@@ -1,5 +1,7 @@
 @extends ('layouts.app')
 
+@section ('title', $product->name)
+
 @section('content')
     {{-- <section class="section-pagetop bg-dark">
         <div class="container clearfix">
@@ -14,7 +16,7 @@
 				        <div class="row no-gutters">
 				        	<aside class="col-sm-5 border-right">
 							    <article class="gallery-wrap">
-							        {{-- @if ($product->images->count() > 0)
+							        @if ($product->images->count() > 0)
 							            <div class="img-big-wrap">
 							                <div class="padding-y">
 							                    <a href="{{ asset('storage/'.$product->images->first()->full) }}" data-fancybox="">
@@ -37,7 +39,7 @@
 							                    </div>
 							                @endforeach
 							            </div>
-							        @endif --}}
+							        @endif
 							    </article>
 							</aside>
 

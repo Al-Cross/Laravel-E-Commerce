@@ -7,7 +7,7 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ config('app.name', 'Laravel') }}</title>
+    <title>@yield('title')</title>
 
     <!-- jQuery -->
     <script src="{{ asset('frontend/js/jquery-2.0.0.min.js') }}" type="text/javascript"></script>
@@ -39,6 +39,7 @@
         </main>
 
         @include('partials.footer')
+        <script src="{{ mix('/js/app.js') }}"></script>
     </div>
 </body>
 </html>

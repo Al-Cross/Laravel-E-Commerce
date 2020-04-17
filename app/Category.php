@@ -3,17 +3,29 @@
 namespace App;
 
 use App\Product;
+use App\Attribute;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+    protected $guarded = [];
     /**
-     * Defines the relationship with App\Product
+     * Define the relationship with App\Product
      *
-     * @return Object
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function products()
     {
         return $this->hasMany(Product::class);
+    }
+
+    /**
+     * Define the relationship with App\Category
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function attributes()
+    {
+        return $this->hasMany(Attribute::class);
     }
 }

@@ -27,4 +27,24 @@ class ProductTest extends TestCase
 
         $this->assertInstanceOf('App\Category', $product->category);
     }
+    /**
+     * @test
+     */
+    public function it_has_images()
+    {
+        $product = create('App\Product');
+
+        $image = create('App\Images', ['product_id' => $product->id]);
+
+        $this->assertEquals(1, $product->images()->count());
+    }
+    /**
+     * @test
+     */
+    public function an_image_belongs_to_a_product()
+    {
+        $image = make('App\Images');
+
+        $this->assertInstanceOf('App\Product', $image->product);
+    }
 }

@@ -1,5 +1,7 @@
 @extends ('layouts.app')
 
+@section ('title', 'Products')
+
 @section ('content')
 	<section class="section-content bg padding-y">
 	    <div class="container">
@@ -8,11 +10,11 @@
 	                @forelse($products as $product)
 	                    <div class="col-md-4">
 	                        <figure class="card card-product mb-4">
-	                           {{--  @if ($product->images->count() > 0)
+	                            @if ($product->images->count() > 0)
 	                                <div class="img-wrap padding-y"><img src="{{ asset('storage/'.$product->images->first()->full) }}" alt=""></div>
 	                            @else
 	                                <div class="img-wrap padding-y"><img src="https://via.placeholder.com/176" alt=""></div>
-	                            @endif --}}
+	                            @endif
 	                            <figcaption class="info-wrap">
 	                                <h4 class="title"><a href="{{ $product->path() }}">{{ $product->name }}</a></h4>
 	                            </figcaption>

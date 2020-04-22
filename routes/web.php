@@ -27,7 +27,9 @@ Route::group([
     Route::get('/', 'DashboardController@index')->name('admin.dashboard.index');
     Route::get('/categories', 'CategoriesController@index')->name('admin.dashboard.categories');
     Route::post('/categories', 'CategoriesController@store');
-    Route::get('/categories/create', 'CategoriesController@show')->name('admin.dashboard.create');
+    Route::get('/categories/create', 'CategoriesController@create')->name('admin.categories.create');
+    Route::get('/products/create', 'ProductUploadController@create')->name('admin.products.create');
+    Route::post('/products', 'ProductUploadController@store');
 });
 
 Route::get('/home', 'HomeController@index')->name('home');

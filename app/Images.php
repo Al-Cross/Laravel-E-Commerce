@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Images extends Model
 {
+    protected $fillable = ['product_id', 'path'];
+
     /**
      * Define the relationship with App\Product
      *

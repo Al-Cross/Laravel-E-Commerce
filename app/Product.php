@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Product extends Model
 {
+    protected $fillable = ['category_id', 'name', 'slug', 'description', 'price', 'quantity'];
+
     /**
      * The URL to the resource.
      *

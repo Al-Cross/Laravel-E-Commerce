@@ -18,8 +18,8 @@ class CreateProductsTable extends Migration
             $table->foreignId('category_id');
             $table->string('name');
             $table->string('slug')->unique()->nullable();
-            $table->text('description');
-            $table->decimal('price');
+            $table->text('description')->nullable();
+            $table->decimal('price', 8, 2);
             $table->integer('quantity');
             $table->timestamps();
         });

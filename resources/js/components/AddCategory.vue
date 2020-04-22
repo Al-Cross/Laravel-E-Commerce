@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="form-group" v-for="input in inputs" v-html="input"></div>
-        <button type="button" class="btn btn-primary btn-block" @click="add">Add Category</button>
+        <button type="button" class="btn btn-primary btn-block" @click="add">Add Attribute</button>
     </div>
 </template>
 

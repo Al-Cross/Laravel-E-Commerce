@@ -16,7 +16,7 @@ class CreateProductAttributesTable extends Migration
         Schema::create('product_attributes', function (Blueprint $table) {
             $table->id();
             $table->foreignId('product_id');
-            $table->foreignId('attribute_id');
+            $table->foreignId('attr_value_id');
             $table->timestamps();
 
             $table->foreign('product_id')
@@ -24,9 +24,9 @@ class CreateProductAttributesTable extends Migration
                 ->on('products')
                 ->onDelete('cascade');
 
-            $table->foreign('attribute_id')
+            $table->foreign('attr_value_id')
                 ->references('id')
-                ->on('attributes')
+                ->on('attribute_values')
                 ->onDelete('cascade');
         });
     }

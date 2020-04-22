@@ -68,7 +68,7 @@
                                     <select id="country" class="form-control" name="country">
                                         <option> Choose...</option>
                                         <option value="United Kingdom">United Kingdom</option>
-                                        <option value="Germany" selected="">Germany</option>
+                                        <option value="Germany">Germany</option>
                                         <option value="United States">United States</option>
                                     </select>
                                 </div>

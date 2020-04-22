@@ -40,5 +40,11 @@
                 <span class="app-menu__label">Categories</span>
             </a>
         </li>
+        <li>
+            <a class="app-menu__item" href="{{route('admin.products.create') }}">
+                <i class="app-menu__icon fas fa-store"></i>
+                <span class="app-menu__label">Create A Product</span>
+            </a>
+        </li>
     </ul>
 </aside>

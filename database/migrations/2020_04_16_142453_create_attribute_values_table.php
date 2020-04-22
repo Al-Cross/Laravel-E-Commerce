@@ -16,8 +16,10 @@ class CreateAttributeValuesTable extends Migration
         Schema::create('attribute_values', function (Blueprint $table) {
             $table->id();
             $table->foreignId('attribute_id');
-            $table->string('value')->unique();
+            $table->string('value');
             $table->timestamps();
+
+            $table->unique(['attribute_id', 'value']);
         });
     }
 

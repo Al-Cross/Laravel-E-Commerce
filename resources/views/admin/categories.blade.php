@@ -5,7 +5,7 @@
 @section ('content')
 	<div class="container">
 		 <p>
-		 	<a class="btn btn-sm btn-default border" href="{{ route('admin.dashboard.create') }}">New Category
+		 	<a class="btn btn-sm btn-default border" href="{{ route('admin.categories.create') }}">New Category
 		 		<i class="fas fa-plus"></i>
 		 	</a>
 		 </p>

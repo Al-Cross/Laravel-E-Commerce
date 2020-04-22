@@ -28,5 +28,15 @@
                 </div>
             </div>
         </div>
+
+        <div class="col-md-6">
+            <div class="widget-small warning coloured-icon">
+                <i class="icon fas fa-store fa-3x"></i>
+                <div class="info">
+                    <h4>Products</h4>
+                    <p><b>{{ $products }}</b></p>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

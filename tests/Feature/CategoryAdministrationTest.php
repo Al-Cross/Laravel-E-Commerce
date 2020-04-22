@@ -3,6 +3,8 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CategoryAdministrationTest extends TestCase
@@ -11,7 +13,7 @@ class CategoryAdministrationTest extends TestCase
     /**
      * @test
      */
-    public function an_administrator_can_access_the_channel_administration_section()
+    public function an_administrator_can_access_the_category_administration_section()
     {
         $this->withoutExceptionHandling();
 
@@ -20,13 +22,16 @@ class CategoryAdministrationTest extends TestCase
         $this->get(route('admin.dashboard.categories'))
             ->assertStatus(200);
 
-        $this->get(route('admin.dashboard.create'))
+        $this->get(route('admin.categories.create'))
+            ->assertStatus(200);
+
+        $this->get(route('admin.products.create'))
             ->assertStatus(200);
     }
     /**
      * @test
      */
-    public function non_administrators_cannot_access_the_channel_administration_section()
+    public function non_administrators_cannot_access_the_category_administration_section()
     {
         $regularUser = create('App\User');
 
@@ -35,7 +40,11 @@ class CategoryAdministrationTest extends TestCase
              ->assertStatus(403);
 
         $this->actingAs($regularUser)
-             ->get(route('admin.dashboard.create'))
+             ->get(route('admin.categories.create'))
+             ->assertStatus(403);
+
+        $this->actingAs($regularUser)
+             ->get(route('admin.products.create'))
              ->assertStatus(403);
     }
     /**
@@ -51,7 +60,7 @@ class CategoryAdministrationTest extends TestCase
             'App\Category',
             ['attribute' => [0 => 'some attribute', '1' => 'another attribute']]
         );
-        // dd($category);
+
         $response = $this->post('/admin/categories', $category->toArray());
 
         $this->get($response->headers->get('Location'))
@@ -71,5 +80,37 @@ class CategoryAdministrationTest extends TestCase
 
         $this->post('/admin/categories', $category->toArray())
             ->assertSessionHasErrors('name');
+    }
+    /**
+     * @test
+     */
+    public function an_administrator_can_create_a_product()
+    {
+        $this->withoutExceptionHandling();
+
+        Storage::fake('local');
+
+        $this->signInAdmin();
+
+        $firstAttribute = create('App\Attribute', ['category_id' => 1]);
+        $secondAttribute = create('App\Attribute', ['category_id' => 1]);
+
+        $product = make(
+            'App\Product',
+            ['attribute_id' => [1 => $firstAttribute, 2 => $secondAttribute],
+            'attr_value' => [1 => 'some value', 2 => 'another value'],
+            'select_value' => [0 => 'new value', 1 => 2],
+            'image' => [0 => $file1 = UploadedFile::fake()->image('avatar1.jpg'),
+                        1 => $file2 = UploadedFile::fake()->image('avatar2.jpg')]]
+        );
+
+        $this->post('/admin/products', $product->toArray());
+
+        $this->assertDatabaseHas('attribute_values', ['value' => 'some value']);
+        Storage::disk('local')->assertExists('images/' . $file1->hashName())
+            ->assertExists('images/' . $file2->hashName());
+
+        $this->get('/products')
+            ->assertSee($product->name);
     }
 }

@@ -53,7 +53,7 @@ class ProductController extends Controller
      */
     public function show(Category $category, Product $product)
     {
-        return view('products.show', compact('product'));
+        return view('products.show', compact('category', 'product'));
     }
 
     /**
@@ -88,5 +88,21 @@ class ProductController extends Controller
     public function destroy(Product $product)
     {
         //
+    }
+
+    /**
+     * Add a product to the shopping cart.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function addToCart()
+    {
+        $product = Product::findOrFail(request()->id);
+
+        $product->addToCart(request('price'), request('quantity'));
+
+        return redirect()
+                ->back()
+                ->with('message', 'Item added to cart successfully.');
     }
 }

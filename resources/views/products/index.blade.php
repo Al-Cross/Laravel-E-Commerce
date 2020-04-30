@@ -10,17 +10,29 @@
 	                @forelse($products as $product)
 	                    <div class="col-md-4">
 	                        <figure class="card card-product mb-4">
-	                            @if ($product->images->count() > 0)
-	                                <div class="img-wrap padding-y"><img src="{{ asset('storage/'.$product->images->first()->full) }}" alt=""></div>
-	                            @else
-	                                <div class="img-wrap padding-y"><img src="https://via.placeholder.com/176" alt=""></div>
-	                            @endif
+                                <div class="img-wrap padding-y">
+                                	<img src="{{ asset('storage/' . $product->mainImage()) }}"
+                                		style="height: 200px;"
+                                		alt="mainImage">
+                                </div>
+
 	                            <figcaption class="info-wrap">
 	                                <h4 class="title"><a href="{{ $product->path() }}">{{ $product->name }}</a></h4>
 	                            </figcaption>
 	                            <div class="bottom-wrap">
-	                                <a href="" class="btn btn-sm btn-success float-right"><i class="fa fa-cart-arrow-down"></i> Buy Now</a>
-	                                <span>{{ $product->price }}</span>
+	                            	<form action="{{ route('add-to-cart') }}" method="POST">
+	                            		@csrf
+	                            		<input type="hidden" name="id" value="{{ $product->id }}">
+	                            		<input type="hidden" name="quantity" value="1">
+	                            		<input type="hidden" name="price" value="{{ $product->price }}">
+	                            		<button type="submit" class="btn btn-sm btn-success float-right">
+	                                	<i class="fa fa-cart-arrow-down"></i> Buy Now
+	                                </button>
+	                            	</form>
+	                                <div class="price h3 text-danger">
+	                                	<span class="currency">{{ config('e-commerce.currency_symbol') }}</span>
+		                                <span>{{ $product->price }}</span>
+	                                </div>
 	                                {{-- @if ($product->sale_price != 0)
 	                                    <div class="price-wrap h5">
 	                                        <span class="price"> {{ config('settings.currency_symbol').$product->sale_price }} </span>

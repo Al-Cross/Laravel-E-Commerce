@@ -19,6 +19,7 @@
     <!-- Scripts -->
     <script src="{{ asset('frontend/js/script.js') }}" type="text/javascript"></script>
 
+    @yield('extra-css')
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
 
@@ -39,7 +40,8 @@
         </main>
 
         @include('partials.footer')
-        <script src="{{ mix('/js/app.js') }}"></script>
     </div>
+    <script src="{{ mix('/js/app.js') }}"></script>
+    @yield ('scripts')
 </body>
 </html>

@@ -82,7 +82,9 @@
                                             @foreach ($attribute->values as $value)
                                                 <option value="{{ $value->id }}">{{ $value->value }}</option>
                                             @endforeach
-                                            <option value="new {{ $attribute->id }}">Create New {{ $attribute->name }}</option>
+                                            <option value="new {{ $attribute->id }}">
+                                                Create New {{ $attribute->name }}
+                                            </option>
                                         </select>
                                         <div class="toggle" id="attr_{{ $attribute->name }}">
                                            <input type="text"
@@ -90,13 +92,13 @@
                                                 name="attr_value[{{ $attribute->id }}]"
                                             >
                                         </div>
-                                            @foreach ($errors->get('attr_value.*') as $array)
-                                                @foreach ($array as $message)
-                                                    <span class="invalid-feedback" role="alert">
-                                                        <strong>{{ $message }}</strong>
-                                                    </span>
-                                                @endforeach
+                                        @foreach ($errors->get('attr_value.*') as $array)
+                                            @foreach ($array as $message)
+                                                <span class="invalid-feedback" role="alert">
+                                                    <strong>{{ $message }}</strong>
+                                                </span>
                                             @endforeach
+                                        @endforeach
                                     </div>
                                 @endforeach
                             <div class="form-group">
@@ -142,25 +144,25 @@
     <script src="{{ asset('backend/js/jquery-3.3.1.min.js') }}"></script>
 
  <script>
-        $(function() {
-            var attributes = {!! json_encode($attributes->toArray(), JSON_HEX_TAG) !!};
+    $(function() {
+        var attributes = {!! json_encode($attributes->toArray(), JSON_HEX_TAG) !!};
 
-            $.each(attributes, function(index, item) {
-                if (item.values.length != 0) {
-                    $('.toggle').hide();
-                }
+        $.each(attributes, function(index, item) {
+            if (item.values.length != 0) {
+                $('.toggle').hide();
+            }
 
-                $('#' + item.id).change(function() {
-                    reveal();
-                });
-
-                function reveal() {
-                    if ($("#" + item.id + " option:selected").val() == 'new ' + item.id) {
-                        $("#attr_" + item.name).show();
-                    } else {
-                        $("#attr_" + item.name).hide();
-                    }
-                }
+            $('#' + item.id).change(function() {
+                reveal();
             });
+
+            function reveal() {
+                if ($("#" + item.id + " option:selected").val() == 'new ' + item.id) {
+                    $("#attr_" + item.name).show();
+                } else {
+                    $("#attr_" + item.name).hide();
+                }
+            }
         });
-    </script>
+    });
+</script>

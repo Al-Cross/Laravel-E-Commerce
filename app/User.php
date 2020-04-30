@@ -2,9 +2,10 @@
 
 namespace App;
 
+use App\Order;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
 
 class User extends Authenticatable
 {
@@ -64,5 +65,10 @@ class User extends Authenticatable
     public function getIsAdminAttribute()
     {
         return $this->isAdmin();
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
     }
 }

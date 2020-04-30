@@ -86,6 +86,135 @@
 /************************************************************************/
 /******/ ({
 
+/***/ "./node_modules/@stripe/stripe-js/dist/pure.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/@stripe/stripe-js/dist/pure.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, '__esModule', { value: true });
+
+function _toConsumableArray(arr) {
+  return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread();
+}
+
+function _arrayWithoutHoles(arr) {
+  if (Array.isArray(arr)) {
+    for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) arr2[i] = arr[i];
+
+    return arr2;
+  }
+}
+
+function _iterableToArray(iter) {
+  if (Symbol.iterator in Object(iter) || Object.prototype.toString.call(iter) === "[object Arguments]") return Array.from(iter);
+}
+
+function _nonIterableSpread() {
+  throw new TypeError("Invalid attempt to spread non-iterable instance");
+}
+
+var V3_URL = 'https://js.stripe.com/v3';
+
+var injectScript = function injectScript() {
+  var script = document.createElement('script');
+  script.src = V3_URL;
+  var headOrBody = document.head || document.body;
+
+  if (!headOrBody) {
+    throw new Error('Expected document.body not to be null. Stripe.js requires a <body> element.');
+  }
+
+  headOrBody.appendChild(script);
+  return script;
+};
+
+var registerWrapper = function registerWrapper(stripe) {
+  if (!stripe || !stripe._registerWrapper) {
+    return;
+  }
+
+  stripe._registerWrapper({
+    name: 'stripe-js',
+    version: "1.3.2"
+  });
+};
+
+var stripePromise = null;
+var loadScript = function loadScript() {
+  // Ensure that we only attempt to load Stripe.js at most once
+  if (stripePromise !== null) {
+    return stripePromise;
+  }
+
+  stripePromise = new Promise(function (resolve, reject) {
+    if (typeof window === 'undefined') {
+      // Resolve to null when imported server side. This makes the module
+      // safe to import in an isomorphic code base.
+      resolve(null);
+      return;
+    }
+
+    if (window.Stripe) {
+      resolve(window.Stripe);
+      return;
+    }
+
+    var script = document.querySelector("script[src=\"".concat(V3_URL, "\"], script[src=\"").concat(V3_URL, "/\"]")) || injectScript();
+    script.addEventListener('load', function () {
+      if (window.Stripe) {
+        resolve(window.Stripe);
+      } else {
+        reject(new Error('Stripe.js not available'));
+      }
+    });
+    script.addEventListener('error', function () {
+      reject(new Error('Failed to load Stripe.js'));
+    });
+  });
+  return stripePromise;
+};
+var initStripe = function initStripe(maybeStripe, args) {
+  if (maybeStripe === null) {
+    return null;
+  }
+
+  var stripe = maybeStripe.apply(void 0, _toConsumableArray(args));
+  registerWrapper(stripe);
+  return stripe;
+};
+
+var loadStripe = function loadStripe() {
+  for (var _len = arguments.length, args = new Array(_len), _key = 0; _key < _len; _key++) {
+    args[_key] = arguments[_key];
+  }
+
+  return loadScript().then(function (maybeStripe) {
+    return initStripe(maybeStripe, args);
+  });
+};
+
+exports.loadStripe = loadStripe;
+
+
+/***/ }),
+
+/***/ "./node_modules/@stripe/stripe-js/pure.js":
+/*!************************************************!*\
+  !*** ./node_modules/@stripe/stripe-js/pure.js ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = __webpack_require__(/*! ./dist/pure.js */ "./node_modules/@stripe/stripe-js/dist/pure.js");
+
+
+/***/ }),
+
 /***/ "./node_modules/axios/index.js":
 /*!*************************************!*\
   !*** ./node_modules/axios/index.js ***!
@@ -1923,7 +2052,7 @@ __webpack_require__.r(__webpack_exports__);
   },
   methods: {
     add: function add() {
-      var field = "<label for=\"attribute\">Attribute</label>\n                            <input type=\"text\" class=\"form-control\" name=\"attribute[]\" id=\"attribute\">\n                        <div v-if=\"response.error\">\n                            <span class=\"invalid-feedback\" role=\"alert\">\n                                    <strong v-text=\"response.error.message\"></strong>\n                                </span>\n                        </div>\n                            ";
+      var field = "<label for=\"attribute\">Attribute</label>\n                            <input type=\"text\" class=\"form-control\" name=\"attribute[]\">\n                        <div v-if=\"response.error\">\n                            <span class=\"invalid-feedback\" role=\"alert\">\n                                    <strong v-text=\"response.error.message\"></strong>\n                                </span>\n                        </div>\n                            ";
       this.inputs.push(field);
     }
   }
@@ -20476,7 +20605,7 @@ var render = function() {
           attrs: { type: "button" },
           on: { click: _vm.add }
         },
-        [_vm._v("Add Category")]
+        [_vm._v("Add Attribute")]
       )
     ],
     2
@@ -32628,14 +32757,20 @@ module.exports = g;
 /*!*****************************!*\
   !*** ./resources/js/app.js ***!
   \*****************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+/*! no exports provided */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _stripe_stripe_js_pure__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @stripe/stripe-js/pure */ "./node_modules/@stripe/stripe-js/pure.js");
+/* harmony import */ var _stripe_stripe_js_pure__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_stripe_stripe_js_pure__WEBPACK_IMPORTED_MODULE_0__);
 /**
  * First we will load all of this project's JavaScript dependencies which
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+ // const stripe = await loadStripe('pk_test_5b20haUIW3xRYL1M64O9bsCl008DBREz6Z');
+
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");

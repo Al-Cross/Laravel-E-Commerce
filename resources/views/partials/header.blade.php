@@ -3,15 +3,6 @@
         <div class="container">
           <nav class="d-flex align-items-end flex-column">
             <ul class="nav">
-                <li class="nav-item">
-                    <a href="#" class="nav-link">
-                        <div class="icon-wrap icon-xs bg2 round text-secondary"><i
-                                class="fa fa-shopping-cart"></i></div>
-                        <div class="text-wrap">
-                            <small>3 items</small>
-                        </div>
-                    </a>
-                </li>
                 @guest
                     <li class="nav-item"><a href="{{ route('login') }}" class="nav-link">
                         <div class="icon-wrap icon-xs bg-primary round text-white"><i class="fas fa-user"></i></div>
@@ -22,12 +13,26 @@
                         <div class="icon-wrap icon-xs bg-success round text-white"><i class="fa fa-user"></i></div>
                         <div class="text-wrap"><span>Register</span></div>
                     </a></li>
+                     <li  class="nav-item">
+                        <a href="{{ route('cart') }}" class="nav-link d-flex">
+                            <div class="round text-sm-left"><i class="fa fa-shopping-cart"></i> My Cart</div>
+                            <span class="badge badge-pill badge-danger">{{ $cartCount }}</span>
+                        </a>
+                    </li>
                 @else
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                              <i class="fa fa-user-circle"></i> {{ Auth::user()->name }} <span class="caret"></span>
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                            @if(Auth::user()->isAdmin())
+                                <a class="dropdown-item" href="{{ route('admin.dashboard.index') }}">
+                                    Admin Panel
+                                </a>
+                            @endif
+                             <a class="dropdown-item" href="{{ route('profile') }}">
+                                My Account
+                            </a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();
                                          document.getElementById('logout-form').submit();">
@@ -38,7 +43,12 @@
                             </form>
                         </div>
                     </li>
-                    <li  class="nav-item"><a href="#" class="nav-link"> <i class="fa fa-shopping-cart"></i> My Cart <span class="badge badge-pill badge-danger">1</span> </a></li>
+                    <li  class="nav-item">
+                        <a href="{{ route('cart') }}" class="nav-link d-flex">
+                            <div class="round text-sm-left"><i class="fa fa-shopping-cart"></i> My Cart</div>
+                            <span class="badge badge-pill badge-danger">{{ $cartCount }}</span>
+                        </a>
+                    </li>
                 @endguest
             </ul>
           </nav>

@@ -31,5 +31,9 @@ class AppServiceProvider extends ServiceProvider
 
             $view->with('categories', $categories);
         });
+
+        \View::composer('partials.header', function ($view) {
+            $view->with('cartCount', \Cart::getContent()->count());
+        });
     }
 }

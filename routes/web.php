@@ -32,7 +32,22 @@ Route::group([
     Route::post('/products', 'ProductUploadController@store');
 });
 
+Route::middleware('auth')->group(function () {
+    Route::get('/my-profile', 'UserController@show')->name('profile');
+    Route::get('/my-profile/{user}/edit', 'UserController@edit')->name('edit.profile');
+    Route::patch('/my-profile/update', 'UserController@update')->name('update.profile');
+    Route::get('/my-orders', 'OrderController@index')->name('orders.index');
+    Route::get('/my-orders/{order}', 'OrderController@show')->name('order.details');
+});
+
 Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/cart', 'CartController@show')->name('cart');
+Route::get('/checkout', 'CheckoutController@index')->name('checkout');
+Route::post('/checkout', 'CheckoutController@store');
+Route::get('/cart/{id}/remove', 'CartController@destroy')->name('checkout.cart.remove');
+Route::patch('/cart/{id}/update', 'CartController@update')->name('checkout.cart.update');
+Route::get('/cart/clear', 'CartController@clearCart')->name('checkout.cart.clear');
 Route::get('/products', 'ProductController@index');
 Route::get('/products/{category:slug}/{product:slug}', 'ProductController@show');
 Route::get('/{category:slug}', 'ProductController@index');
+Route::post('/product/add-cart', 'ProductController@addToCart')->name('add-to-cart');

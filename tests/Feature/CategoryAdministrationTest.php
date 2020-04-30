@@ -61,6 +61,9 @@ class CategoryAdministrationTest extends TestCase
             ['attribute' => [0 => 'some attribute', '1' => 'another attribute']]
         );
 
+        $product = create('App\Product');
+        $image = create('App\Images', ['product_id' => $product->id]);
+
         $response = $this->post('/admin/categories', $category->toArray());
 
         $this->get($response->headers->get('Location'))
@@ -86,9 +89,7 @@ class CategoryAdministrationTest extends TestCase
      */
     public function an_administrator_can_create_a_product()
     {
-        $this->withoutExceptionHandling();
-
-        Storage::fake('local');
+        // $this->withoutExceptionHandling();
 
         $this->signInAdmin();
 
@@ -107,8 +108,9 @@ class CategoryAdministrationTest extends TestCase
         $this->post('/admin/products', $product->toArray());
 
         $this->assertDatabaseHas('attribute_values', ['value' => 'some value']);
-        Storage::disk('local')->assertExists('images/' . $file1->hashName())
-            ->assertExists('images/' . $file2->hashName());
+        $this->assertDatabaseHas('product_attributes', ['attr_value_id' => 2]);
+
+        Storage::disk('public')->assertExists('images/' . $file1->hashName());
 
         $this->get('/products')
             ->assertSee($product->name);

@@ -75,12 +75,9 @@ class ProductUploadController extends Controller
             return strpos($string, 'new') === false;
         });
 
-        foreach ($select as $value_id) {
-            ProductAttributes::create([
-                'product_id' => $product->id,
-                'attr_value_id' => $value_id
-            ]);
-        }
+        // foreach ($select as $value_id) {
+        //     $product->attributes()->attach($value_id);
+        // }
 
 
         $images = request()->file('image');
@@ -88,7 +85,7 @@ class ProductUploadController extends Controller
 
         foreach ($images as $image) {
             $imageName = $image->hashName();
-            $paths[] = $image->storeAs('images', $imageName);
+            $paths[] = $image->storeAs('public/images', $imageName);
         }
 
         foreach ($paths as $path) {

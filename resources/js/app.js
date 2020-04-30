@@ -3,6 +3,9 @@
  * includes Vue and other libraries. It is a great starting point when
  * building robust, powerful web applications using Vue and Laravel.
  */
+import {loadStripe} from '@stripe/stripe-js/pure';
+
+// const stripe = await loadStripe('pk_test_5b20haUIW3xRYL1M64O9bsCl008DBREz6Z');
 
 require('./bootstrap');
 

@@ -47,4 +47,14 @@ class ProductTest extends TestCase
 
         $this->assertInstanceOf('App\Product', $image->product);
     }
+    /**
+     * @test
+     */
+    public function it_belongs_to_a_value()
+    {
+        $product = create('App\Product');
+        $value = create('App\AttributeValues');
+
+        $this->assertInstanceOf('Illuminate\Database\Eloquent\Collection', $product->attributes);
+    }
 }

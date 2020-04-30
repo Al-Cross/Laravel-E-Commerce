@@ -1,5 +1,6 @@
 <?php
 
 return [
-    'administrators' => ['johndoe@example.com']
+    'administrators' => ['johndoe@example.com'],
+    'currency_symbol' => '€'
 ];

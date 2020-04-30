@@ -11,6 +11,6 @@ $factory->define(Images::class, function (Faker $faker) {
         'product_id' => function () {
             return factory(Product::class)->create()->id;
         },
-        'path' => 'path/to/image'
+        'path' => 'images/path/to/image'
     ];
 });

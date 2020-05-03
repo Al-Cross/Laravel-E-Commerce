@@ -18,12 +18,12 @@ class CreateOrdersTable extends Migration
             $table->foreignId('user_id')->nullable();
             $table->string('billing_name');
             $table->string('billing_email');
-            $table->string('billing_address');
-            $table->string('billing_city');
-            $table->string('billing_postalcode');
-            $table->string('billing_country');
-            $table->string('billing_phone');
-            $table->string('billing_name_on_card');
+            $table->string('billing_address')->nullable();
+            $table->string('billing_city')->nullable();
+            $table->string('billing_postalcode')->nullable();
+            $table->string('billing_country')->nullable();
+            $table->string('billing_phone')->nullable();
+            $table->string('billing_name_on_card')->nullable();
             $table->string('billing_subtotal');
             $table->string('billing_tax');
             $table->string('billing_total');

@@ -44,6 +44,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/cart', 'CartController@show')->name('cart');
 Route::get('/checkout', 'CheckoutController@index')->name('checkout');
 Route::post('/checkout', 'CheckoutController@store');
+Route::post('/paypal-checkout', 'CheckoutController@paypal')->name('paypal');
 Route::get('/cart/{id}/remove', 'CartController@destroy')->name('checkout.cart.remove');
 Route::patch('/cart/{id}/update', 'CartController@update')->name('checkout.cart.update');
 Route::get('/cart/clear', 'CartController@clearCart')->name('checkout.cart.clear');

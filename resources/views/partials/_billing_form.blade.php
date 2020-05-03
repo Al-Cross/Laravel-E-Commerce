@@ -121,4 +121,21 @@
             </div>
         </div>
     </form>
+
+    <div class="mt-3">or</div>
+    <div class="mt-3">
+        <h4>Pay With PayPal</h4>
+
+        <form method="POST" id="paypal-form" action="{{ route('paypal') }}">
+            @csrf
+            <section>
+                <div class="bt-drop-in-wrapper">
+                    <div id="bt-dropin"></div>
+                </div>
+            </section>
+
+            <input id="nonce" name="payment_method_nonce" type="hidden" />
+            <button class="btn btn-primary" id="button-pay" type="submit"><span>Pay with Paypal</span></button>
+        </form>
+    </div>
 </article>

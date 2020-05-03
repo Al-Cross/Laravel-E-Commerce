@@ -85,7 +85,7 @@ class ProductUploadController extends Controller
 
         foreach ($images as $image) {
             $imageName = $image->hashName();
-            $paths[] = $image->storeAs('public/images', $imageName);
+            $paths[] = $image->storeAs('images', $imageName);
         }
 
         foreach ($paths as $path) {

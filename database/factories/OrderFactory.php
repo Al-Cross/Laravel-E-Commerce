@@ -27,6 +27,7 @@ $factory->define(Order::class, function (Faker $faker) {
         'total' => $subtotal * (1 + 0.2),
         'payment_gateway' => 'stripe',
         'shipped' => false,
-        'error' => null
+        'error' => null,
+        'quantity' => 1
     ];
 });

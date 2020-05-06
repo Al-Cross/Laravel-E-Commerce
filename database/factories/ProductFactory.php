@@ -13,7 +13,7 @@ $factory->define(Product::class, function (Faker $faker) {
         'category_id' => function () {
             return factory(Category::class)->create()->id;
         },
-        'name' => $name,
+        'name' => $faker->word,
         'slug' => Str::slug($name),
         'description' => $faker->sentence,
         'price' => rand(1, 1000),

@@ -83,7 +83,7 @@
                                                 <option value="{{ $value->id }}">{{ $value->value }}</option>
                                             @endforeach
                                             <option value="new {{ $attribute->id }}">
-                                                Create New {{ $attribute->name }}
+                                                Set New {{ $attribute->name }}
                                             </option>
                                         </select>
                                         <div class="toggle" id="attr_{{ $attribute->name }}">

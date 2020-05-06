@@ -7,7 +7,7 @@
                     class="form-control @error('name') is-invalid @enderror"
                     name="name"
                     id="name"
-                    value="{{ old('name') }}" required>
+                    value="{{ old('name', Auth::user() ? Auth::user()->name : '') }}" required>
             @error('name')
             <span class="invalid-feedback" role="alert">
                 <strong>{{ $message }}</strong>
@@ -19,7 +19,7 @@
             <input type="text"
                     class="form-control @error('email') is-invalid @enderror"
                     name="email"
-                    value="{{ old('email')}}" required>
+                    value="{{ old('email', Auth::user() ? Auth::user()->email : '') }}" required>
             @error('email')
             <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -32,7 +32,7 @@
                     id="address"
                     class="form-control @error('address') is-invalid @enderror"
                     name="address"
-                    value="{{ old('address') }}" required>
+                    value="{{ old('address', Auth::user() ? Auth::user()->address : '') }}" required>
             @error('address')
             <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -45,7 +45,7 @@
                     id="city"
                     class="form-control @error('city') is-invalid @enderror"
                     name="city"
-                    value="{{ old('city') }}" required>
+                    value="{{ old('city', Auth::user() ? Auth::user()->city : '') }}" required>
             @error('city')
             <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -58,7 +58,7 @@
                     id="postalcode"
                     class="form-control @error('postalcode') is-invalid @enderror"
                     name="postalcode"
-                    value="{{ old('postalcode') }}" required>
+                    value="{{ old('postalcode', Auth::user() ? Auth::user()->postalcode : '') }}" required>
             @error('postalcode')
             <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>
@@ -71,7 +71,7 @@
                     id="country"
                     class="form-control @error('country') is-invalid @enderror"
                     name="country"
-                    value="{{ old('country') }}" required>
+                    value="{{ old('country', Auth::user() ? Auth::user()->country : '') }}" required>
             @error('country')
             <span class="invalid-feedback" role="alert">
                     <strong>{{ $message }}</strong>

@@ -70,15 +70,19 @@
                         <a class="nav-link" href="/products">Home </a>
 
                         @foreach ($categories as $category)
-                        <li class="nav-item">
-                          <a class="nav-link" href="{{ $category->slug }}">{{ $category->name }}</a>
-                        </li>
+                            <li class="nav-item">
+                              <a class="nav-link" href="{{ route('category', $category->slug) }}">{{ $category->name }}</a>
+                            </li>
                         @endforeach
                     </ul>
 
-                    <form class="form-inline my-2 my-lg-0">
+                    <form action="/search" method="GET" class="form-inline my-2 my-lg-0">
                         <div class="input-group">
-                          <input type="text" class="form-control" placeholder="Search">
+                          <input type="text"
+                                name="query"
+                                value="{{ request()->input('query') }}"
+                                class="form-control"
+                                placeholder="Search">
                           <div class="input-group-append">
                             <button class="btn btn-primary" type="submit">
                               <i class="fa fa-search"></i>
@@ -86,6 +90,25 @@
                           </div>
                         </div>
                     </form>
+
+                    <ul class="nav">
+                        <li class="nav-item dropdown">
+                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    Sort Products <span class="caret"></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                     <a class="dropdown-item" href="{{ Request::path() }}?price=desc">
+                                        Price Descending
+                                    </a>
+                                    <a class="dropdown-item" href="{{ Request::path() }}?price=asc">
+                                        Price Ascending
+                                    </a>
+                                     <a class="dropdown-item" href="{{ Request::path() }}?demand=1">
+                                        Hottest
+                                    </a>
+                                </div>
+                        </li>
+                    </ul>
                 </nav>
             </div>
         </div>

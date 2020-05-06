@@ -42,6 +42,7 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/cart', 'CartController@show')->name('cart');
+Route::get('/search', 'ProductController@search');
 Route::get('/checkout', 'CheckoutController@index')->name('checkout');
 Route::post('/checkout', 'CheckoutController@store');
 Route::post('/paypal-checkout', 'CheckoutController@paypal')->name('paypal');
@@ -50,5 +51,5 @@ Route::patch('/cart/{id}/update', 'CartController@update')->name('checkout.cart.
 Route::get('/cart/clear', 'CartController@clearCart')->name('checkout.cart.clear');
 Route::get('/products', 'ProductController@index');
 Route::get('/products/{category:slug}/{product:slug}', 'ProductController@show');
-Route::get('/{category:slug}', 'ProductController@index');
+Route::get('/{category:slug}', 'ProductController@index')->name('category');
 Route::post('/product/add-cart', 'ProductController@addToCart')->name('add-to-cart');

@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Product;
 use App\Category;
+use App\OrderProduct;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ProductController extends Controller
 {
@@ -19,6 +21,33 @@ class ProductController extends Controller
 
         if ($category->exists) {
             $products = $products->where('category_id', $category->id);
+
+            if (request('price') == 'desc') {
+                $products = $products->sortByDesc('price');
+            } elseif (request('price') == 'asc') {
+                $products = $products->sortBy('price');
+            }
+        }
+
+        if (request('price') == 'desc') {
+            $products = $products->sortByDesc('price');
+        } elseif (request('price') == 'asc') {
+            $products = $products->sortBy('price');
+        }
+
+        if (request()->has('demand')) {
+            $productIds = DB::table('products')
+                ->join('order_product', 'products.id', '=', 'order_product.product_id')
+                ->select('product_id', DB::raw('SUM(order_product.quantity) as quantity'))
+                ->groupBy('product_id')
+                ->orderBy('quantity', 'DESC')
+                ->get();
+
+            foreach ($productIds as $id) {
+                $product[] = $id->product_id;
+            }
+
+            $products = Product::findMany($product);
         }
 
         return view('products.index', compact('products'));
@@ -104,5 +133,18 @@ class ProductController extends Controller
         return redirect()
                 ->back()
                 ->with('message', 'Item added to cart successfully.');
+    }
+
+    public function search()
+    {
+        request()->validate([
+            'query' => ['required', 'min:3']
+        ]);
+
+        $query = request()->input('query');
+
+        $products = Product::search($query)->paginate(20);
+
+        return view('products.search_results', compact('products'));
     }
 }

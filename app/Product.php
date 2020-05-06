@@ -4,11 +4,34 @@ namespace App;
 
 use App\Images;
 use App\Category;
+use App\OrderProduct;
 use App\AttributeValues;
 use Illuminate\Database\Eloquent\Model;
+use Nicolaslopezj\Searchable\SearchableTrait;
 
 class Product extends Model
 {
+    use SearchableTrait;
+
+    /**
+    * Searchable rules.
+    *
+    * @var array
+    */
+    protected $searchable = [
+        /**
+         * Columns and their priority in search results.
+         * Columns with higher values are more important.
+         * Columns with equal values have equal importance.
+         *
+         * @var array
+         */
+        'columns' => [
+            'products.name' => 10,
+            'products.description' => 5
+        ]
+    ];
+
     protected $fillable = ['category_id', 'name', 'slug', 'description', 'price', 'quantity'];
 
     /**
@@ -44,7 +67,7 @@ class Product extends Model
     /**
      * Define the relationship with App\AttributeValues
      *
-     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
     public function attributes()
     {
@@ -58,6 +81,10 @@ class Product extends Model
      */
     public function mainImage()
     {
+        if ($this->images->isEmpty()) {
+            return '/images/default.jpeg';
+        }
+
         return $this->images->where('product_id', $this->id)->first()->path;
     }
 

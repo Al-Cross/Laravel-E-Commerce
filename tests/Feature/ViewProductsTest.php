@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use App\OrderProduct;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -15,15 +16,13 @@ class ViewProductsTest extends TestCase
     {
         parent::setUp();
 
-        $this->product = create('App\Product');
+        $this->product = create('App\Product', ['price' => 20]);
     }
     /**
      * @test
      */
     public function a_user_can_view_all_products()
     {
-        // $this->withoutExceptionHandling();
-
         $this->get('/products')->assertSee($this->product->name)
         ->assertSee($this->product->price);
     }
@@ -56,19 +55,19 @@ class ViewProductsTest extends TestCase
             ->assertDontSee($productNotInCategory->name);
     }
     /**
-     // * @test
+     * @test
      */
-    // public function a_user_can_view_the_product_attributes()
-    // {
-    //     $this->withoutExceptionHandling();
+    public function a_user_can_filter_products_according_their_price()
+    {
+        $product2 = create('App\Product', ['price' => 30]);
+        $product3 = create('App\Product', ['price' => 50]);
 
-    //     $values = create('App\AttributeValues', [], 2);
-    //     $image = create('App\Images', ['product_id' => $this->product->id]);
+        $response = $this->get('/products?price=desc');
 
-    //     $this->product->attributes()->attach($values);
+        $this->assertEquals([50, 30, 20], array_column($response['products']->toArray(), 'price'));
 
-    //     $this->get($this->product->path())
-    //         ->assertSee($this->product->attributes[0]->value)
-    //         ->assertSee($this->product->attributes[1]->value);
-    // }
+        $response = $this->get('/products?price=asc');
+
+        $this->assertEquals([20, 30, 50], array_column($response['products']->toArray(), 'price'));
+    }
 }

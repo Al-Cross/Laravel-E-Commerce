@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\Product;
 use App\OrderProduct;
+use App\Mail\OrderPlaced;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use App\Http\Requests\CheckoutRequest;
 use Cartalyst\Stripe\Laravel\Facades\Stripe;
 use Cartalyst\Stripe\Exception\CardErrorException;
@@ -47,7 +50,8 @@ class CheckoutController extends Controller
                 'receipt_email' => $request->email,
             ]);
 
-            $this->addToOrdersTables($request, null);
+            $order = $this->addToOrdersTables($request, null);
+            Mail::send(new OrderPlaced($order));
 
             \Cart::clear();
 
@@ -84,6 +88,7 @@ class CheckoutController extends Controller
 
         if ($result->success || !is_null($result->transaction)) {
             $this->addToOrdersTablesPaypal($email, $name, null);
+            Mail::send(new OrderPlaced);
 
             \Cart::clear();
 
@@ -102,6 +107,8 @@ class CheckoutController extends Controller
      *
      * @param App\Http\Requests $request
      * @param CardException $error
+     *
+     * @return  Object
      */
     protected function addToOrdersTables($request, $error = null)
     {
@@ -129,7 +136,12 @@ class CheckoutController extends Controller
                 'product_id' => $item->id,
                 'quantity' => $item->quantity
             ]);
+
+            $product = Product::findOrFail($item->id);
+            $product->update(['quantity' => $product->quantity - $item->quantity]);
         }
+
+        return $order;
     }
 
     /**

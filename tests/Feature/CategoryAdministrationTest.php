@@ -89,7 +89,7 @@ class CategoryAdministrationTest extends TestCase
      */
     public function an_administrator_can_create_a_product()
     {
-        // $this->withoutExceptionHandling();
+        $this->withoutExceptionHandling();
 
         $this->signInAdmin();
 
@@ -98,9 +98,9 @@ class CategoryAdministrationTest extends TestCase
 
         $product = make(
             'App\Product',
-            ['attribute_id' => [1 => $firstAttribute, 2 => $secondAttribute],
+            ['attribute_id' => [1 => $firstAttribute->id, 2 => $secondAttribute->id],
             'attr_value' => [1 => 'some value', 2 => 'another value'],
-            'select_value' => [0 => 'new value', 1 => 2],
+            'select_value' => [0 => 'new 1', 1 => 'new 2'],
             'image' => [0 => $file1 = UploadedFile::fake()->image('avatar1.jpg'),
                         1 => $file2 = UploadedFile::fake()->image('avatar2.jpg')]]
         );

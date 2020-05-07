@@ -24,6 +24,7 @@ class CreateOrdersTable extends Migration
             $table->string('billing_country')->nullable();
             $table->string('billing_phone')->nullable();
             $table->string('billing_name_on_card')->nullable();
+            $table->string('discount')->nullable();
             $table->string('billing_subtotal');
             $table->string('billing_tax');
             $table->string('billing_total');

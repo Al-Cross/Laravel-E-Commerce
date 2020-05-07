@@ -26,8 +26,8 @@ class CheckoutController extends Controller
         $paypalToken = $gateway->clientToken()->generate();
 
         $orderDetails = collect([
-            'tax' => round($this->getNumbers()->get('newTax'), 2, PHP_ROUND_HALF_UP),
-            'toPay' => round($this->getNumbers()->get('newTotal'), 2, PHP_ROUND_HALF_UP)
+            'tax' => $this->getNumbers()->get('newTax'),
+            'toPay' => $this->getNumbers()->get('newTotal')
         ]);
 
         return view('products.checkout', compact('orderDetails', 'paypalToken'));
@@ -54,6 +54,7 @@ class CheckoutController extends Controller
             Mail::send(new OrderPlaced($order));
 
             \Cart::clear();
+            session()->forget('coupon');
 
             return view('products.thankyou');
         } catch (CardErrorException $e) {
@@ -88,9 +89,10 @@ class CheckoutController extends Controller
 
         if ($result->success || !is_null($result->transaction)) {
             $this->addToOrdersTablesPaypal($email, $name, null);
-            Mail::send(new OrderPlaced);
 
+            Mail::send(new OrderPlaced);
             \Cart::clear();
+            session()->forget('coupon');
 
             return view('products.thankyou');
         } else {
@@ -122,6 +124,7 @@ class CheckoutController extends Controller
                 'billing_country' => $request->country,
                 'billing_phone' => $request->phone,
                 'billing_name_on_card' => $request->name_on_card,
+                'discount' => $this->getNumbers()->get('discount'),
                 'billing_subtotal' => $this->getNumbers()->get('newSubtotal'),
                 'billing_tax' => $this->getNumbers()->get('newTax'),
                 'billing_total' => $this->getNumbers()->get('newTotal'),
@@ -160,6 +163,7 @@ class CheckoutController extends Controller
                 'billing_tax' => $this->getNumbers()->get('newTax'),
                 'billing_total' => $this->getNumbers()->get('newTotal'),
                 'payment_gateway' => 'paypal',
+                'discount' => $this->getNumbers()->get('discount'),
                 'error' => $error
             ]);
 
@@ -182,13 +186,15 @@ class CheckoutController extends Controller
     private function getNumbers()
     {
         $tax = 0.2;
-        $newSubTotal = \Cart::getSubtotal();
+        $discount = session()->get('coupon')['discount'] ?? 0;
+        $newSubTotal = \Cart::getSubtotal() - $discount;
         $newTax = $newSubTotal * $tax;
         $newTotal = $newSubTotal * (1 + $tax);
 
         return collect([
             'tax' => $tax,
             'newSubtotal' => $newSubTotal,
+            'discount' => round($discount, 2, PHP_ROUND_HALF_UP),
             'newTax' => $newTax,
             'newTotal' => $newTotal
         ]);

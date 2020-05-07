@@ -98,4 +98,18 @@ class Product extends Model
     {
         \Cart::add($this->id, $this->name, $price, $quantity);
     }
+
+    /**
+     * Check the product availability.
+     *
+     * @return boolean
+     */
+    public function getInStockAttribute()
+    {
+        if ($this->quantity == 0) {
+            return false;
+        }
+
+        return true;
+    }
 }

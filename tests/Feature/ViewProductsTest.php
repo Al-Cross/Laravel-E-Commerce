@@ -37,6 +37,21 @@ class ViewProductsTest extends TestCase
             ->assertSee($this->product->description);
     }
     /**
+    * @test
+    */
+    public function a_user_can_see_product_availability()
+    {
+        $this->get($this->product->path());
+
+        $this->assertTrue($this->product->inStock);
+
+        $product2 = create('App\Product', ['quantity' => 0]);
+
+        $this->get($product2->path());
+
+        $this->assertFalse($product2->inStock);
+    }
+    /**
      * @test
      */
     public function a_user_can_filter_products_according_to_a_category()

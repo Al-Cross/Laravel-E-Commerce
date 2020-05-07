@@ -35,8 +35,13 @@
 
 							<aside class="col-sm-7">
 							    <article class="p-5">
-							        <h3 class="title mb-3">{{ $product->name }}</h3>
-
+							        <h3 class="title mb-3">
+							        	{{ $product->name }}
+							        	<label
+		                        			class="btn {{ $product->inStock ? 'btn-success' : 'btn-danger'}}">
+		                        			{{ $product->inStock ? 'In' : 'Out of' }} Stock
+			                        	</label>
+							        </h3>
 							        <div class="mb-3">
 							                <var class="price h3 text-danger">
 							                    <span class="currency">{{ config('e-commerce.currency_symbol') }}</span><span class="num" id="productPrice">{{ $product->price }}</span>
@@ -65,30 +70,32 @@
 							                    </dl>
 							                </div>
 							            </div>
-							            <hr>
-							            <div class="row">
-							                <div class="col-sm-12">
-							                    <dl class="dlist-inline">
-							                        <dt>Quantity: </dt>
-							                        <dd>
-							                            <input class="form-control"
-							                            		type="number"
-							                            		min="1"
-							                            		value="1"
-							                            		max="{{ $product->quantity }}"
-							                            		name="quantity"
-							                            		style="width:70px;"
-							                            >
-							                            <input type="hidden" name="id" value="{{ $product->id }}">
-							                            <input type="hidden"
-							                            		name="price"
-							                            		id="finalPrice"
-							                            		value="{{ $product->price }}"
-							                            >
-							                        </dd>
-							                    </dl>
-							                </div>
-							            </div>
+							            @if ($product->inStock)
+								            <hr>
+								            <div class="row">
+								                <div class="col-sm-12">
+								                    <dl class="dlist-inline">
+								                        <dt>Quantity: </dt>
+								                        <dd>
+								                            <input class="form-control"
+								                            		type="number"
+								                            		min="1"
+								                            		value="1"
+								                            		max="{{ $product->quantity }}"
+								                            		name="quantity"
+								                            		style="width:70px;"
+								                            >
+								                            <input type="hidden" name="id" value="{{ $product->id }}">
+								                            <input type="hidden"
+								                            		name="price"
+								                            		id="finalPrice"
+								                            		value="{{ $product->price }}"
+								                            >
+								                        </dd>
+								                    </dl>
+								                </div>
+								            </div>
+							            @endif
 							            <hr>
 							            <button type="submit" class="btn btn-success"><i class="fas fa-shopping-cart"></i> Add To Cart</button>
 							        </form>

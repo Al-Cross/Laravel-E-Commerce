@@ -4,6 +4,7 @@ namespace App;
 
 use App\Images;
 use App\Category;
+use App\Wishlist;
 use App\OrderProduct;
 use App\AttributeValues;
 use Illuminate\Database\Eloquent\Model;
@@ -71,7 +72,22 @@ class Product extends Model
      */
     public function attributes()
     {
-        return $this->belongsToMany(AttributeValues::class, 'product_attributes', 'product_id', 'attr_value_id');
+        return $this->belongsToMany(
+            AttributeValues::class,
+            'product_attributes',
+            'product_id',
+            'attr_value_id'
+        )->withTimestamps();
+    }
+
+    /**
+     * Define the relationship with App\Wishlist
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class);
     }
 
     /**

@@ -32,7 +32,7 @@
                                     </span>
                                 @enderror
                             </div>
-                            <add-category class="mb-4"></add-category>
+                            <add-attribute class="mb-4"></add-attribute>
                             <div class="form-group">
                             	<button type="submit" class="btn btn-success btn-block">Submit</button>
                             </div>

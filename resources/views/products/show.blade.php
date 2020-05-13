@@ -10,6 +10,15 @@
     </section>
     <section class="section-content bg padding-y border-top" id="site">
         <div class="container">
+        	<div class="row">
+                <div class="col-sm-12">
+                    @if (Session::has('message'))
+                        <p class="alert alert-success">{{ Session::get('message') }}</p>
+                    @elseif (Session::has('error'))
+                        <p class="alert alert-danger mb-4">{{ Session::get('error') }}</p>
+                    @endif
+                </div>
+            </div>
             <div class="row">
                 <div class="col-md-12">
 				    <div class="card">
@@ -19,17 +28,19 @@
 						            <div class="img-big-wrap">
 						                <div class="padding-y">
 						                    <a href="{{ asset('storage/'. $product->mainImage()) }}" data-fancybox="">
-						                        <img src="{{ asset('storage/'. $product->mainImage()) }}" alt="">
+						                        <img src="{{ asset('storage/'. $product->mainImage()) }}" alt="mainImage">
 						                    </a>
 						                </div>
 						            </div>
-						            <div class="img-small-wrap">
+				                    <div class="owl-carousel owl-theme">
 						                @foreach($product->images as $image)
-						                    <div class="item-gallery">
-						                        <img src="{{ asset('storage/'. $image->path) }}" style="height: 300px; width: 300px;" alt="{{ $product->name}}">
-						                    </div>
+						                	<a href="{{ asset('storage/'. $image->path) }}" data-fancybox="">
+						                        <img src="{{ asset('storage/'. $image->path) }}"
+						                        	style="max-height: 150px; max-width: 150px;"
+						                        	alt="{{ $product->name}}">
+						                	</a>
 						                @endforeach
-						            </div>
+				                    </div>
 							    </article>
 							</aside>
 
@@ -38,7 +49,7 @@
 							        <h3 class="title mb-3">
 							        	{{ $product->name }}
 							        	<label
-		                        			class="btn {{ $product->inStock ? 'btn-success' : 'btn-danger'}}">
+		                        			class="btn {{ $product->inStock ? 'btn-success' : 'btn-danger'}} btn-sm">
 		                        			{{ $product->inStock ? 'In' : 'Out of' }} Stock
 			                        	</label>
 							        </h3>
@@ -49,12 +60,14 @@
 							                </var>
 							        </div>
 							        <hr>
-							        <form action="{{ route('add-to-cart') }}" method="POST" role="form" id="addToCart">
-							            @csrf
+
 							            <div class="row">
 							                <div class="col-sm-12">
 							                    <dl class="dlist-inline">
-							                    	{{ $product->description }}
+							                    	@if ($product->description)
+								                    	{{ $product->description }}
+							                    		<hr>
+							                    	@endif
 							                    	@foreach ($product->attributes as $value)
 							                    		@foreach ($category->attributes as $attribute)
 							                    			<div class="mb-3">
@@ -71,39 +84,17 @@
 							                </div>
 							            </div>
 							            @if ($product->inStock)
-								            <hr>
-								            <div class="row">
-								                <div class="col-sm-12">
-								                    <dl class="dlist-inline">
-								                        <dt>Quantity: </dt>
-								                        <dd>
-								                            <input class="form-control"
-								                            		type="number"
-								                            		min="1"
-								                            		value="1"
-								                            		max="{{ $product->quantity }}"
-								                            		name="quantity"
-								                            		style="width:70px;"
-								                            >
-								                            <input type="hidden" name="id" value="{{ $product->id }}">
-								                            <input type="hidden"
-								                            		name="price"
-								                            		id="finalPrice"
-								                            		value="{{ $product->price }}"
-								                            >
-								                        </dd>
-								                    </dl>
-								                </div>
-								            </div>
+											@include ('partials._add_to_cart_form')
 							            @endif
-							            <hr>
-							            <button type="submit" class="btn btn-success"><i class="fas fa-shopping-cart"></i> Add To Cart</button>
-							        </form>
 							        <hr>
-							        <a href="/products" class="border">
-							        	<button class="btn btn-success">Continue Shopping</button>
-							        </a>
+							        <div class="d-flex">
+								        <add-to-wishlist :user="{{ Auth::user()->id }}" :product="{{ $product->id }}"></add-to-wishlist>
+								        <a href="/products" class="border ml-4">
+								        	<button class="btn btn-success">Continue Shopping</button>
+								        </a>
+							        </div>
 							    </article>
+							    <wishlist :user="{{ Auth::user()->id }}"></wishlist>
 							</aside>
 				        </div>
 				    </div>
@@ -122,4 +113,14 @@
 	            @endif
             </div>
     </section>
+@endsection
+
+@section ('scripts')
+<script src="{{ asset('frontend/plugins/owlcarousel/owl.carousel.min.js') }}"></script>
+
+<script>
+	$(document).ready(function(){
+	  $(".owl-carousel").owlCarousel();
+	});
+</script>
 @endsection

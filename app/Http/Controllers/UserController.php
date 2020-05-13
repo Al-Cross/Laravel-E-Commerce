@@ -47,7 +47,12 @@ class UserController extends Controller
     {
         $user = auth()->user();
 
-        $recentOrders = $user->orders()->latest()->take(3)->with('products:name')->get();
+        $recentOrders = $user
+            ->orders()
+            ->latest()
+            ->take(3)
+            ->with(['products', 'products.images'])
+            ->get();
 
         return view('users.show', compact('user', 'recentOrders'));
     }

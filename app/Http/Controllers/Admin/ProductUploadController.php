@@ -75,10 +75,9 @@ class ProductUploadController extends Controller
             return strpos($string, 'new') === false;
         });
 
-        // foreach ($select as $value_id) {
-        //     $product->attributes()->attach($value_id);
-        // }
-
+        foreach ($select as $value_id) {
+            $product->attributes()->attach($value_id);
+        }
 
         $images = request()->file('image');
         $paths = [];

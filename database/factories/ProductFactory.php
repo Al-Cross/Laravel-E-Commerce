@@ -14,7 +14,7 @@ $factory->define(Product::class, function (Faker $faker) {
             return factory(Category::class)->create()->id;
         },
         'name' => $faker->word,
-        'slug' => Str::slug($name),
+        'slug' => Str::slug($name . '_' . rand(1, 100)),
         'description' => $faker->sentence,
         'price' => rand(1, 1000),
         'quantity' => 10

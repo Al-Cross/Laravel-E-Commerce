@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Order;
+use App\Wishlist;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -67,8 +68,23 @@ class User extends Authenticatable
         return $this->isAdmin();
     }
 
+    /**
+     * Define the relationship with App\Order
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
     public function orders()
     {
         return $this->hasMany(Order::class);
+    }
+
+    /**
+     * Define the relationship with App\Wishlist
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function wishlist()
+    {
+        return $this->hasMany(Wishlist::class);
     }
 }

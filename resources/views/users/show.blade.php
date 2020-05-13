@@ -21,9 +21,6 @@
 				<div class="card-body">
 
 					<figure class="icontext">
-							<div class="icon">
-								<img class="rounded-circle img-sm border" src="images/avatars/avatar3.jpg">
-							</div>
 							<div class="text">
 								<strong> {{ $user->name }} </strong> <br>
 								{{ $user->email }} <br>
@@ -69,14 +66,14 @@
 						@foreach($recentOrders as $order)
 							<div class="col-md-6">
 								<figure class="itemside  mb-3">
-									<div class="aside"><img src="images/items/1.jpg" class="border img-sm"></div>
-									<figcaption class="info">
-										<time class="text-muted"><i class="fa fa-calendar-alt"></i>
-											{{ $order->created_at->diffForHumans() }}
-										</time>
-										@foreach ($order->products as $product)
-											<p>{{ $product->name }}</p>
-										@endforeach
+									@foreach ($order->products as $product)
+										<div class="aside"><img src="{{ asset('storage/' . $product->mainImage()) }}" class="border img-sm"></div>
+										<figcaption class="info">
+											<time class="text-muted"><i class="fa fa-calendar-alt"></i>
+												{{ $order->created_at->diffForHumans() }}
+											</time>
+												<p>{{ $product->name }}</p>
+									@endforeach
 									</figcaption>
 								</figure>
 							</div> <!-- col.// -->

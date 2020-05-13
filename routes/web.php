@@ -34,6 +34,9 @@ Route::group([
 
 Route::middleware('auth')->group(function () {
     Route::get('/my-profile', 'UserController@show')->name('profile');
+    Route::get('/my-profile/{user:id}/wishlist', 'WishlistController@index')->name('wishlist');
+    Route::post('/my-profile/{user:id}/wishlist', 'WishlistController@store')->name('wishlist.add');
+    Route::get('/my-profile/{user:id}/wishlist/{id}/remove', 'WishlistController@destroy')->name('wishlist.remove');
     Route::get('/my-profile/{user}/edit', 'UserController@edit')->name('edit.profile');
     Route::patch('/my-profile/update', 'UserController@update')->name('update.profile');
     Route::get('/my-orders', 'OrderController@index')->name('orders.index');

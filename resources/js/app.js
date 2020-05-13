@@ -22,7 +22,10 @@ window.Vue = require('vue');
 // const files = require.context('./', true, /\.vue$/i)
 // files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
 
-Vue.component('add-category', require('./components/AddCategory.vue').default);
+Vue.component('add-attribute', require('./components/AddAttribute.vue').default);
+Vue.component('add-to-wishlist', require('./components/AddToWishlist.vue').default);
+Vue.component('wishlist', require('./components/Wishlist.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

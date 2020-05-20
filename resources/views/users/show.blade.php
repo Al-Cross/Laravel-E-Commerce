@@ -11,7 +11,7 @@
 			<ul class="list-group">
 				<a class="list-group-item active" href="#"> Account overview  </a>
 				<a class="list-group-item" href="{{ route('orders.index') }}"> My Orders </a>
-				<a class="list-group-item" href="#"> My wishlist </a>
+				<a class="list-group-item" href="{{ route('wishlist', $user->id) }}"> My wishlist </a>
 				<a class="list-group-item" href="{{ route('edit.profile', $user->id) }}">Settings </a>
 			</ul>
 		</aside> <!-- col.// -->

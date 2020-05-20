@@ -6,11 +6,12 @@ use App\Order;
 use App\Wishlist;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Nicolaslopezj\Searchable\SearchableTrait;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, SearchableTrait;
 
     /**
      * The attributes that are mass assignable.
@@ -49,6 +50,25 @@ class User extends Authenticatable
     ];
 
     /**
+    * Searchable rules.
+    *
+    * @var array
+    */
+    protected $searchable = [
+        /**
+         * Columns and their priority in search results.
+         * Columns with higher values are more important.
+         * Columns with equal values have equal importance.
+         *
+         * @var array
+         */
+        'columns' => [
+            'users.name' => 10,
+            'users.email' => 5
+        ]
+    ];
+
+    /**
      * Set the site administrators
      *
      * @return boolean
@@ -67,7 +87,6 @@ class User extends Authenticatable
     {
         return $this->isAdmin();
     }
-
     /**
      * Define the relationship with App\Order
      *

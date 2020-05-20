@@ -25,11 +25,21 @@ Route::group([
     'namespace' => 'Admin'
 ], function () {
     Route::get('/', 'DashboardController@index')->name('admin.dashboard.index');
+    Route::get('/users', 'DashboardController@show')->name('admin.dashboard.users');
+    Route::get('/users/search', 'DashboardController@search')->name('admin.dashboard.search');
+    Route::delete('/users/{user}', 'DashboardController@destroy');
     Route::get('/categories', 'CategoriesController@index')->name('admin.dashboard.categories');
     Route::post('/categories', 'CategoriesController@store');
+    Route::get('/notifications', 'NotificationsController@index');
+    Route::delete('/notifications/{notification}', 'NotificationsController@destroy')->name('delete.notification');
     Route::get('/categories/create', 'CategoriesController@create')->name('admin.categories.create');
     Route::get('/products/create', 'ProductUploadController@create')->name('admin.products.create');
+    Route::get('/products', 'ProductUploadController@index');
     Route::post('/products', 'ProductUploadController@store');
+    Route::get('/products/{product:slug}/edit', 'ProductUploadController@edit')->name('admin.product.edit');
+    Route::patch('/products/{product:slug}/update', 'ProductUploadController@update');
+    Route::delete('/images/{product}/{image}/delete', 'ProductUploadController@removeImage');
+    Route::delete('/products/{product}/delete', 'ProductUploadController@destroy')->name('admin.product.delete');
 });
 
 Route::middleware('auth')->group(function () {

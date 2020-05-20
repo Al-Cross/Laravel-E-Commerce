@@ -9,10 +9,10 @@
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/fonts/fontawesome/css/all.min.css') }}"/>
 </head>
 <body class="app sidebar-mini rtl">
-    @include('admin.partials.header')
     @include('admin.partials.sidebar')
     <main class="app-content">
         <div id="app">
+            @include('admin.partials.header')
             @yield('content')
         </div>
         <script src="{{ mix('/js/app.js') }}"></script>

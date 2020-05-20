@@ -3,8 +3,6 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
-use Illuminate\Http\UploadedFile;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CategoryAdministrationTest extends TestCase
@@ -52,8 +50,6 @@ class CategoryAdministrationTest extends TestCase
      */
     public function an_administrator_can_create_a_category()
     {
-        $this->withoutExceptionHandling();
-
         $this->signInAdmin();
 
         $category = make(
@@ -83,36 +79,5 @@ class CategoryAdministrationTest extends TestCase
 
         $this->post('/admin/categories', $category->toArray())
             ->assertSessionHasErrors('name');
-    }
-    /**
-     * @test
-     */
-    public function an_administrator_can_create_a_product()
-    {
-        $this->withoutExceptionHandling();
-
-        $this->signInAdmin();
-
-        $firstAttribute = create('App\Attribute', ['category_id' => 1]);
-        $secondAttribute = create('App\Attribute', ['category_id' => 1]);
-
-        $product = make(
-            'App\Product',
-            ['attribute_id' => [1 => $firstAttribute->id, 2 => $secondAttribute->id],
-            'attr_value' => [1 => 'some value', 2 => 'another value'],
-            'select_value' => [0 => 'new 1', 1 => 'new 2'],
-            'image' => [0 => $file1 = UploadedFile::fake()->image('avatar1.jpg'),
-                        1 => $file2 = UploadedFile::fake()->image('avatar2.jpg')]]
-        );
-
-        $this->post('/admin/products', $product->toArray());
-
-        $this->assertDatabaseHas('attribute_values', ['value' => 'some value']);
-        $this->assertDatabaseHas('product_attributes', ['attr_value_id' => 2]);
-
-        Storage::disk('public')->assertExists('images/' . $file1->hashName());
-
-        $this->get('/products')
-            ->assertSee($product->name);
     }
 }

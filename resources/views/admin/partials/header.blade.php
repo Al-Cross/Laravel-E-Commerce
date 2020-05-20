@@ -2,57 +2,20 @@
     <a class="app-header__logo" href="/products">{{ config('app.name') }}</a>
     <a class="app-sidebar__toggle fas fa-bars" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
     <ul class="app-nav">
-        <li class="app-search">
-            <input class="app-search__input" type="search" placeholder="Search" />
-            <button class="app-search__button">
-                <i class="fa fa-search"></i>
-            </button>
-        </li>
-        <li class="dropdown">
-            <a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Show notifications"><i class="fas fa-bell"></i></a>
-            <ul class="app-notification dropdown-menu dropdown-menu-right">
-                <li class="app-notification__title">
-                    You have 4 new notifications.
-                </li>
-                <div class="app-notification__content">
-                    <li>
-                        <a class="app-notification__item" href="javascript:;">
-                            <span class="app-notification__icon">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x text-danger"></i>
-                                    <i class="fa fa-hdd-o fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </span>
-                            <div>
-                                <p class="app-notification__message">
-                                    Mail server not working
-                                </p>
-                                <p class="app-notification__meta">5 min ago</p>
-                            </div>
-                        </a>
-                    </li>
-                    <li>
-                        <a class="app-notification__item" href="javascript:;">
-                            <span class="app-notification__icon">
-                                <span class="fa-stack fa-lg">
-                                    <i class="fa fa-circle fa-stack-2x text-success"></i>
-                                    <i class="fa fa-money fa-stack-1x fa-inverse"></i>
-                                </span>
-                            </span>
-                            <div>
-                                <p class="app-notification__message">
-                                    Transaction complete
-                                </p>
-                                <p class="app-notification__meta">2 days ago</p>
-                            </div>
-                        </a>
-                    </li>
-                </div>
-                <li class="app-notification__footer">
-                    <a href="#">See all notifications.</a>
-                </li>
-            </ul>
-        </li>
+        <form action="{{ route('admin.dashboard.search') }}" method="GET">
+            <li class="app-search">
+                <input class="app-search__input"
+                        type="search"
+                        name="query"
+                        value="{{ request()->input('query') }}"
+                        placeholder="Search Users"
+                />
+                <button class="app-search__button">
+                    <i class="fa fa-search"></i>
+                </button>
+            </li>
+        </form>
+        <admin-notifications></admin-notifications>
         <!-- User Menu-->
         <li class="dropdown">
             <a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i class="fa fa-user fa-lg"></i></a>

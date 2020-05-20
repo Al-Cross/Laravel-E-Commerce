@@ -47,7 +47,16 @@ class ProductController extends Controller
                 $product[] = $id->product_id;
             }
 
-            $products = Product::findMany($product);
+            if (isset($product)) {
+                $products = Product::findMany($product);
+            } else {
+                return redirect()
+                    ->back()
+                    ->with(
+                        'message',
+                        'No hot items yet. Be the first to take the lead!'
+                    );
+            }
         }
 
         return view('products.index', compact('products'));

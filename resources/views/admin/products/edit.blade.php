@@ -5,15 +5,18 @@
 @section ('content')
 
 	<section class="section-content bg padding-y">
+        <header class="card-header">
+            <h4 class="card-title mt-2 text-center">Update a Product</h4>
+        </header>
+        <delete-image :data="{{ json_encode($product->images) }}"></delete-image>
+        <hr>
         <div class="container">
             <div class="col-md-6 mx-auto">
                 <div class="card">
-                    <header class="card-header">
-                        <h4 class="card-title mt-2">Add a Product</h4>
-                    </header>
                     <article class="card-body">
-                        <form action="/admin/products" method="POST" enctype="multipart/form-data">
+                        <form action="/admin/products/{{ $product->slug }}/update" method="POST" enctype="multipart/form-data">
                             @csrf
+                            @method('PATCH')
                             <div class="form-group">
                                 <label for="category">Category</label>
                                 <select class="form-control {{ $errors->has('category_id') ? 'is-invalid' : '' }}" name="category_id">
@@ -38,7 +41,7 @@
                                         class="form-control @error('name') is-invalid @enderror"
                                         name="name"
                                         id="name"
-                                        value="{{ old('name') }}"
+                                        value="{{ old('name', $product->name) }}"
                                         required
                                 >
                                 @error('name')
@@ -67,7 +70,7 @@
                                         name="description"
                                         rows="5"
                                         id="description"
-                                        value="{{ old('description') }}">
+                                        value="{{ old('description', $product->description) }}">
                                 </textarea>
                                 @error('description')
                                 <span class="invalid-feedback" role="alert">
@@ -107,7 +110,7 @@
                                         class="form-control @error('price') is-invalid @enderror"
                                         name="price"
                                         id="price"
-                                        value="{{ old('price') }}"
+                                        value="{{ old('price', $product->price) }}"
                                         required
                                 >
                                 @error('price')
@@ -122,7 +125,7 @@
                                         class="form-control @error('quantity') is-invalid @enderror"
                                         name="quantity"
                                         id="quantity"
-                                        value="{{ old('quantity') }}"
+                                        value="{{ old('quantity', $product->quantity) }}"
                                         required
                                 >
                                 @error('quantity')

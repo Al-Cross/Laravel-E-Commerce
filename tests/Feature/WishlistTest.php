@@ -58,8 +58,6 @@ class WishlistTest extends TestCase
      */
     public function authenticated_users_can_remove_items_from_wishlist()
     {
-        $this->withoutExceptionHandling();
-
         $user = create('App\User');
         $product = create('App\Product');
 

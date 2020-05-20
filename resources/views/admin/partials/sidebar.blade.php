@@ -8,26 +8,14 @@
     </div>
     <ul class="app-menu">
         <li>
-            <a class="app-menu__item active" href="#"><i class="app-menu__icon fa fa-dashboard"></i>
+            <a class="app-menu__item" href="{{ route('admin.dashboard.index') }}"><i class="app-menu__icon fa fa-dashboard"></i>
                 <span class="app-menu__label">Dashboard</span>
             </a>
         </li>
-        <li class="treeview">
-            <a class="app-menu__item" href="#" data-toggle="treeview"><i class="app-menu__icon fa fa-users"></i>
+        <li>
+            <a class="app-menu__item" href="{{ route('admin.dashboard.users') }}"><i class="app-menu__icon fa fa-users"></i>
                 <span class="app-menu__label">Users</span>
-                <i class="treeview-indicator fa fa-angle-right"></i>
             </a>
-            <ul class="treeview-menu">
-                <li>
-                    <a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i> Admin Users</a>
-                </li>
-                <li>
-                    <a class="treeview-item" href="#" target="_blank" rel="noopener noreferrer"><i class="icon fa fa-circle-o"></i> Roles</a>
-                </li>
-                <li>
-                    <a class="treeview-item" href="#"><i class="icon fa fa-circle-o"></i> Permissions</a>
-                </li>
-            </ul>
         </li>
         <li>
             <a class="app-menu__item" href="#"><i class="app-menu__icon fa fa-cogs"></i>
@@ -35,16 +23,29 @@
             </a>
         </li>
         <li>
-            <a class="app-menu__item" href="{{route('admin.dashboard.categories') }}">
+            <a class="app-menu__item" href="{{ route('admin.dashboard.categories') }}">
                 <i class="app-menu__icon fas fa-clone"></i>
                 <span class="app-menu__label">Categories</span>
             </a>
         </li>
         <li>
-            <a class="app-menu__item" href="{{route('admin.products.create') }}">
+            <a class="app-menu__item" href="{{ route('admin.products.create') }}">
                 <i class="app-menu__icon fas fa-store"></i>
-                <span class="app-menu__label">Create A Product</span>
+                <span class="app-menu__label">Add A Product</span>
             </a>
         </li>
     </ul>
 </aside>
+
+<script src="{{ asset('backend/js/jquery-3.3.1.min.js') }}"></script>
+
+<script>
+   jQuery(function($) {
+         var path = window.location.href; // because the 'href' property of the DOM element is the absolute path
+            $('ul a').each(function() {
+            if (this.href === path) {
+               $(this).addClass('active');
+            }
+        });
+    });
+</script>

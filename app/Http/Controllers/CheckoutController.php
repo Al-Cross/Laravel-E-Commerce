@@ -141,7 +141,7 @@ class CheckoutController extends Controller
             ]);
 
             $product = Product::findOrFail($item->id);
-            $product->update(['quantity' => $product->quantity - $item->quantity]);
+            $product->reduceQuantity($item->quantity);
         }
 
         return $order;

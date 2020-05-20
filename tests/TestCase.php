@@ -10,6 +10,7 @@ abstract class TestCase extends BaseTestCase
 
     /**
      * Sign in an administrator in the app.
+     *
      * @param  string $admin
      * @return Object
      */
@@ -22,5 +23,26 @@ abstract class TestCase extends BaseTestCase
         $this->actingAs($admin);
 
         return $this;
+    }
+
+    /**
+     * Simulate the process of order and checkout.
+     *
+     * @param array   $options  The order details
+     * @param integer $quantity The ordered quantity
+     */
+    public function buyProduct($options = [], $quantity = null)
+    {
+        $product = create('App\Product');
+        $order = make('App\Order', $options);
+
+        $this->post(route('add-to-cart'), [
+            'id' => $product->id,
+            'name' => $product->name,
+            'price' => $product->price,
+            'quantity' => $quantity ?: 1
+        ]);
+
+        $this->post('/checkout', $order->toArray());
     }
 }

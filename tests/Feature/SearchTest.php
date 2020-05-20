@@ -23,4 +23,20 @@ class SearchTest extends TestCase
             ->assertSee($search)
             ->assertDontSee($productsNotInSearch);
     }
+    /**
+     * @test
+     */
+    public function administrator_can_search_users()
+    {
+        $this->signInAdmin();
+
+        $search = 'John Doe';
+
+        $usersNotInSearch = create('App\User', [], 2);
+        $users = create('App\User', ['name' => "{$search}"]);
+
+        $this->get(route("admin.dashboard.search", ["query" => "{$search}"]))
+            ->assertSee($search)
+            ->assertDontSee($usersNotInSearch);
+    }
 }

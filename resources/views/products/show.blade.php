@@ -23,7 +23,7 @@
                 <div class="col-md-12">
 				    <div class="card">
 				        <div class="row no-gutters">
-				        	<aside class="col-sm-5 border-right">
+				        	<aside class="col-sm-6 border-right">
 							    <article class="gallery-wrap">
 						            <div class="img-big-wrap">
 						                <div class="padding-y">
@@ -32,19 +32,10 @@
 						                    </a>
 						                </div>
 						            </div>
-				                    <div class="owl-carousel owl-theme">
-						                @foreach($product->images as $image)
-						                	<a href="{{ asset('storage/'. $image->path) }}" data-fancybox="">
-						                        <img src="{{ asset('storage/'. $image->path) }}"
-						                        	style="max-height: 150px; max-width: 150px;"
-						                        	alt="{{ $product->name}}">
-						                	</a>
-						                @endforeach
-				                    </div>
 							    </article>
 							</aside>
 
-							<aside class="col-sm-7">
+							<aside class="col-sm-6">
 							    <article class="p-5">
 							        <h3 class="title mb-3">
 							        	{{ $product->name }}
@@ -92,6 +83,11 @@
 								        <a href="/products" class="border ml-4">
 								        	<button class="btn btn-success">Continue Shopping</button>
 								        </a>
+								        @if (Auth::user()->isAdmin())
+									    	<a href="{{ route('admin.product.edit', $product->slug) }}" class="border ml-4">
+									        	<button class="btn btn-warning">Edit Product</button>
+									        </a>
+									    @endif
 							        </div>
 							    </article>
 							    <wishlist :user="{{ Auth::user()->id }}"></wishlist>
@@ -101,26 +97,61 @@
 				</div>
             </div>
         </div>
-         <div class="container">
-            	@if ($errors->count() > 0)
-	            	<ul>
-	            		@foreach($errors->all() as $error)
-		            		<div class="alert alert-danger">
-		            			<li>{{ $error }}</li>
-		            		</div>
-		            	@endforeach
-	            	</ul>
-	            @endif
-            </div>
+        <div class="container">
+        	@if ($errors->count() > 0)
+            	<ul>
+            		@foreach($errors->all() as $error)
+	            		<div class="alert alert-danger">
+	            			<li>{{ $error }}</li>
+	            		</div>
+	            	@endforeach
+            	</ul>
+            @endif
+        </div>
+
+        <div class="container">
+        	<div class="row">
+        		<div class="btn-group float-right">
+				  <button type="button" class="btn btn-primary slick-prev-custom"> <i class="fa fa-chevron-left"></i> </button>
+				  <button type="button" class="btn btn-primary slick-next-custom"> <i class="fa fa-chevron-right"></i> </button>
+				</div>
+        		<div class="col-md-12">
+        			<div class="slider-custom-slick row">
+						@foreach($product->images as $image)
+	                        @if ($product->mainImage() !== $image->path)
+								<div class="item-slide p-2">
+		                        	<figure class="card card-product-grid">
+			                        	<div class="img-wrap">
+			                        		<img src="{{ asset('storage/'. $image->path) }}"
+			                        			class="shadow-lg"
+			                        			style="max-height: 200px; max-width: 200px;"
+			                        			alt="{{ $product->name}}">
+			                        	</div>
+			                        </figure>
+								</div>
+	                        @endif
+		                @endforeach
+		            </div>
+        		</div>
+        	</div>
+        </div>
     </section>
 @endsection
 
 @section ('scripts')
-<script src="{{ asset('frontend/plugins/owlcarousel/owl.carousel.min.js') }}"></script>
+<script src="{{ asset('frontend/plugins/slickslider/slick.min.js') }}"></script>
 
 <script>
-	$(document).ready(function(){
-	  $(".owl-carousel").owlCarousel();
+	$(document).ready(function() {
+	   if ($('.slider-custom-slick').length > 0) { // check if element exists
+	        $('.slider-custom-slick').slick({
+	              infinite: true,
+	              slidesToShow: 4,
+	              dots: true,
+	              prevArrow: $('.slick-prev-custom'),
+	              nextArrow: $('.slick-next-custom')
+	        });
+	    } // end if
 	});
 </script>
 @endsection

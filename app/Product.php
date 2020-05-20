@@ -8,7 +8,9 @@ use App\Wishlist;
 use App\OrderProduct;
 use App\AttributeValues;
 use Illuminate\Database\Eloquent\Model;
+use App\Notifications\OutOfStockNotification;
 use Nicolaslopezj\Searchable\SearchableTrait;
+use App\Notifications\AlmostOutOfStockNotification;
 
 class Product extends Model
 {
@@ -113,6 +115,24 @@ class Product extends Model
     public function addToCart($price, $quantity)
     {
         \Cart::add($this->id, $this->name, $price, $quantity);
+    }
+
+    /**
+     * Subtract the ordered quantity from the available quantity
+     *
+     * @param  $orderedQty
+     */
+    public function reduceQuantity($orderedQty)
+    {
+        $this->update(['quantity' => $this->quantity - $orderedQty]);
+
+        $admin = resolve('App\User');
+
+        if ($this->quantity >= 1 && $this->quantity <= 3) {
+            $admin->notify(new AlmostOutOfStockNotification($this));
+        } elseif ($this->quantity == 0) {
+            $admin->notify(new OutOfStockNotification($this));
+        }
     }
 
     /**

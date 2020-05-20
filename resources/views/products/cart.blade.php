@@ -54,7 +54,7 @@
                                             <div>
                                                <label for="select">Select:</label>
                                                 <select class="quantity" data-name="{{ $item->id }}">
-                                                    @for ($i = 0; $i <= 5; $i++)
+                                                    @for ($i = 0; $i <= 10; $i++)
                                                     <option {{ $item->quantity == $i ? 'selected' : '' }}>{{ $i }}</option>
                                                     @endfor
                                                 </select>
@@ -88,16 +88,17 @@
                         <dd class="text-right"><strong>{{ config('e-commerce.currency_symbol') }}{{ \Cart::getSubTotal() }}</strong></dd>
                     </dl>
                     <hr>
-                    <figure class="itemside mb-3">
-                        <aside class="aside"><img src="{{ asset('frontend/images/icons/pay-visa.png') }}"></aside>
-                    </figure>
-                    <figure class="itemside mb-3">
-                        <aside class="aside"> <img src="{{ asset('frontend/images/icons/pay-mastercard.png') }}"> </aside>
-                        <div class="text-wrap small text-muted">
-                            Pay by MasterCard and Save 40%.
-                            <br> Lorem ipsum dolor
-                        </div>
-                    </figure>
+                    <div class="d-flex">
+                       <figure class="itemside mb-3">
+                            <aside class="aside"><img src="{{ asset('frontend/images/icons/pay-visa.png') }}"></aside>
+                        </figure>
+                        <figure class="itemside mb-3">
+                            <aside class="aside"> <img src="{{ asset('frontend/images/icons/pay-mastercard.png') }}"> </aside>
+                        </figure>
+                        <figure class="itemside mb-3">
+                            <aside class="aside"> <img src="{{ asset('storage/svg/PayPal.svg') }}"> </aside>
+                        </figure>
+                    </div>
                     <a href="{{ route('checkout') }}" class="btn btn-success btn-lg btn-block">Proceed To Checkout</a>
                 </aside>
             </div>

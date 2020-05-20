@@ -25,7 +25,8 @@ window.Vue = require('vue');
 Vue.component('add-attribute', require('./components/AddAttribute.vue').default);
 Vue.component('add-to-wishlist', require('./components/AddToWishlist.vue').default);
 Vue.component('wishlist', require('./components/Wishlist.vue').default);
-
+Vue.component('admin-notifications', require('./components/AdminNotifications.vue').default);
+Vue.component('delete-image', require('./components/DeleteImage.vue').default);
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

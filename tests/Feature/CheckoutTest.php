@@ -27,13 +27,9 @@ class CheckoutTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $product = create('App\Product');
-        $order = make('App\Order', ['user_id' => null, 'stripeToken' => 'tok_visa']);
+        $this->buyProduct(['user_id' => null, 'stripeToken' => 'tok_visa']);
 
-        $this->post(route('add-to-cart'), $product->toArray());
-        $this->post('/checkout', $order->toArray());
-
-        $this->assertDatabaseHas('orders', ['billing_name' => $order->name]);
+        $this->assertDatabaseHas('orders', ['payment_gateway' => 'stripe']);
     }
     /**
      * @test
@@ -44,8 +40,7 @@ class CheckoutTest extends TestCase
 
         $this->actingAs($user);
 
-        $product = create('App\Product');
-        $order = make('App\Order', [
+        $this->buyProduct([
             'user_id' => $user->id,
             'name' => $user->name,
             'email' => $user->email,
@@ -55,9 +50,6 @@ class CheckoutTest extends TestCase
             'name_on_card' => $user->name,
             'stripeToken' => 'tok_visa'
         ]);
-
-        $this->post(route('add-to-cart'), $product->toArray());
-        $this->post('/checkout', $order->toArray());
 
         $this->assertDatabaseHas(
             'orders',
@@ -69,23 +61,8 @@ class CheckoutTest extends TestCase
      */
     public function the_available_quantity_decreases_after_an_order_is_made()
     {
-        $product = create('App\Product');
-        $order = make('App\Order', ['stripeToken' => 'tok_visa']);
+        $this->buyProduct(['stripeToken' => 'tok_visa'], 4);
 
-        $this->assertDatabaseHas('products', ['quantity' => 10]);
-
-        $this->post(route('add-to-cart'), [
-            'id' => $product->id,
-            'name' => $product->name,
-            'price' => $product->price,
-            'quantity' => 1
-        ]);
-
-        $this->post('/checkout', $order->toArray());
-
-        $this->assertDatabaseHas(
-            'products',
-            ['quantity' => $product->quantity - $order->quantity]
-        );
+        $this->assertDatabaseHas('products', ['quantity' => 6]);
     }
 }

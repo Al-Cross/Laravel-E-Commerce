@@ -13,7 +13,7 @@
             <div class="widget-small primary coloured-icon">
                 <i class="icon fa fa-users fa-3x"></i>
                 <div class="info">
-                    <h4>Users</h4>
+                    <h4><a href="{{ route('admin.dashboard.users') }}">Users</a></h4>
                     <p><b>{{ $users }}</b></p>
                 </div>
             </div>
@@ -24,7 +24,7 @@
                 <i class="icon fas fa-file-alt fa-3x"></i>
                 <div class="info">
                     <h4>Uploades</h4>
-                    <p><b>10</b></p>
+                    <p><b>{{ $images }}</b></p>
                 </div>
             </div>
         </div>
@@ -33,7 +33,7 @@
             <div class="widget-small warning coloured-icon">
                 <i class="icon fas fa-store fa-3x"></i>
                 <div class="info">
-                    <h4>Products</h4>
+                    <h4><a href="admin/products">Products</a></h4>
                     <p><b>{{ $products }}</b></p>
                 </div>
             </div>

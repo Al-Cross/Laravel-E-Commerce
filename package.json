@@ -24,6 +24,7 @@
         "vue-template-compiler": "^2.6.10"
     },
     "dependencies": {
-        "@stripe/stripe-js": "^1.4.0"
+        "@stripe/stripe-js": "^1.4.0",
+        "moment": "^2.25.3"
     }
 }

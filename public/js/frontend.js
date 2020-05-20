@@ -84,16 +84,41 @@
 /******/ 	return __webpack_require__(__webpack_require__.s = 0);
 /******/ })
 /************************************************************************/
-/******/ ([
-/* 0 */
-/*!*************************************!*\
-  !*** multi ./resources/frontend/js ***!
-  \*************************************/
+/******/ ({
+
+/***/ "./resources/frontend/sass/bootstrap.scss":
+/*!************************************************!*\
+  !*** ./resources/frontend/sass/bootstrap.scss ***!
+  \************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
+/***/ "./resources/js/frontend.js":
+/*!**********************************!*\
+  !*** ./resources/js/frontend.js ***!
+  \**********************************/
+/*! no exports provided */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed (from ./node_modules/babel-loader/lib/index.js):\nError: ENOENT: no such file or directory, open 'C:\\laragon\\www\\e-commerce\\resources\\js\\frontend.js'");
+
+/***/ }),
+
+/***/ 0:
+/*!*********************************************************************************!*\
+  !*** multi ./resources/js/frontend.js ./resources/frontend/sass/bootstrap.scss ***!
+  \*********************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-!(function webpackMissingModule() { var e = new Error("Cannot find module 'C:\\laragon\\www\\e-commerce\\resources\\frontend\\js'"); e.code = 'MODULE_NOT_FOUND'; throw e; }());
+__webpack_require__(/*! C:\laragon\www\e-commerce\resources\js\frontend.js */"./resources/js/frontend.js");
+module.exports = __webpack_require__(/*! C:\laragon\www\e-commerce\resources\frontend\sass\bootstrap.scss */"./resources/frontend/sass/bootstrap.scss");
 
 
 /***/ })
-/******/ ]);
+
+/******/ });

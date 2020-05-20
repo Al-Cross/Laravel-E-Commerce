@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\User;
 use App\Category;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,6 +22,11 @@ class AppServiceProvider extends ServiceProvider
                 'publicKey' => config('services.braintree.publicKey'),
                 'privateKey' => config('services.braintree.privateKey')
             ]);
+        });
+
+        $this->app->singleton('App\User', function () {
+            return User::where('email', '=', config('e-commerce.administrators'))
+                ->first();
         });
     }
 

@@ -6,6 +6,15 @@
 	<section class="section-content bg padding-y">
 	    <div class="container">
 	        <div id="code_prod_complex">
+	        	<div class="row">
+	                <div class="col-sm-12">
+	                    @if (Session::has('message'))
+	                        <p class="alert alert-success">{{ Session::get('message') }}</p>
+	                    @elseif (Session::has('error'))
+	                        <p class="alert alert-danger mb-4">{{ Session::get('error') }}</p>
+	                    @endif
+	                </div>
+	            </div>
 	            <div class="row">
 	                @forelse($products as $product)
 	                    <div class="col-md-4">
@@ -20,15 +29,17 @@
 	                                <h4 class="title"><a href="{{ $product->path() }}">{{ $product->name }}</a></h4>
 	                            </figcaption>
 	                            <div class="bottom-wrap">
-	                            	<form action="{{ route('add-to-cart') }}" method="POST">
-	                            		@csrf
-	                            		<input type="hidden" name="id" value="{{ $product->id }}">
-	                            		<input type="hidden" name="quantity" value="1">
-	                            		<input type="hidden" name="price" value="{{ $product->price }}">
-	                            		<button type="submit" class="btn btn-sm btn-success float-right">
-	                                	<i class="fa fa-cart-arrow-down"></i> Buy Now
-	                                </button>
-	                            	</form>
+		                            @if ($product->inStock)
+		                            	<form action="{{ route('add-to-cart') }}" method="POST">
+		                            		@csrf
+		                            		<input type="hidden" name="id" value="{{ $product->id }}">
+		                            		<input type="hidden" name="quantity" value="1">
+		                            		<input type="hidden" name="price" value="{{ $product->price }}">
+		                            		<button type="submit" class="btn btn-sm btn-success float-right">
+			                                	<i class="fa fa-cart-arrow-down"></i> Buy Now
+			                                </button>
+		                            	</form>
+	                            	@endif
 	                                <div class="price h3 text-danger">
 	                                	<span class="currency">{{ config('e-commerce.currency_symbol') }}</span>
 		                                <span>{{ $product->price }}</span>

@@ -9,25 +9,6 @@
 		 		<i class="fas fa-plus"></i>
 		 	</a>
 		 </p>
-		<table class="table">
-			<thead>
-				<tr>
-					<th>Category</th>
-					<th>Delete</th>
-				</tr>
-			</thead>
-			<tbody>
-				@forelse ($categories as $category)
-					<tr>
-						<td>{{ $category->name }}</td>
-						<td><button type="submit" class="btn btn-danger">Delete</button></td>
-					</tr>
-				@empty
-					<tr>
-						<p>No categories yet.</p>
-					</tr>
-				@endforelse
-			</tbody>
-		</table>
+		<categories :data="{{ $categories }}"></categories>
 	</div>
 @endsection

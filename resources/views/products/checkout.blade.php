@@ -45,15 +45,6 @@
                     <header class="card-header">
                         <h4 class="card-title mt-2">Billing Details</h4>
                     </header>
-                    <div class="row">
-                        <div class="col-sm-12">
-                            @if (Session::has('message'))
-                                <p class="alert alert-success">{{ Session::get('message') }}</p>
-                            @elseif (Session::has('error'))
-                                 <p class="alert alert-danger">{{ Session::get('error') }}</p>
-                            @endif
-                        </div>
-                    </div>
                     @include('partials._billing_form')
 
                 </div>

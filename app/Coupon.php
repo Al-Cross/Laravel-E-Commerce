@@ -6,11 +6,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Coupon extends Model
 {
+    /**
+     * Fetch the coupon by its code.
+     *
+     * @param  string $code
+     * @return Object
+     */
     public static function findByCode($code)
     {
         return self::where('code', $code)->first();
     }
 
+    /**
+     * Find the value of the discount according to its type.
+     *
+     * @param  integer $total
+     * @return integer
+     */
     public function discount($total)
     {
         if ($this->type == 'fixed') {

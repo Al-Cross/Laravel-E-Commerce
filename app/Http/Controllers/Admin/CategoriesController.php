@@ -11,7 +11,7 @@ use App\Http\Controllers\Controller;
 class CategoriesController extends Controller
 {
     /**
-     * Dispplay a listing of the resource.
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -47,23 +47,27 @@ class CategoriesController extends Controller
             'name' => $data['name'],
             'slug' => Str::slug($data['name'])
         ]);
+
         \Cache::forget('categories');
 
-        if (is_array($data['attribute'])) {
-            foreach ($data['attribute'] as $attribute) {
-                Attribute::create([
-                    'category_id' => $category->id,
-                    'name' => $attribute
-                ]);
-            }
-        } else {
-            Attribute::create([
-                'category_id' => $category->id,
-                'name' => $data['attribute']
-            ]);
+        foreach ($data['attribute'] as $attribute) {
+            $category->attributes()->create(['name' => $attribute]);
         }
 
-
         return redirect()->route('admin.dashboard.categories');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param App\Category  $category
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy(Category $category)
+    {
+        $category->delete();
+
+        \Cache::forget('categories');
     }
 }

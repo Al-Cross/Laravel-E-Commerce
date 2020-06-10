@@ -2,6 +2,8 @@
 
 namespace App\Http\Requests;
 
+use App\Rules\Checkbox;
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreProductRequest extends FormRequest
@@ -25,16 +27,18 @@ class StoreProductRequest extends FormRequest
     {
         $rules = [
             'category_id' => 'required',
-            'name' => ['required', 'string'],
+            'name' => ['required', 'string',
+                Rule::unique('products', 'name')->ignore($this->product)],
             'description' => ['min:10', 'nullable'],
             'price' => ['required', 'numeric'],
+            'sale_price' => ['numeric', 'nullable'],
             'quantity' => ['required', 'integer'],
-            'select_value' => ['required', 'array'],
-            'select_value.*' => 'required',
-            'attr_value' => ['required_if:select_value.*,1', 'array'],
-            'attr_value.*' => ['required_if:select_value.*,1']
+            'select_value' => ['required_without:attr_value', 'array'],
+            'select_value.*' => ['required_without:attr_value', new Checkbox],
+            'attr_value' => ['required_without:select_value', 'array'],
+            'attr_value.*' => ['required_without:select_value'],
+            'featured' => 'boolean'
         ];
-
 
         $addRule1 = $this->postMergeRule($rules, 'image', 'required|array');
 
@@ -50,7 +54,10 @@ class StoreProductRequest extends FormRequest
      */
     public function messages()
     {
-        return ['category_id.required' => 'Please select a category.'];
+        return [
+            'category_id.required' => 'Please select a category.',
+            'select_value.required_without' => 'Please choose a property from the list'
+        ];
     }
 
     /**

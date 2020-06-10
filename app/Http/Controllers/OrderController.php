@@ -30,7 +30,7 @@ class OrderController extends Controller
     {
         if (auth()->user()->id != $order->user_id) {
             return back()->with(
-                'error',
+                'flash',
                 'You do not have permission to view this order!'
             );
         }

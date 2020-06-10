@@ -20,9 +20,8 @@
                     		value="{{ $product->price }}"
                     >
                 </dd>
+                <button type="submit" class="btn btn-success"><i class="fas fa-shopping-cart"></i> Add To Cart</button>
             </dl>
         </div>
     </div>
-    <hr>
-    <button type="submit" class="btn btn-success"><i class="fas fa-shopping-cart"></i> Add To Cart</button>
 </form>

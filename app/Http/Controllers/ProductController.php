@@ -6,7 +6,7 @@ use App\Product;
 use App\Category;
 use App\OrderProduct;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
+use App\Filters\ProductFilters;
 
 class ProductController extends Controller
 {
@@ -15,48 +15,15 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Category $category)
+    public function index(Category $category, ProductFilters $filters)
     {
-        $products = Product::all();
-
         if ($category->exists) {
-            $products = $products->where('category_id', $category->id);
-
-            if (request('price') == 'desc') {
-                $products = $products->sortByDesc('price');
-            } elseif (request('price') == 'asc') {
-                $products = $products->sortBy('price');
-            }
-        }
-
-        if (request('price') == 'desc') {
-            $products = $products->sortByDesc('price');
-        } elseif (request('price') == 'asc') {
-            $products = $products->sortBy('price');
-        }
-
-        if (request()->has('demand')) {
-            $productIds = DB::table('products')
-                ->join('order_product', 'products.id', '=', 'order_product.product_id')
-                ->select('product_id', DB::raw('SUM(order_product.quantity) as quantity'))
-                ->groupBy('product_id')
-                ->orderBy('quantity', 'DESC')
-                ->get();
-
-            foreach ($productIds as $id) {
-                $product[] = $id->product_id;
-            }
-
-            if (isset($product)) {
-                $products = Product::findMany($product);
-            } else {
-                return redirect()
-                    ->back()
-                    ->with(
-                        'message',
-                        'No hot items yet. Be the first to take the lead!'
-                    );
-            }
+            $products = $category->products()
+                ->filter($filters)
+                ->latest()
+                ->paginate(20);
+        } else {
+            $products = Product::filter($filters)->latest()->paginate(20);
         }
 
         return view('products.index', compact('products'));
@@ -133,7 +100,7 @@ class ProductController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function addToCart()
+    public function fillCart()
     {
         $product = Product::findOrFail(request()->id);
 
@@ -141,9 +108,14 @@ class ProductController extends Controller
 
         return redirect()
                 ->back()
-                ->with('message', 'Item added to cart successfully.');
+                ->with('flash', 'Item added to cart successfully.');
     }
 
+    /**
+     * Find a product.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function search()
     {
         request()->validate([

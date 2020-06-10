@@ -16,7 +16,7 @@ class CouponTest extends TestCase
         $coupon = create('App\Coupon');
 
         $this->post('/coupon', $coupon->toArray())
-            ->assertSessionHas('message', 'Coupon has been applied!');
+            ->assertSessionHas('flash', 'Coupon has been applied!');
     }
     /**
      * @test
@@ -26,7 +26,7 @@ class CouponTest extends TestCase
         $coupon = create('App\Coupon');
 
         $this->delete('/coupon')
-            ->assertSessionHas('message', 'The coupon has been removed.');
+            ->assertSessionHas('flash', 'The coupon has been removed.');
     }
     /**
      * @test
@@ -34,7 +34,7 @@ class CouponTest extends TestCase
     public function a_valid_coupon_code_must_be_provided()
     {
         $this->post('/coupon', ['code' => 'Invalid code'])
-            ->assertSessionHas('error', 'Invalid coupon code.');
+            ->assertSessionHas('flash', 'Invalid coupon code.');
     }
     /**
      * @test

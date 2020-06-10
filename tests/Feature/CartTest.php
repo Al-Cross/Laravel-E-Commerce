@@ -16,7 +16,7 @@ class CartTest extends TestCase
         $product = create('App\Product');
 
         $this->post(route('add-to-cart'), $product->toArray())
-            ->assertSessionHas('message', 'Item added to cart successfully.');
+            ->assertSessionHas('flash', 'Item added to cart successfully.');
     }
     /**
      * @test
@@ -43,7 +43,7 @@ class CartTest extends TestCase
         $this->get(route('cart'))->assertSee($product->name);
 
         $this->get(route('checkout.cart.remove', $product->id))
-            ->assertSessionHas('message', 'Item removed from cart successfully.');
+            ->assertSessionHas('flash', 'Item removed from cart successfully.');
     }
     /**
      * @test

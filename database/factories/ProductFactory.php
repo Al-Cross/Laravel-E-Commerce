@@ -17,6 +17,7 @@ $factory->define(Product::class, function (Faker $faker) {
         'slug' => Str::slug($name . '_' . rand(1, 100)),
         'description' => $faker->sentence,
         'price' => rand(1, 1000),
+        'sale_price' => rand(1, 500),
         'quantity' => 10
     ];
 });

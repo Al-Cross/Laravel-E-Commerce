@@ -1,6 +1,11 @@
 <template>
 	<div @click.prevent="toggleButton" :class="{ 'active' : isWishlistActive }">
-		<button type="submit" class="btn btn-success" @click="addWish">Add To Wishlist</button>
+		<a data-original-title="Save to Wishlist"
+			class="btn btn-light"
+			data-toggle="tooltip"
+			@click="addWish">
+			<i class="fa fa-heart" ></i>
+		</a>
 	</div>
 </template>
 

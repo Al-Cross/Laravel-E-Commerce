@@ -6,27 +6,24 @@
 	<section class="section-content bg padding-y">
 	    <div class="container">
 	        <div id="code_prod_complex">
-	        	<div class="row">
-	                <div class="col-sm-12">
-	                    @if (Session::has('message'))
-	                        <p class="alert alert-success">{{ Session::get('message') }}</p>
-	                    @elseif (Session::has('error'))
-	                        <p class="alert alert-danger mb-4">{{ Session::get('error') }}</p>
-	                    @endif
-	                </div>
-	            </div>
 	            <div class="row">
 	                @forelse($products as $product)
-	                    <div class="col-md-4">
-	                        <figure class="card card-product mb-4">
+	                    <div class="col-md-3">
+	                        <figure class="card card-product-grid">
                                 <div class="img-wrap padding-y">
+                                	@if($product->featured)
+	                                	<span class="badge badge-warning ml-5"> FEATURED </span>
+                                	@endif
+                                	@if($product->new())
+	                                	<span class="badge badge-danger"> NEW </span>
+                                	@endif
                                 	<img src="{{ asset('storage/' . $product->mainImage()) }}"
                                 		style="height: 200px;"
                                 		alt="mainImage">
                                 </div>
 
-	                            <figcaption class="info-wrap">
-	                                <h4 class="title"><a href="{{ $product->path() }}">{{ $product->name }}</a></h4>
+	                            <figcaption class="info-wrap border-top">
+	                                <a class="title" href="{{ $product->path() }}">{{ $product->name }}</a>
 	                            </figcaption>
 	                            <div class="bottom-wrap">
 		                            @if ($product->inStock)
@@ -40,20 +37,16 @@
 			                                </button>
 		                            	</form>
 	                            	@endif
-	                                <div class="price h3 text-danger">
-	                                	<span class="currency">{{ config('e-commerce.currency_symbol') }}</span>
-		                                <span>{{ $product->price }}</span>
-	                                </div>
-	                                {{-- @if ($product->sale_price != 0)
+	                                @if ($product->sale_price != 0)
 	                                    <div class="price-wrap h5">
-	                                        <span class="price"> {{ config('settings.currency_symbol').$product->sale_price }} </span>
-	                                        <del class="price-old"> {{ config('settings.currency_symbol').$product->price }}</del>
+	                                        <span class="price h3"> {{ config('e-commerce.currency_symbol').$product->sale_price }} </span>
+	                                        <del class="price-old text-danger"> {{ config('e-commerce.currency_symbol').$product->price }}</del>
 	                                    </div>
 	                                @else
 	                                    <div class="price-wrap h5">
-	                                        <span class="price"> {{ config('settings.currency_symbol').$product->price }} </span>
+	                                        <span class="price h3"> {{ config('e-commerce.currency_symbol').$product->price }} </span>
 	                                    </div>
-	                                @endif --}}
+	                                @endif
 	                            </div>
 	                        </figure>
 	                    </div>
@@ -73,6 +66,7 @@
 		            @endif
 	            </div>
 	        </div>
+	        {{ $products->links() }}
 	    </div>
 	</section>
 @endsection

@@ -5,13 +5,12 @@
 			<div class="sidebar-panel">
 				<h4 class="text-white"><u>The Wishlist</u></h4>
 				<figure class="card card-product mb-4" v-for="(item, index) in items" :key="item.id">
-                    <div class="img-wrap padding-y" v-for="image in item.product.images">
-                    	<img :src="'/storage/' + image.path"
-                    		style="height: 200px;"
-                    		alt="mainImage"
-                		>
+                    <div class="img-wrap padding-y" v-for="image in item.product.images.slice(0, 1)">
+                    <img :src="'/storage/' + image.path"
+                        style="height: 200px;"
+                        alt="mainImage"
+                    >
                     </div>
-
                     <figcaption class="info-wrap">
                         <h4 class="title" v-text="item.product.name"></h4>
                     </figcaption>
@@ -28,12 +27,13 @@
 
 <script>
 import {state, mutator} from '../mutators.js';
+
 export default {
 	props: ['user'],
 
 	data() {
 		return {
-			items: [],
+			items: []
 		};
 	},
 

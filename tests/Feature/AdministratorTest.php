@@ -27,7 +27,8 @@ class AdministratorTest extends TestCase
             ['id' => 1,
             'attribute_id' => [1 => $firstAttribute->id, 2 => $secondAttribute->id],
             'attr_value' => [1 => 'some value', 2 => 'another value'],
-            'select_value' => [0 => 'new 1', 1 => 'new 2'],
+            'select_value' => [0 => 2],
+            'featured' => true,
             'image' => [0 => $this->file1 = UploadedFile::fake()->image('avatar1.jpg'),
                         1 => $this->file2 = UploadedFile::fake()->image('avatar2.jpg')]]
         );
@@ -80,6 +81,8 @@ class AdministratorTest extends TestCase
             'description' => 'Lorem ipsum text.',
             'quantity' => 5,
             'price' => 25.99,
+            'sale_price' => 24.99,
+            'featured' => false,
             'attribute_id' => [1 => $firstAttribute->id, 2 => $secondAttribute->id],
             'attr_value' => [1 => 'some value', 2 => 'another value'],
             'select_value' => [0 => 'new value', 1 => 'new 2'],
@@ -99,7 +102,7 @@ class AdministratorTest extends TestCase
         Storage::disk('public')->assertExists('images/' . $this->file2->hashName());
 
         $this->delete(route('admin.product.delete', $this->product->id))
-            ->assertSessionHas('message', 'Product successfully removed.');
+            ->assertSessionHas('flash', 'Product successfully removed.');
 
         Storage::disk('public')->assertMissing('images/' . $this->file2->hashName());
         $this->assertDatabaseMissing('images', ['product_id' => $this->product->id]);
@@ -114,10 +117,17 @@ class AdministratorTest extends TestCase
 
         $this->delete('/admin/users/' . $user->id)
             ->assertSessionHas(
-                'message',
+                'flash',
                 'The user has been successfully removed from the site.'
             );
 
         $this->assertDatabaseMissing('users', ['name' => $user->name]);
+    }
+    /**
+     * @test
+     */
+    public function a_product_may_be_featured()
+    {
+        $this->assertDatabaseHas('products', ['featured' => true]);
     }
 }

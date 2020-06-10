@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\User;
+use App\Order;
 use App\Images;
 use App\Product;
 use Illuminate\Http\Request;
@@ -22,21 +23,35 @@ class DashboardController extends Controller
 
         $products = Product::count();
         $images = Images::count();
+        $orders = Order::count();
 
-        return view('admin.index', compact('users', 'products', 'images'));
+        return view('admin.index', compact('users', 'products', 'images', 'orders'));
     }
 
     /**
-    * Display the specified resource.
-    *
-    * @param  \App\Product  $product
-    * @return \Illuminate\Http\Response
+     * Display the specified resource.
+     *
+     * @param  App\Product  $product
+     * @return \Illuminate\Http\Response
     */
     public function show()
     {
         $users = User::paginate(40);
 
         return view('admin.users', compact('users'));
+    }
+
+    /**
+     * Display all closed orders.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function orders()
+    {
+        $orders = Order::with('products')->paginate(40);
+        $income = $orders->sum('billing_total');
+
+        return view('admin.orders', compact('orders', 'income'));
     }
 
     /**
@@ -67,7 +82,7 @@ class DashboardController extends Controller
         return redirect()
             ->back()
             ->with(
-                'message',
+                'flash',
                 'The user has been successfully removed from the site.'
             );
     }

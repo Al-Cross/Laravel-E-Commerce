@@ -5,29 +5,20 @@
 @section ('content')
 	<section class="section-content bg padding-y">
 	    <div class="container">
-	    	<div class="row">
-                <div class="col-sm-12">
-                    @if (Session::has('message'))
-                        <p class="alert alert-success mb-4">{{ Session::get('message') }}</p>
-                    @elseif (Session::has('error'))
-                         <p class="alert alert-danger mb-4">{{ Session::get('error') }}</p>
-                    @endif
-                </div>
-            </div>
 	        <div id="code_prod_complex">
 	        	<h1>My Wishlist</h1>
 	        	<hr>
 	            <div class="row">
 	                @forelse($wishlist as $item)
-	                    <div class="col-md-4">
-	                        <figure class="card card-product mb-4">
+	                    <div class="col-md-3">
+	                        <figure class="card card-product-grid mb-4">
                                 <div class="img-wrap padding-y">
                                 	<img src="{{ asset('storage/' . $item->product->mainImage()) }}"
                                 		style="height: 200px;"
                                 		alt="mainImage">
                                 </div>
 
-	                            <figcaption class="info-wrap">
+	                            <figcaption class="info-wrap border-top">
 	                                <h4 class="title"><a href="{{ $item->product->path() }}">{{ $item->product->name }}</a></h4>
 	                            </figcaption>
 	                            <div class="bottom-wrap">

@@ -4,6 +4,7 @@ namespace App\Providers;
 
 use App\User;
 use App\Category;
+use App\Wishlist;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -47,6 +48,7 @@ class AppServiceProvider extends ServiceProvider
 
         \View::composer('partials.header', function ($view) {
             $view->with('cartCount', \Cart::getContent()->count());
+            $view->with('wishlistCount', Wishlist::count());
         });
     }
 }

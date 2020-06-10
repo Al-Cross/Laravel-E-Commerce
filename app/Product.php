@@ -5,6 +5,7 @@ namespace App;
 use App\Images;
 use App\Category;
 use App\Wishlist;
+use Carbon\Carbon;
 use App\OrderProduct;
 use App\AttributeValues;
 use Illuminate\Database\Eloquent\Model;
@@ -35,7 +36,11 @@ class Product extends Model
         ]
     ];
 
-    protected $fillable = ['category_id', 'name', 'slug', 'description', 'price', 'quantity'];
+    protected $fillable = [
+        'category_id', 'name', 'slug', 'description', 'price', 'sale_price', 'quantity', 'featured'
+    ];
+
+    protected $casts = ['featured' => 'boolean'];
 
     /**
      * The URL to the resource.
@@ -114,13 +119,13 @@ class Product extends Model
      */
     public function addToCart($price, $quantity)
     {
-        \Cart::add($this->id, $this->name, $price, $quantity);
+        \Cart::add($this->id, $this->name, $price, $quantity, $this->mainImage(), $this->quantity);
     }
 
     /**
      * Subtract the ordered quantity from the available quantity
      *
-     * @param  $orderedQty
+     * @param $orderedQty
      */
     public function reduceQuantity($orderedQty)
     {
@@ -136,6 +141,18 @@ class Product extends Model
     }
 
     /**
+     * Apply the selected filters to the query.
+     *
+     * @param  Eloquent $query
+     * @param  App\Filters\ProductFilters $filters
+     * @return Eloquent query
+     */
+    public function scopeFilter($query, $filters)
+    {
+        return $filters->apply($query);
+    }
+
+    /**
      * Check the product availability.
      *
      * @return boolean
@@ -147,5 +164,15 @@ class Product extends Model
         }
 
         return true;
+    }
+
+    /**
+     * Check if the product is newly added.
+     *
+     * @return boolean
+     */
+    public function new()
+    {
+        return $this->created_at > Carbon::now()->subDays(7);
     }
 }

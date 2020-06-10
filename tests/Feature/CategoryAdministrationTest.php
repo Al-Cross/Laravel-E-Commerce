@@ -8,15 +8,18 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 class CategoryAdministrationTest extends TestCase
 {
     use RefreshDatabase;
+
+    public function setUp() :void
+    {
+        parent::setUp();
+
+        $this->signInAdmin();
+    }
     /**
      * @test
      */
     public function an_administrator_can_access_the_category_administration_section()
     {
-        $this->withoutExceptionHandling();
-
-        $this->signInAdmin();
-
         $this->get(route('admin.dashboard.categories'))
             ->assertStatus(200);
 
@@ -48,10 +51,18 @@ class CategoryAdministrationTest extends TestCase
     /**
      * @test
      */
+    public function a_category_requires_a_name()
+    {
+        $category = make('App\Category', ['name' => null]);
+
+        $this->post('/admin/categories', $category->toArray())
+            ->assertSessionHasErrors('name');
+    }
+    /**
+     * @test
+     */
     public function an_administrator_can_create_a_category()
     {
-        $this->signInAdmin();
-
         $category = make(
             'App\Category',
             ['attribute' => [0 => 'some attribute', '1' => 'another attribute']]
@@ -71,13 +82,14 @@ class CategoryAdministrationTest extends TestCase
     /**
      * @test
      */
-    public function a_category_requires_a_name()
+    public function an_administrator_may_delete_a_category()
     {
-        $this->signInAdmin();
+        $category = create('App\Category');
+        $product = create('App\Product', ['category_id' => $category->id]);
+        $attribute = create('App\Attribute', ['category_id' => $category->id]);
 
-        $category = make('App\Category', ['name' => null]);
+        $this->delete('/admin/categories/' . $category->id . '/delete');
 
-        $this->post('/admin/categories', $category->toArray())
-            ->assertSessionHasErrors('name');
+        $this->assertDatabaseMissing('categories', ['name' => $category->name]);
     }
 }

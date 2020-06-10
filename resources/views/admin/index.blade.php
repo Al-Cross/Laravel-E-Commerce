@@ -20,7 +20,7 @@
         </div>
 
         <div class="col-md-6">
-            <div class="widget-small warning coloured-icon">
+            <div class="widget-small primary coloured-icon">
                 <i class="icon fas fa-file-alt fa-3x"></i>
                 <div class="info">
                     <h4>Uploades</h4>
@@ -35,6 +35,16 @@
                 <div class="info">
                     <h4><a href="admin/products">Products</a></h4>
                     <p><b>{{ $products }}</b></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6">
+            <div class="widget-small warning coloured-icon">
+                <i class="icon fas fa-truck fa-3x"></i>
+                <div class="info">
+                    <h4><a href="{{ route('admin.dashboard.orders') }}">Orders</a></h4>
+                    <p><b>{{ $orders }}</b></p>
                 </div>
             </div>
         </div>

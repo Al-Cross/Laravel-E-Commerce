@@ -20,8 +20,15 @@ class CreateProductsTable extends Migration
             $table->string('slug')->unique()->nullable();
             $table->text('description')->nullable();
             $table->decimal('price', 8, 2);
+            $table->decimal('sale_price', 8, 2)->nullable();
             $table->integer('quantity');
+            $table->boolean('featured')->default(false);
             $table->timestamps();
+
+            $table->foreign('category_id')
+                ->references('id')
+                ->on('categories')
+                ->onDelete('cascade');
         });
     }
 

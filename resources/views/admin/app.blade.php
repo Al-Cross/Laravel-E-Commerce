@@ -13,7 +13,10 @@
     <main class="app-content">
         <div id="app">
             @include('admin.partials.header')
+            @include('flash::message')
             @yield('content')
+
+            <flash message="{{ session('flash') }}"></flash>
         </div>
         <script src="{{ mix('/js/app.js') }}"></script>
     </main>

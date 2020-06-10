@@ -26,14 +26,17 @@ Route::group([
 ], function () {
     Route::get('/', 'DashboardController@index')->name('admin.dashboard.index');
     Route::get('/users', 'DashboardController@show')->name('admin.dashboard.users');
+    Route::get('/orders', 'DashboardController@orders')->name('admin.dashboard.orders');
     Route::get('/users/search', 'DashboardController@search')->name('admin.dashboard.search');
     Route::delete('/users/{user}', 'DashboardController@destroy');
     Route::get('/categories', 'CategoriesController@index')->name('admin.dashboard.categories');
     Route::post('/categories', 'CategoriesController@store');
+    Route::delete('/categories/{category}/delete', 'CategoriesController@destroy');
     Route::get('/notifications', 'NotificationsController@index');
     Route::delete('/notifications/{notification}', 'NotificationsController@destroy')->name('delete.notification');
     Route::get('/categories/create', 'CategoriesController@create')->name('admin.categories.create');
     Route::get('/products/create', 'ProductUploadController@create')->name('admin.products.create');
+    Route::get('/products/create/{category}', 'ProductUploadController@create');
     Route::get('/products', 'ProductUploadController@index');
     Route::post('/products', 'ProductUploadController@store');
     Route::get('/products/{product:slug}/edit', 'ProductUploadController@edit')->name('admin.product.edit');
@@ -67,4 +70,4 @@ Route::get('/cart/clear', 'CartController@clearCart')->name('checkout.cart.clear
 Route::get('/products', 'ProductController@index');
 Route::get('/products/{category:slug}/{product:slug}', 'ProductController@show');
 Route::get('/{category:slug}', 'ProductController@index')->name('category');
-Route::post('/product/add-cart', 'ProductController@addToCart')->name('add-to-cart');
+Route::post('/product/add-cart', 'ProductController@fillCart')->name('add-to-cart');

@@ -56,8 +56,6 @@ class ViewProductsTest extends TestCase
      */
     public function a_user_can_filter_products_according_to_a_category()
     {
-        $this->withoutExceptionHandling();
-
         $category = create('App\Category');
         $productNotInCategory = create('App\Product');
         $productInCategory = create('App\Product', ['category_id' => $category->id]);
@@ -74,15 +72,23 @@ class ViewProductsTest extends TestCase
      */
     public function a_user_can_filter_products_according_their_price()
     {
+        $this->withoutExceptionHandling();
+
         $product2 = create('App\Product', ['price' => 30]);
         $product3 = create('App\Product', ['price' => 50]);
 
         $response = $this->get('/products?price=desc');
-
-        $this->assertEquals([50, 30, 20], array_column($response['products']->toArray(), 'price'));
+        foreach ($response['products'] as $product) {
+            $descending[] = $product['price'];
+        }
+        // dd($values);
+        $this->assertEquals([50, 30, 20], $descending);
 
         $response = $this->get('/products?price=asc');
+        foreach ($response['products'] as $product) {
+            $ascending[] = $product['price'];
+        }
 
-        $this->assertEquals([20, 30, 50], array_column($response['products']->toArray(), 'price'));
+        $this->assertEquals([20, 30, 50], $ascending);
     }
 }

@@ -25,13 +25,19 @@
         <li>
             <a class="app-menu__item" href="{{ route('admin.dashboard.categories') }}">
                 <i class="app-menu__icon fas fa-clone"></i>
-                <span class="app-menu__label">Categories</span>
+                <span class="app-menu__label ml-2">Categories</span>
             </a>
         </li>
         <li>
             <a class="app-menu__item" href="{{ route('admin.products.create') }}">
                 <i class="app-menu__icon fas fa-store"></i>
-                <span class="app-menu__label">Add A Product</span>
+                <span class="app-menu__label ml-2">Add A Product</span>
+            </a>
+        </li>
+        <li>
+            <a class="app-menu__item" href="{{ route('admin.dashboard.orders') }}">
+                <i class="app-menu__icon fas fa-truck"></i>
+                <span class="app-menu__label ml-2">Orders</span>
             </a>
         </li>
     </ul>

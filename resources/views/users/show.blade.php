@@ -11,7 +11,7 @@
 			<ul class="list-group">
 				<a class="list-group-item active" href="#"> Account overview  </a>
 				<a class="list-group-item" href="{{ route('orders.index') }}"> My Orders </a>
-				<a class="list-group-item" href="{{ route('wishlist', $user->id) }}"> My wishlist </a>
+				<a class="list-group-item" href="{{ route('wishlist', $user) }}"> My wishlist </a>
 				<a class="list-group-item" href="{{ route('edit.profile', $user->id) }}">Settings </a>
 			</ul>
 		</aside> <!-- col.// -->
@@ -36,9 +36,6 @@
 						{{ $user->country}}
 						<a href="{{ route('edit.profile', $user->id) }}" class="btn-link"> Edit</a>
 					</p>
-
-
-
 					<article class="card-group">
 						<figure class="card bg">
 							<div class="p-3">
@@ -48,8 +45,8 @@
 						</figure>
 						<figure class="card bg">
 							<div class="p-3">
-								 <h5 class="card-title">5</h5>
-								<span>Wishlists</span>
+								 <h5 class="card-title">{{ $user->wishlist->count() }}</h5>
+								<span>Items In Wishlist</span>
 							</div>
 						</figure>
 					</article>
@@ -58,32 +55,34 @@
 				</div> <!-- card-body .// -->
 			</article> <!-- card.// -->
 
-			<article class="card  mb-3">
-				<div class="card-body">
-					<h5 class="card-title mb-4">Recent orders </h5>
+			@if($recentOrders->count() > 0)
+				<article class="card  mb-3">
+					<div class="card-body">
+						<h5 class="card-title mb-4">Recent orders </h5>
+						<div class="row">
+							@foreach($recentOrders as $order)
+								<div class="col-md-6">
+									<figure class="itemside  mb-3">
+										@foreach ($order->products as $product)
+											<div class="aside">
+												<img src="{{ asset('storage/' . $product->mainImage()) }}" class="border img-sm">
+											</div>
+											<figcaption class="info">
+												<time class="text-muted"><i class="fa fa-calendar-alt"></i>
+													{{ $order->created_at->format('d. M Y') }}
+												</time>
+													<p><a href="{{ $product->path() }}">{{ $product->name }}</a></p>
+										@endforeach
+										</figcaption>
+									</figure>
+								</div> <!-- col.// -->
+							@endforeach
+					</div> <!-- row.// -->
 
-					<div class="row">
-						@foreach($recentOrders as $order)
-							<div class="col-md-6">
-								<figure class="itemside  mb-3">
-									@foreach ($order->products as $product)
-										<div class="aside"><img src="{{ asset('storage/' . $product->mainImage()) }}" class="border img-sm"></div>
-										<figcaption class="info">
-											<time class="text-muted"><i class="fa fa-calendar-alt"></i>
-												{{ $order->created_at->diffForHumans() }}
-											</time>
-												<p>{{ $product->name }}</p>
-									@endforeach
-									</figcaption>
-								</figure>
-							</div> <!-- col.// -->
-						@endforeach
-				</div> <!-- row.// -->
-
-				<a href="#" class="btn btn-outline-primary"> See all orders  </a>
-				</div> <!-- card-body .// -->
-			</article> <!-- card.// -->
-
+					<a href="{{ route('orders.index') }}" class="btn btn-outline-primary"> See all orders  </a>
+					</div> <!-- card-body .// -->
+				</article> <!-- card.// -->
+			@endif
 		</main> <!-- col.// -->
 	</div>
 

@@ -60,7 +60,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  integer  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($userId)
@@ -78,8 +78,6 @@ class UserController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
@@ -93,23 +91,11 @@ class UserController extends Controller
         ]);
 
         $user = auth()->user();
-        $input = $request->except('password', 'password_confirmation');
-
-        if (! $request->filled('password')) {
-            $user->fill($input)->save();
-
-            return back()->with(
-                'message',
-                'Your account has been successfully updated!'
-            );
-        }
-
-        $user->password = bcrypt($request->password);
-        $user->fill($input)->save();
+        $user->updateProfile($request);
 
         return back()->with(
-            'message',
-            'Your account (and pass) has been successfully updated!'
+            'flash',
+            'Your account has been successfully updated!'
         );
     }
 

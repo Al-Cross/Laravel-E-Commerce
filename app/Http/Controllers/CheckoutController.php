@@ -36,7 +36,7 @@ class CheckoutController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(CheckoutRequest $request)
@@ -65,9 +65,9 @@ class CheckoutController extends Controller
     }
 
     /**
-    * Process the PayPal payment.
-    *
-    * @return \Illuminate\Http\Response
+     * Process the PayPal payment.
+     *
+     * @return \Illuminate\Http\Response
     */
     public function paypal()
     {
@@ -99,7 +99,7 @@ class CheckoutController extends Controller
             $this->addToOrdersTablesPaypal($email, $name, $result->message);
 
             return back()->with(
-                'error',
+                'flash',
                 'An error occurred with the message: ' . $result->message
             );
         }
@@ -110,7 +110,7 @@ class CheckoutController extends Controller
      * @param App\Http\Requests $request
      * @param CardException $error
      *
-     * @return  Object
+     * @return Object
      */
     protected function addToOrdersTables($request, $error = null)
     {
@@ -175,6 +175,9 @@ class CheckoutController extends Controller
                 'product_id' => $item->id,
                 'quantity' => $item->quantity
             ]);
+
+            $product = Product::findOrFail($item->id);
+            $product->reduceQuantity($item->quantity);
         }
     }
 

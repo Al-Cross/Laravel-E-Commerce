@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreProductRequest;
+use Illuminate\Validation\ValidationException;
 
 class ProductUploadController extends Controller
 {
@@ -32,18 +33,23 @@ class ProductUploadController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Category $category)
     {
         $categories = Category::all();
-        $attributes = Attribute::with('values')->get();
 
-        return view('admin.products.create', compact('categories', 'attributes'));
+        if (request()->wantsJson()) {
+            return $category->attributes()->with('values', 'values.product')->get();
+        }
+
+        return view('admin.products.create', compact('categories'));
     }
 
     /**
-    * Store a newly created resource in storage.
-    *
-    * @return \Illuminate\Http\Response
+     * Store a newly created resource in storage.
+     *
+     * @param Http\Requests\StoreProductRequest $request
+     *
+     * @return \Illuminate\Http\Response
     */
     public function store(StoreProductRequest $request)
     {
@@ -55,65 +61,44 @@ class ProductUploadController extends Controller
             'slug' => Str::slug($data['name']),
             'description' => $data['description'],
             'price' => $data['price'],
-            'quantity' => $data['quantity']
+            'sale_price' => $data['sale_price'],
+            'quantity' => $data['quantity'],
+            'featured' => $data['featured']
         ]);
 
-        $filtered = array_filter($data['attr_value']);
+        isset($data['attr_value']) ? $attr_values['fromField'] = $data['attr_value'] : $attr_values['fromField'] = array();
+        isset($data['select_value']) ? $attr_values['fromSelect'] = $data['select_value'] : $attr_values['fromSelect'] = array();
 
-        if (! empty($filtered)) {
-            foreach ($filtered as $attribute => $value) {
-                $attr_value = AttributeValues::firstOrCreate(
-                    ['value' => $value],
-                    ['attribute_id' => $attribute]
-                );
+        $this->addAttributes($attr_values, $product);
 
-                $product->attributes()->attach($attr_value->id);
-            }
-        }
+        $this->saveImages($product->id, request()->file('image'));
 
-        $select = array_filter($data['select_value'], function ($string) {
-            return strpos($string, 'new') === false;
-        });
-
-        foreach ($select as $value_id) {
-            $product->attributes()->attach($value_id);
-        }
-
-        $images = request()->file('image');
-        $paths = [];
-
-        foreach ($images as $image) {
-            $imageName = $image->hashName();
-            $paths[] = $image->storeAs('images', $imageName);
-        }
-
-        foreach ($paths as $path) {
-            Images::create([
-                'product_id' => $product->id,
-                'path' => $path
-            ]);
-        }
-
-        return redirect('/products');
+        return response(['redirect' => '/products']);
     }
 
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param App\Product  $product
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function edit(Product $product)
     {
         $categories = Category::all();
-        $attributes = Attribute::with('values')->get();
 
         return view(
             'admin.products.edit',
-            compact('product', 'categories', 'attributes')
+            compact('product', 'categories')
         );
     }
 
     /**
-    * Update the specified resource in storage.
-    *
-    * @param App\Product  $product
-    *
-    * @return \Illuminate\Http\Response
+     * Update the specified resource in storage.
+     *
+     * @param App\Product  $product
+     *
+     * @return \Illuminate\Http\Response
     */
     public function update(Product $product, StoreProductRequest $request)
     {
@@ -125,52 +110,29 @@ class ProductUploadController extends Controller
             'slug' => Str::slug($data['name']),
             'description' => $data['description'],
             'price' => $data['price'],
-            'quantity' => $data['quantity']
+            'sale_price' => $data['sale_price'],
+            'quantity' => $data['quantity'],
+            'featured' => $data['featured']
         ]);
 
-        $filtered = array_filter($data['attr_value']);
-        $product->attributes()->detach();
-        if (! empty($filtered)) {
-            foreach ($filtered as $attribute => $value) {
-                $attr_value = AttributeValues::where('attribute_id', '=', $attribute)
-                    ->update(['value' => $value]);
+        isset($data['attr_value']) ? $attr_values['fromField'] = $data['attr_value'] : $attr_values['fromField'] = array();
+        isset($data['select_value']) ? $attr_values['fromSelect'] = $data['select_value'] : $attr_values['fromSelect'] = array();
 
-                $product->attributes()->attach($attr_value->id);
-            }
+        $this->addAttributes($attr_values, $product);
+
+
+        if ($request->has('image')) {
+            $this->saveImages($product->id, $request->file('image'));
         }
 
-        $select = array_filter($data['select_value'], function ($string) {
-            return strpos($string, 'new') === false;
-        });
-
-        foreach ($select as $value_id) {
-            $product->attributes()->attach($value_id);
-        }
-
-        $images = request()->file('image');
-        $paths = [];
-
-        if (! empty($images)) {
-            foreach ($images as $image) {
-                $imageName = $image->hashName();
-                $paths[] = $image->storeAs('images', $imageName);
-            }
-
-            foreach ($paths as $path) {
-                Images::create([
-                    'product_id' => $product->id,
-                    'path' => $path
-                ]);
-            }
-        }
-
-        return redirect($product->path());
+        return response(['redirect' => $product->path()]);
     }
 
     /**
      * Delete the selected image.
-     * @param  App\Product $product
-     * @param  integer  $imageId
+     *
+     * @param App\Product $product
+     * @param integer  $imageId
      */
     public function removeImage(Product $product, $imageId)
     {
@@ -203,6 +165,57 @@ class ProductUploadController extends Controller
 
         return redirect()
             ->back()
-            ->with('message', 'Product successfully removed.');
+            ->with('flash', 'Product successfully removed.');
+    }
+
+    /**
+     * Store the images.
+     *
+     * @param array $images
+     */
+    public function saveImages($productId, $images = null)
+    {
+        $paths = [];
+
+        foreach ($images as $image) {
+            $imageName = $image->hashName();
+            $paths[] = $image->storeAs('images', $imageName);
+        }
+
+        foreach ($paths as $path) {
+            Images::create([
+                'product_id' => $productId,
+                'path' => $path
+            ]);
+        }
+    }
+
+    /**
+     * Store the values of the product attributes.
+     *
+     * @param array $fromInputField
+     * @param array $fromSelect
+     * @param App\Product $product
+     */
+    public function addAttributes($input, $product)
+    {
+        $product->attributes()->detach();
+
+        $filteredInput = array_filter($input['fromField'], function ($string) {
+            return strpos($string, 'undefined') === false;
+        });
+
+        foreach ($filteredInput as $attribute => $value) {
+            $attr_value = AttributeValues::firstOrCreate(
+                ['value' => $value],
+                ['attribute_id' => $attribute]
+            );
+
+            $product->attributes()->attach($attr_value->id);
+        }
+
+        foreach ($input['fromSelect'] as $value_id) {
+            $product->attributes()->attach($value_id);
+        }
     }
 }

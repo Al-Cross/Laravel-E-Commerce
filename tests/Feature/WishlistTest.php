@@ -10,14 +10,21 @@ class WishlistTest extends TestCase
 {
     use RefreshDatabase;
 
+    public function setUp() :void
+    {
+        parent::setUp();
+
+        $this->user = create('App\User');
+        $this->product = create('App\Product');
+    }
     /**
      * @test
      */
-    public function unauthenticated_users_dont_have_a_wishlist()
+    public function must_be_loggedin_to_see_the_wishlist()
     {
-        $user = create('App\User');
+        $unauthenticated = create('App\User', ['id' => 12]);
 
-        $this->get(route('wishlist', $user->id))
+        $this->get(route('wishlist', $unauthenticated->id))
             ->assertRedirect('/login');
     }
     /**
@@ -25,12 +32,9 @@ class WishlistTest extends TestCase
      */
     public function an_authenticated_user_can_visit_their_wishlist_page()
     {
-        $this->withoutExceptionHandling();
+        $this->actingAs($this->user);
 
-        $user = create('App\User');
-        $this->actingAs($user);
-
-        $this->get(route('wishlist', $user->id))
+        $this->get(route('wishlist', $this->user->id))
             ->assertStatus(200);
     }
     /**
@@ -38,19 +42,16 @@ class WishlistTest extends TestCase
      */
     public function authenticated_users_can_add_to_their_wishlist()
     {
-        $user = create('App\User');
-        $product = create('App\Product');
+        $this->actingAs($this->user);
 
-        $this->actingAs($user);
-
-        $response = $this->from($product->path())->post(
-            route('wishlist.add', $user->id),
-            ['productId' => $product->id]
+        $response = $this->from($this->product->path())->post(
+            route('wishlist.add', $this->user->id),
+            ['productId' => $this->product->id]
         );
 
         $this->assertDatabaseHas('wishlists', [
-                'user_id' => $user->id,
-                'product_id' => $product->id
+                'user_id' => $this->user->id,
+                'product_id' => $this->product->id
             ]);
     }
     /**
@@ -58,44 +59,23 @@ class WishlistTest extends TestCase
      */
     public function authenticated_users_can_remove_items_from_wishlist()
     {
-        $user = create('App\User');
-        $product = create('App\Product');
+        $this->actingAs($this->user);
 
-        $this->actingAs($user);
-
-        $this->from($product->path())->post(
-            route('wishlist.add', $user->id),
-            ['productId' => $product->id]
+        $this->from($this->product->path())->post(
+            route('wishlist.add', $this->user->id),
+            ['productId' => $this->product->id]
         );
-        $response = $this->get(route('wishlist.remove', [$user->id, $product->id]));
+        $response = $this->get(
+            route('wishlist.remove', [$this->user->id, $this->product->id])
+        );
 
         $response->assertSessionHas(
-            'message',
+            'flash',
             'Removed successfully from the wishlist.'
         );
         $this->assertDatabaseMissing(
             'wishlists',
-            ['user_id' => $user->id, 'product_id' => $product->id]
+            ['user_id' => $this->user->id, 'product_id' => $this->product->id]
         );
-    }
-    /**
-     * @test
-     */
-    public function a_product_may_not_be_added_twice_to_wishlist()
-    {
-        $user = create('App\User');
-        $product = create('App\Product');
-
-        $this->actingAs($user);
-
-        $this->from($product->path())->post(
-            route('wishlist.add', $user->id),
-            ['productId' => $product->id]
-        );
-
-        $this->from($product->path())->post(
-            route('wishlist.add', $user->id),
-            $product->toArray()
-        )->assertSessionHas('error', 'This item is already in your wishlist.');
     }
 }

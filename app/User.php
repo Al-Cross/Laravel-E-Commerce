@@ -4,9 +4,10 @@ namespace App;
 
 use App\Order;
 use App\Wishlist;
+use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Nicolaslopezj\Searchable\SearchableTrait;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -105,5 +106,23 @@ class User extends Authenticatable
     public function wishlist()
     {
         return $this->hasMany(Wishlist::class);
+    }
+
+    /**
+     * Update the user's account details.
+     *
+     * @param  \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\Response
+     */
+    public function updateProfile(Request $request)
+    {
+        $input = $request->except('password', 'password_confirmation');
+
+        if (! $request->filled('password')) {
+            $this->fill($input)->save();
+        }
+
+        $this->password = bcrypt($request->password);
+        $this->fill($input)->save();
     }
 }

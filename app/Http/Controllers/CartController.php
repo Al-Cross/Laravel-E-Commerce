@@ -16,9 +16,21 @@ class CartController extends Controller
     {
         $cartContents = \Cart::getContent();
 
-        return view('products.cart', compact('cartContents'));
+        $purchased = null;
+        if ($user = auth()->user()) {
+            $purchased = $user->orders()->with('products')->get();
+        }
+
+        return view('products.cart', compact('cartContents', 'purchased'));
     }
 
+    /**
+     * Update the contents of the cart.
+     *
+     * @param integer  $id
+     *
+     * @return \Illuminate\Http\Response
+    */
     public function update($id)
     {
         $validator = Validator::make(request()->all(), [
@@ -26,7 +38,7 @@ class CartController extends Controller
         ]);
 
         if ($validator->fails()) {
-            session()->flash('error', "Quantity must be between 1 and 5.");
+            session()->flash('flash', "Quantity must be between 1 and 5.");
             return response()->json(['success' => false], 400);
         }
 
@@ -35,14 +47,15 @@ class CartController extends Controller
             'value' => request()->quantity
             ]]);
 
-        session()->flash('message', 'Quantity was updated successfully.');
+        session()->flash('flash', 'Quantity was updated successfully.');
         return response()->json(['success' => true]);
     }
 
     /**
-     * Remove the specified resource from storage.
+     * Remove the specified item from the cart.
      *
-     * @param  \App\Product  $product
+     * @param integer  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
@@ -54,8 +67,8 @@ class CartController extends Controller
         \Cart::remove($id);
 
         return redirect()
-                ->back()
-                ->with('message', 'Item removed from cart successfully.');
+            ->back()
+            ->with('flash', 'Item removed from cart successfully.');
     }
 
     /**

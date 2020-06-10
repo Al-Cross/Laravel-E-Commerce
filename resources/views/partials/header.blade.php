@@ -35,6 +35,7 @@
                             </a>
                             <a class="dropdown-item" href="{{ route('wishlist', Auth::user()->id) }}">
                                 My Wishlist
+                                <span class="badge badge-pill badge-danger">{{ $wishlistCount }}</span>
                             </a>
                             <a class="dropdown-item" href="{{ route('logout') }}"
                                onclick="event.preventDefault();

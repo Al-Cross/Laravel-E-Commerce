@@ -1,10 +1,10 @@
 @component('mail::message')
 # Order Received
 
-**Order ID** {{ $order->id }} <br>
-**Order Email** {{ $order->billing_email }} <br>
-**Order Billing Name** {{ $order->billing_name }} <br>
-**Order Total** {{ config('e-commerce.currency_symbol') }} {{ round($order->billing_total) }} <br>
+**Order ID:** {{ $order->id }} <br>
+**Order Email:** {{ $order->billing_email }} <br>
+**Order Billing Name:** {{ $order->billing_name }} <br>
+**Order Total:** {{ config('e-commerce.currency_symbol') }} {{ number_format($order->billing_total, 2) }} <br>
 
 You can get further details about your order by visiting our website.
 

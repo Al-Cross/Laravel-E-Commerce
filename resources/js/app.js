@@ -4,12 +4,19 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 import {loadStripe} from '@stripe/stripe-js/pure';
+import VuejsDialog from 'vuejs-dialog';
+import VuejsDialogMixin from 'vuejs-dialog/dist/vuejs-dialog-mixin.min.js'; // only needed in custom components
+
+// include the default style
+import 'vuejs-dialog/dist/vuejs-dialog.min.css';
 
 // const stripe = await loadStripe('pk_test_5b20haUIW3xRYL1M64O9bsCl008DBREz6Z');
 
 require('./bootstrap');
 
 window.Vue = require('vue');
+// Tell Vue to install the plugin.
+Vue.use(VuejsDialog);
 
 /**
  * The following block of code may be used to automatically register your
@@ -27,6 +34,10 @@ Vue.component('add-to-wishlist', require('./components/AddToWishlist.vue').defau
 Vue.component('wishlist', require('./components/Wishlist.vue').default);
 Vue.component('admin-notifications', require('./components/AdminNotifications.vue').default);
 Vue.component('delete-image', require('./components/DeleteImage.vue').default);
+Vue.component('categories', require('./components/Categories.vue').default);
+Vue.component('create-product', require('./components/CreateProduct.vue').default);
+Vue.component('flash', require('./components/Flash.vue').default);
+
 
 /**
  * Next, we will create a fresh Vue application instance and attach it to

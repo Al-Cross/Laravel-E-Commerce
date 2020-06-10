@@ -3,22 +3,15 @@
 @section('title', 'Edit Account')
 
 @section('content')
-    <div class="row">
-        <div class="col-sm-12">
-            @if (Session::has('message'))
-                <p class="alert alert-success">{{ Session::get('message') }}</p>
-            @endif
-        </div>
-    </div>
     <section class="section-content padding-y">
         <div class="container">
             <div class="row">
                 <aside class="col-md-3">
                     <ul class="list-group">
-                        <a class="list-group-item active" href="{{ route('profile') }}"> Account overview  </a>
+                        <a class="list-group-item" href="{{ route('profile') }}"> Account overview  </a>
                         <a class="list-group-item" href="{{ route('orders.index') }}"> My Orders </a>
                         <a class="list-group-item" href="{{ route('wishlist', $user->id) }}"> My wishlist </a>
-                        <a class="list-group-item" href="{{ route('edit.profile', $user->id) }}">Settings </a>
+                        <a class="list-group-item active" href="{{ route('edit.profile', $user->id) }}">Settings </a>
                     </ul>
                 </aside>
 

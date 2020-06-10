@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use Tests\TestCase;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserDashboardTest extends TestCase
@@ -58,6 +59,7 @@ class UserDashboardTest extends TestCase
      */
     public function a_user_can_edit_their_account()
     {
+        $this->withoutExceptionHandling();
         $user = create('App\User');
 
         $this->actingAs($user);
@@ -79,5 +81,35 @@ class UserDashboardTest extends TestCase
             'address' => 'some new address',
             'city' => 'new city'
         ]);
+    }
+    /**
+     * @test
+     */
+    public function a_user_can_edit_their_password()
+    {
+        $this->withoutExceptionHandling();
+        $user = create('App\User');
+
+        $this->actingAs($user);
+        $newPassword = 'Some random pass';
+
+        $this->get(route('profile'))
+            ->assertStatus(200)
+            ->assertSee($user->email);
+
+        $this->patch(route('update.profile'), [
+            'name' => $user->name,
+            'email' => 'Changed@user.com',
+            'password' => $newPassword,
+            'password_confirmation' => $newPassword,
+            'address' => 'some new address',
+            'city' => 'new city',
+            'country' => $user->country
+        ])->assertSessionHas(
+            'flash',
+            'Your account has been successfully updated!'
+        );
+
+        $this->assertTrue(Hash::check($newPassword, $user->password));
     }
 }

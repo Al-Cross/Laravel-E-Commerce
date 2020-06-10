@@ -18,7 +18,7 @@ class CouponController extends Controller
         $coupon = Coupon::findByCode(request()->code);
 
         if (! $coupon) {
-            return back()->with('error', 'Invalid coupon code.');
+            return back()->with('flash', 'Invalid coupon code.');
         }
 
         session()->put('coupon', [
@@ -26,7 +26,7 @@ class CouponController extends Controller
             'discount' => $coupon->discount(\Cart::getSubtotal())
         ]);
 
-        return back()->with('message', 'Coupon has been applied!');
+        return back()->with('flash', 'Coupon has been applied!');
     }
 
     /**
@@ -39,6 +39,6 @@ class CouponController extends Controller
     {
         session()->forget('coupon');
 
-        return back()->with('message', 'The coupon has been removed.');
+        return back()->with('flash', 'The coupon has been removed.');
     }
 }

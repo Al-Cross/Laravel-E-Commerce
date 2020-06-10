@@ -8,10 +8,10 @@
 						<img src="{{ asset('frontend/images/logo.png') }}" class="logo-footer">
 						<p class="mt-3">Some short text about company like You might remember the Dell computer commercials in which a youth reports this exciting news to his friends.</p>
 						<div>
-						    <a class="btn btn-icon btn-light" title="Facebook" target="_blank" href="#"><i class="fa fa-facebook"></i></a>
-						    <a class="btn btn-icon btn-light" title="Instagram" target="_blank" href="#"><i class="fa fa-instagram"></i></a>
-						    <a class="btn btn-icon btn-light" title="Youtube" target="_blank" href="#"><i class="fa fa-youtube"></i></a>
-						    <a class="btn btn-icon btn-light" title="Twitter" target="_blank" href="#"><i class="fa fa-twitter"></i></a>
+						    <a class="btn btn-icon btn-light" title="Facebook" target="_blank" href="#"><i class="fab fa-facebook"></i></a>
+						    <a class="btn btn-icon btn-light" title="Instagram" target="_blank" href="#"><i class="fab fa-instagram"></i></a>
+						    <a class="btn btn-icon btn-light" title="Youtube" target="_blank" href="#"><i class="fab fa-youtube"></i></a>
+						    <a class="btn btn-icon btn-light" title="Twitter" target="_blank" href="#"><i class="fab fa-twitter"></i></a>
 						</div>
 					</article>
 				</aside>
@@ -52,7 +52,7 @@
 		</section>	<!-- footer-top.// -->
 
 		<section class="footer-copyright border-top">
-				<p class="float-left text-muted"> © 2019 Company  All rights resetved </p>
+				<p class="float-left text-muted"> © 2020 Company  All rights reserved </p>
 				<p target="_blank" class="float-right text-muted">
 					<a href="#">Privacy &amp; Cookies</a> &nbsp;   &nbsp;
 					<a href="#">Accessibility</a>

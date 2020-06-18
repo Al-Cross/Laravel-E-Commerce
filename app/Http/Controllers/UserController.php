@@ -8,37 +8,6 @@ use Illuminate\Http\Request;
 class UserController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
      * Display the specified resource.
      *
      * @return \Illuminate\Http\Response
@@ -47,8 +16,7 @@ class UserController extends Controller
     {
         $user = auth()->user();
 
-        $recentOrders = $user
-            ->orders()
+        $recentOrders = $user->orders()
             ->latest()
             ->take(3)
             ->with(['products', 'products.images'])
@@ -77,7 +45,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request  $request
      */
     public function update(Request $request)
     {
@@ -97,16 +65,5 @@ class UserController extends Controller
             'flash',
             'Your account has been successfully updated!'
         );
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 }

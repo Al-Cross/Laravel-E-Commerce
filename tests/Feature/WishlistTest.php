@@ -30,16 +30,6 @@ class WishlistTest extends TestCase
     /**
      * @test
      */
-    public function an_authenticated_user_can_visit_their_wishlist_page()
-    {
-        $this->actingAs($this->user);
-
-        $this->get(route('wishlist', $this->user->id))
-            ->assertStatus(200);
-    }
-    /**
-     * @test
-     */
     public function authenticated_users_can_add_to_their_wishlist()
     {
         $this->actingAs($this->user);
@@ -65,6 +55,7 @@ class WishlistTest extends TestCase
             route('wishlist.add', $this->user->id),
             ['productId' => $this->product->id]
         );
+
         $response = $this->get(
             route('wishlist.remove', [$this->user->id, $this->product->id])
         );

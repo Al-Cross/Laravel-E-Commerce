@@ -49,7 +49,7 @@
                     </li>
                     <li  class="nav-item">
                         <a href="{{ route('cart') }}" class="nav-link d-flex">
-                            <div class="round text-sm-left"><i class="fa fa-shopping-cart"></i> My Cart</div>
+                            <div class="round text-sm-left"><i class="fa fa-shopping-cart"></i>My Cart</div>
                             <span class="badge badge-pill badge-danger">{{ $cartCount }}</span>
                         </a>
                     </li>
@@ -61,8 +61,8 @@
 
     <section class="header-main">
         <div class="container">
-            <div class="row ">
-                <div class="col-lg-3">
+            <div class="row">
+                <div class="col-lg-1 mr-5">
                     <div class="brand-wrap">
                         <a href="{{ url('/') }}">
                             <img class="logo" src="{{ asset('frontend/images/logo.png') }}" alt="logo">
@@ -71,7 +71,7 @@
                 </div>
                 <nav class="navbar navbar-main  navbar-expand-lg navbar-light">
                     <ul class="navbar-nav mr-auto">
-                        <a class="nav-link" href="/products">Home </a>
+                        <a class="nav-link" href="/products">Home</a>
 
                         @foreach ($categories as $category)
                             <li class="nav-item">
@@ -95,24 +95,26 @@
                         </div>
                     </form>
 
-                    <ul class="nav">
-                        <li class="nav-item dropdown">
-                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    Sort Products <span class="caret"></span>
-                                </a>
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                     <a class="dropdown-item" href="{{ Request::path() }}?price=desc">
-                                        Price Descending
+                    @if (Auth::check() && URL::current() != route('wishlist', Auth::user()->id))
+                        <ul class="nav">
+                            <li class="nav-item dropdown">
+                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                        Sort Products <span class="caret"></span>
                                     </a>
-                                    <a class="dropdown-item" href="{{ Request::path() }}?price=asc">
-                                        Price Ascending
-                                    </a>
-                                     <a class="dropdown-item" href="{{ Request::path() }}?demand=1">
-                                        Hottest
-                                    </a>
-                                </div>
-                        </li>
-                    </ul>
+                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                         <a class="dropdown-item" href="{{ Request::path() }}?price=desc">
+                                            Price Descending
+                                        </a>
+                                        <a class="dropdown-item" href="{{ Request::path() }}?price=asc">
+                                            Price Ascending
+                                        </a>
+                                         <a class="dropdown-item" href="{{ Request::path() }}?demand=1">
+                                            Hottest
+                                        </a>
+                                    </div>
+                            </li>
+                        </ul>
+                    @endif
                 </nav>
             </div>
         </div>

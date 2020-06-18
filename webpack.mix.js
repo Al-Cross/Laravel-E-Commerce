@@ -13,6 +13,8 @@ const mix = require('laravel-mix');
 
 mix.copyDirectory('resources/frontend', 'public/frontend');
 mix.copyDirectory('resources/backend', 'public/backend');
+mix.copyDirectory('node_modules/desoslide/dist', 'public/desoslide');
 
 mix.js('resources/js/app.js', 'public/js')
-   .sass('resources/frontend/sass/bootstrap.scss', 'public/css');
+   .sass('resources/frontend/sass/bootstrap.scss', 'public/css')
+   .sass('resources/sass/revealInput.scss', 'public/css');

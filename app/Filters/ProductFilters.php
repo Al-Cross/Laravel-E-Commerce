@@ -28,14 +28,14 @@ class ProductFilters extends Filters
     public function demand()
     {
         if ($this->request->demand) {
-            $productIds = DB::table('products')
+            $products = DB::table('products')
                 ->join('order_product', 'products.id', '=', 'order_product.product_id')
                 ->select('product_id', DB::raw('SUM(order_product.quantity) as quantity'))
                 ->groupBy('product_id')
                 ->orderBy('quantity', 'DESC')
                 ->get();
 
-            foreach ($productIds as $id) {
+            foreach ($products as $id) {
                 $product[] = $id->product_id;
             }
 
@@ -45,7 +45,7 @@ class ProductFilters extends Filters
                 return redirect()
                     ->back()
                     ->with(
-                        'message',
+                        'flash',
                         'No hot items yet. Be the first to take the lead!'
                     );
             }

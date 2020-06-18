@@ -34,8 +34,6 @@ class CartTest extends TestCase
      */
     public function a_user_may_remove_an_item_from_the_cart()
     {
-        $this->withoutExceptionHandling();
-
         $product = create('App\Product');
 
         $this->post(route('add-to-cart'), $product->toArray());

@@ -25,8 +25,6 @@ class CheckoutTest extends TestCase
      */
     public function non_logged_in_users_may_make_orders()
     {
-        $this->withoutExceptionHandling();
-
         $this->buyProduct(['user_id' => null, 'stripeToken' => 'tok_visa']);
 
         $this->assertDatabaseHas('orders', ['payment_gateway' => 'stripe']);

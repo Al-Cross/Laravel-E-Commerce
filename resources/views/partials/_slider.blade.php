@@ -1,18 +1,16 @@
-<div class="col-md-12">
-	<div class="slider-custom-slick row">
+<div class="col-lg-12">
+	<ul id="slideshow_thumbs" class="d-flex justify-content-around" style="overflow-x: auto;">
 		@foreach($product->images as $image)
-            @if ($product->mainImage() !== $image->path)
-				<div class="item-slide p-2">
-                	<figure class="card card-product-grid">
-                    	<div class="img-wrap">
-                    		<img src="{{ asset('storage/'. $image->path) }}"
-                    			class="shadow-lg"
-                    			style="max-height: 200px; max-width: 200px;"
-                    			alt="{{ $product->name}}">
-                    	</div>
-                    </figure>
-				</div>
-            @endif
+			<div class="p-2 row">
+            	<li class="p-2 card card-product-grid image mr-2">
+                    <a href="{{ asset('storage/'. $image->path) }}">
+                        <img src="{{ asset('storage/'. $image->path) }}"
+                            class="shadow-lg"
+                            style="max-height: 150px; max-width: 150px;"
+                            alt="{{ $product->name}}">
+                    </a>
+                </li>
+			</div>
         @endforeach
-    </div>
+    </ul>
 </div>

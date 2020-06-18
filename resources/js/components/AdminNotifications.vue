@@ -1,10 +1,12 @@
 <template>
-	<li class="dropdown">
-        <a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Show notifications"><i id="bell" :data-count="notifications.length" class="fas fa-bell icon-red circle"></i></a>
+	<li class="dropdown" v-cloak>
+        <a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Show notifications">
+            <i id="bell" :data-count="notifications.length" class="fas fa-bell icon-red circle"></i>
+        </a>
         <ul class="app-notification dropdown-menu dropdown-menu-right">
             <li class="app-notification__title">
                 <p v-if="notifications.length == 0">No new notifications.</p>
-                <p v-if="notifications.length > 0" v-text="'You have ' + notifications.length + ' new notifications.'"></p>
+                <p v-else v-text="'You have ' + notifications.length + ' new notification(s).'"></p>
             </li>
             <div class="app-notification__content" v-for="notification in notifications">
                 <li>
@@ -22,9 +24,6 @@
                     </a>
                 </li>
             </div>
-            <li class="app-notification__footer">
-                <a href="#">See all notifications.</a>
-            </li>
         </ul>
     </li>
 </template>

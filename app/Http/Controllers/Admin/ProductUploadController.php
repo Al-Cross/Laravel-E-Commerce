@@ -28,6 +28,7 @@ class ProductUploadController extends Controller
 
         return view('admin.products.index', compact('products'));
     }
+
     /**
      * Display a page for creating a resource.
      *
@@ -136,11 +137,11 @@ class ProductUploadController extends Controller
      */
     public function removeImage(Product $product, $imageId)
     {
-        $imagePath = $product->images->find($imageId);
-        $image = basename($imagePath->path);
+        $image = $product->images->find($imageId);
+        $imagePath = basename($image->path);
 
-        Storage::disk('public')->delete('/images/' . $image);
-        $imagePath->delete();
+        Storage::disk('public')->delete('/images/' . $imagePath);
+        $image->delete();
     }
 
     /**
@@ -153,12 +154,14 @@ class ProductUploadController extends Controller
     {
         $images = $product->images;
 
-        foreach ($images as $image) {
-            $imagePath[] = basename($image->path);
-        }
+        if (isset($images)) {
+            foreach ($images as $image) {
+                $imagePath[] = basename($image->path);
+            }
 
-        foreach ($imagePath as $path) {
-            Storage::disk('public')->delete('/images/' . $path);
+            foreach ($imagePath as $path) {
+                Storage::disk('public')->delete('/images/' . $path);
+            }
         }
 
         $product->delete();

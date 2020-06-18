@@ -17,13 +17,15 @@
                                 	@if($product->new())
 	                                	<span class="badge badge-danger"> NEW </span>
                                 	@endif
-                                	<img src="{{ asset('storage/' . $product->mainImage()) }}"
-                                		style="height: 200px;"
-                                		alt="mainImage">
-                                </div>
+	                                <a class="title" href="{{ $product->path() }}">
+	                                	<img src="{{ asset('storage/' . $product->mainImage()) }}"
+	                                		style="height: 200px;"
+	                                		alt="mainImage">
+	                            </div>
 
-	                            <figcaption class="info-wrap border-top">
-	                                <a class="title" href="{{ $product->path() }}">{{ $product->name }}</a>
+			                            <figcaption class="info-wrap border-top">
+			                                {{ $product->name }}
+		                            </a>
 	                            </figcaption>
 	                            <div class="bottom-wrap">
 		                            @if ($product->inStock)
@@ -54,17 +56,7 @@
 	                    <p>No Products found yet.</p>
 	                @endforelse
 	            </div>
-	             <div class="container">
-	            	@if ($errors->count() > 0)
-		            	<ul>
-		            		@foreach($errors->all() as $error)
-			            		<div class="alert alert-danger">
-			            			<li>{{ $error }}</li>
-			            		</div>
-			            	@endforeach
-		            	</ul>
-		            @endif
-	            </div>
+	            @include('partials._errors')
 	        </div>
 	        {{ $products->links() }}
 	    </div>

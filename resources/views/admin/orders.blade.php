@@ -1,6 +1,6 @@
 @extends ('admin.app')
 
-@section ('title', 'Registered Users')
+@section ('title', 'All Orders')
 
 @section ('content')
 	<div class="container clearfix">

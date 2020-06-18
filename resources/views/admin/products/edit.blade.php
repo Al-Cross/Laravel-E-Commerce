@@ -65,7 +65,6 @@
                                     <input type="name"
                                             class="form-control"
                                             name="name"
-                                            id="name"
                                             v-model="product.name"
                                             required
                                     >
@@ -103,7 +102,6 @@
                                     <textarea class="form-control"
                                             name="description"
                                             rows="5"
-                                            id="description"
                                             v-model="product.description"
                                             >
                                     </textarea>
@@ -116,7 +114,6 @@
                                     <input type="price"
                                             class="form-control"
                                             name="price"
-                                            id="price"
                                             v-model="product.price"
                                             required
                                     >
@@ -138,7 +135,6 @@
                                     <input type="quantity"
                                             class="form-control"
                                             name="quantity"
-                                            id="quantity"
                                             v-model="product.quantity"
                                             required
                                     >

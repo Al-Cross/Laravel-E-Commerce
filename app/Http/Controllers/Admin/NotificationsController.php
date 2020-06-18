@@ -18,6 +18,7 @@ class NotificationsController extends Controller
 
         return $admin->unreadNotifications;
     }
+
     /**
      * Mark a notification as read.
      *

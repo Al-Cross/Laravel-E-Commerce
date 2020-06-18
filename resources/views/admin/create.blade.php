@@ -3,7 +3,6 @@
 @section ('title', 'Create Category')
 
 @section ('content')
-
 	<section class="section-content bg padding-y">
         <div class="container">
             <div class="col-md-6 mx-auto">
@@ -16,7 +15,10 @@
                             @csrf
                             <div class="form-group">
                                 <label for="name">Name</label>
-                                <input type="name" class="form-control @error('name') is-invalid @enderror" name="name" id="name" value="{{ old('name') }}">
+                                <input type="name"
+                                        class="form-control @error('name') is-invalid @enderror"
+                                        name="name"
+                                        value="{{ old('name') }}">
                                 @error('name')
                                 <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

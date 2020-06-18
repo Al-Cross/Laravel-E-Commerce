@@ -112,7 +112,6 @@ class AdministratorTest extends TestCase
      */
     public function an_administrator_may_delete_a_user()
     {
-        $this->withoutExceptionHandling();
         $user = create('App\User');
 
         $this->delete('/admin/users/' . $user->id)
@@ -129,5 +128,36 @@ class AdministratorTest extends TestCase
     public function a_product_may_be_featured()
     {
         $this->assertDatabaseHas('products', ['featured' => true]);
+    }
+    /**
+     * @test
+     */
+    public function an_administrator_can_manage_coupons()
+    {
+        $this->get('/admin/coupons')->assertStatus(200);
+        $this->get('/admin/coupons/new')->assertStatus(200);
+
+        $coupon = make('App\Coupon');
+
+        $this->post('/admin/coupons/create', $coupon->toArray());
+
+        $this->assertDatabaseHas(
+            'coupons',
+            [
+                    'code' => 'ABC123',
+                    'value' => 5
+                ]
+        );
+    }
+    /**
+     * @test
+     */
+    public function a_coupon_may_be_removed_by_the_administrator()
+    {
+        $coupon = create('App\Coupon');
+
+        $this->delete('/admin/coupons/remove/' . $coupon->id);
+
+        $this->assertDatabaseMissing('coupons', ['code' => $coupon->code]);
     }
 }

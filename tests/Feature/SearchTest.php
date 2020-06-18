@@ -13,7 +13,6 @@ class SearchTest extends TestCase
      */
     public function a_user_can_search_products()
     {
-        $this->withoutExceptionHandling();
         $search = 'foobar';
 
         $productsNotInSearch = create('App\Product', [], 2);

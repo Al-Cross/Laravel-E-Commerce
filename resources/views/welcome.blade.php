@@ -1,100 +1,135 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	<meta name="author" content="Bootstrap-ecommerce by Vosidiy M.">
 
-        <title>Laravel</title>
+	<title>Bootstrap E-Commerce</title>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+	<!-- jQuery -->
+	<script src="{{ asset('frontend/js/jquery-2.0.0.min.js') }}" type="text/javascript"></script>
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
+	<!-- Bootstrap4 files-->
+	<script src="../js/bootstrap.bundle.min.js" type="text/javascript"></script>
+	<link href="{{ asset('frontend/css/bootstrap.css') }}" rel="stylesheet" type="text/css" />
 
-            .full-height {
-                height: 100vh;
-            }
+	<!-- Font awesome 5 -->
+	<link href="{{ asset('frontend/fonts/fontawesome/css/all.min.css') }}" type="text/css" rel="stylesheet">
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+	<!-- custom style -->
+	<link href="{{ asset('frontend/css/ui.css') }}" rel="stylesheet" type="text/css" />
+	<link href="{{ asset('frontend/css/responsive.css') }}" rel="stylesheet" media="only screen and (max-width: 1200px)" />
 
-            .position-ref {
-                position: relative;
-            }
+	<!-- custom javascript -->
+	<script src="{{ asset('frontend/js/script.js') }}" type="text/javascript"></script>
+</head>
+<body>
+    <header class="section-header">
+	<section class="header-main border-bottom">
+	<div class="container">
+		<a href="#" class="brand-wrap"><img class="logo" src="{{ asset('frontend/images/logo.png') }}"></a>
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
+		<div class="d-flex align-items-end flex-column">
             @if (Route::has('login'))
                 <div class="top-right links">
                     @auth
-                        <a href="{{ url('/home') }}">Home</a>
+                    	<div class="d-flex">
+                    		<a class="dropdown-item" href="{{ url('/products') }}">Home</a>
+	                        <a class="dropdown-item" href="{{ route('logout') }}"
+	                           onclick="event.preventDefault();
+	                                     document.getElementById('logout-form').submit();">
+	                            {{ __('Logout') }}
+	                        </a>
+	                        <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+	                            @csrf
+	                        </form>
+                    	</div>
                     @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
+                    	<div class="d-flex">
+                    		<a class="dropdown-item" href="{{ route('login') }}">Login</a>
+	                        @if (Route::has('register'))
+	                            <a class="dropdown-item" href="{{ route('register') }}">Register</a>
+	                        @endif
+                    	</div>
                     @endauth
                 </div>
             @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
-            </div>
         </div>
-    </body>
+	</div> <!-- container.// -->
+	</section>
+
+	<section class="section-pagetop bg-primary">
+		<div class="container">
+			<h2 class="title-page text-white text-center">Products That Inspire</h2>
+		</div>
+	</section>
+	</header>
+
+	<section class="section-content padding-y bg">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4 mb-4">
+					<div class="card bg-dark">
+					  <img src="{{ asset('/frontend/images/banners/computers.jpg') }}" class="card-img opacity" style="height:227px;">
+					  <div class="card-img-overlay text-white">
+					    <h5 class="card-title">Computers</h5>
+					    <p class="card-text">The newest of the world of electronics</p>
+					    <a href="/computers" class="btn btn-light">Discover</a>
+					  </div>
+					</div>
+				</div> <!-- col.// -->
+				<div class="col-md-4 mb-4">
+					<div class="card bg-dark">
+					  <img src="{{ asset('/frontend/images/banners/banner2.jpg') }}" class="card-img opacity">
+					  <div class="card-img-overlay text-white">
+					    <h5 class="card-title">Headphones</h5>
+					    <p class="card-text">High-Quality Made Available</p>
+					    <a href="/headphones" class="btn btn-light">Discover</a>
+					  </div>
+					</div>
+				</div> <!-- col.// -->
+				<div class="col-md-4 mb-4">
+					<div class="card-banner align-items-end" style="height:227px; background-image: url('frontend/images/banners/camera-background.jpg');">
+						<article class="card-img-overlay text-white">
+					    	<h5 class="card-title">Camera & Photo</h5>
+					    	<p class="card-text">Save the most memorable moments</p>
+					    	<a href="/action-cameras" class="btn btn-light">Discover</a>
+					    </article>
+					</div>
+				</div> <!-- col.// -->
+			</div> <!-- row.// -->
+			<div class="row">
+				<div class="col-md-4">
+					<div class="shadow-sm card-banner">
+					  <div class="p-4" style="width:75%">
+					    <h5 class="card-title">iPad Pro</h5>
+					    <p>We work directly with licensed suppliers to deliver the best products.</p>
+					  </div>
+					  <img src="{{ asset('/frontend/images/banners/banner-item1.jpg') }}" height="150" class="img-bg">
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="shadow-sm card-banner">
+					  <div class="p-4" style="width:70%">
+					    <h5 class="card-title">Smart Watch</h5>
+					    <p>On our platform you can discover the trendiest fitness gear.</p>
+					  </div>
+					  <img src="{{ asset('/frontend/images/banners/banner-item2.jpg') }}" height="150" class="img-bg">
+					</div>
+				</div>
+				<div class="col-md-4">
+					<div class="shadow-sm card-banner">
+					  <div class="p-4" style="width:75%">
+					    <h5 class="card-title">Great drones</h5>
+					    <p>All displayed products have a minimum 30-day money-back guarantee.</p>
+
+					  </div>
+					  <img src="{{ asset('/frontend/images/banners/banner-item3.jpg') }}" height="150" class="img-bg">
+					</div>
+				</div> <!-- col.// -->
+			</div> <!-- row.// -->
+		</div>
+	</section>
+</body>
 </html>

@@ -88,6 +88,7 @@ class User extends Authenticatable
     {
         return $this->isAdmin();
     }
+
     /**
      * Define the relationship with App\Order
      *

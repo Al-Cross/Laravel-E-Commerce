@@ -112,7 +112,7 @@
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <button type="submit" class="btn btn-success btn-block"> Edit Profile </button>
+                                            <button type="submit" class="btn btn-success btn-block">Edit Profile</button>
                                         </div>
                                     </form>
                                 </article>

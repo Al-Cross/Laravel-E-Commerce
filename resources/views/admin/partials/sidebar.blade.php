@@ -18,8 +18,8 @@
             </a>
         </li>
         <li>
-            <a class="app-menu__item" href="#"><i class="app-menu__icon fa fa-cogs"></i>
-                <span class="app-menu__label">Settings</span>
+            <a class="app-menu__item" href="/admin/coupons"><i class="app-menu__icon fas fa-percent"></i>
+                <span class="app-menu__label">Coupons</span>
             </a>
         </li>
         <li>
@@ -47,7 +47,7 @@
 
 <script>
    jQuery(function($) {
-         var path = window.location.href; // because the 'href' property of the DOM element is the absolute path
+         var path = window.location.href;
             $('ul a').each(function() {
             if (this.href === path) {
                $(this).addClass('active');

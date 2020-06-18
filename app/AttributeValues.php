@@ -9,6 +9,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class AttributeValues extends Model
 {
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var array
+     */
     protected $fillable = ['attribute_id', 'value'];
 
     /**
@@ -28,6 +33,11 @@ class AttributeValues extends Model
      */
     public function product()
     {
-        return $this->belongsToMany(Product::class, 'product_attributes', 'attr_value_id', 'product_id');
+        return $this->belongsToMany(
+            Product::class,
+            'product_attributes',
+            'attr_value_id',
+            'product_id'
+        );
     }
 }

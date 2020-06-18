@@ -62,7 +62,6 @@ class ViewProductsTest extends TestCase
 
         create('App\Images', ['product_id' => $productInCategory->id]);
 
-
         $this->get('/' . $category->slug)
             ->assertSee($productInCategory->name)
             ->assertDontSee($productNotInCategory->name);
@@ -72,8 +71,6 @@ class ViewProductsTest extends TestCase
      */
     public function a_user_can_filter_products_according_their_price()
     {
-        $this->withoutExceptionHandling();
-
         $product2 = create('App\Product', ['price' => 30]);
         $product3 = create('App\Product', ['price' => 50]);
 
@@ -81,7 +78,7 @@ class ViewProductsTest extends TestCase
         foreach ($response['products'] as $product) {
             $descending[] = $product['price'];
         }
-        // dd($values);
+
         $this->assertEquals([50, 30, 20], $descending);
 
         $response = $this->get('/products?price=asc');

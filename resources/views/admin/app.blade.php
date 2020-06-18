@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" href="{{ asset('backend/css/main.css') }}" />
     <link rel="stylesheet" type="text/css" href="{{ asset('frontend/fonts/fontawesome/css/all.min.css') }}"/>
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/revealInput.css') }}">
 </head>
 <body class="app sidebar-mini rtl">
     @include('admin.partials.sidebar')
@@ -18,6 +19,7 @@
 
             <flash message="{{ session('flash') }}"></flash>
         </div>
+        @yield ('scripts')
         <script src="{{ mix('/js/app.js') }}"></script>
     </main>
     <script src="{{ asset('backend/js/jquery-3.3.1.min.js') }}"></script>

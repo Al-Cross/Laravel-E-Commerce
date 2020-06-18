@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Coupon extends Model
 {
+    protected $guarded = [];
+
     /**
      * Fetch the coupon by its code.
      *
@@ -27,7 +29,7 @@ class Coupon extends Model
     {
         if ($this->type == 'fixed') {
             return $this->value;
-        } elseif ($this->type == 'percent') {
+        } elseif ($this->type == 'percent_off') {
             return ($this->percent_off / 100) * $total;
         } else {
             return 0;

@@ -34,7 +34,6 @@
 
 		methods: {
 			handleClick(category, index) {
-				// Trigger a confirmation dialog
 				this.$dialog
 					.confirm(
 				  		'Deletion of a category removes all products associated with it. Are you sure you want to delete it?')

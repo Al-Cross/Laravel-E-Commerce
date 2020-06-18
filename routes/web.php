@@ -27,6 +27,10 @@ Route::group([
     Route::get('/', 'DashboardController@index')->name('admin.dashboard.index');
     Route::get('/users', 'DashboardController@show')->name('admin.dashboard.users');
     Route::get('/orders', 'DashboardController@orders')->name('admin.dashboard.orders');
+    Route::get('/coupons', 'DashboardController@coupons');
+    Route::post('/coupons/create', 'DashboardController@storeCoupon');
+    Route::get('/coupons/new', 'DashboardController@createCoupon');
+    Route::delete('/coupons/remove/{coupon}', 'DashboardController@destroyCoupon');
     Route::get('/users/search', 'DashboardController@search')->name('admin.dashboard.search');
     Route::delete('/users/{user}', 'DashboardController@destroy');
     Route::get('/categories', 'CategoriesController@index')->name('admin.dashboard.categories');

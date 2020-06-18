@@ -59,7 +59,6 @@ class UserDashboardTest extends TestCase
      */
     public function a_user_can_edit_their_account()
     {
-        $this->withoutExceptionHandling();
         $user = create('App\User');
 
         $this->actingAs($user);
@@ -87,7 +86,6 @@ class UserDashboardTest extends TestCase
      */
     public function a_user_can_edit_their_password()
     {
-        $this->withoutExceptionHandling();
         $user = create('App\User');
 
         $this->actingAs($user);

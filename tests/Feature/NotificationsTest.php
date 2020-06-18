@@ -31,7 +31,6 @@ class NotificationsTest extends TestCase
      */
     public function a_notification_is_prepared_when_a_product_is_out_of_stock()
     {
-        $this->withoutExceptionHandling();
         $admin = create('App\User');
 
         $this->signInAdmin($admin);
@@ -64,8 +63,6 @@ class NotificationsTest extends TestCase
      */
     public function the_administrator_can_fetch_their_notifications()
     {
-        $this->withoutExceptionHandling();
-
         $admin = create('App\User');
 
         $this->signInAdmin($admin);

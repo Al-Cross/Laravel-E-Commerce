@@ -37,6 +37,10 @@ export default {
             if (this.details.sale_price) {
                 this.product.sale_price = this.details.sale_price;
             }
+
+            if (this.details.description) {
+                this.product.description = this.details.description;
+            }
         }
     },
 
@@ -68,9 +72,12 @@ export default {
             }
         },
 
+        /**
+         * Prepapres all of the input data for the axios POST request.
+         * @return FormData Object
+         */
         compile() {
             let formData = new FormData();
-            let attributeId = this.attributes.map(a => a.id);
 
             if (this.product.selected.length < this.attributes.length && this.product.attr_value.length == 0) {
                 flash('Select values for all attributes.', 'danger');
@@ -78,29 +85,9 @@ export default {
                 return
             }
 
-            for (var i = 0; i < this.files.length; i++) {
-                let image = this.files[i];
-
-                formData.append('image[' + i + ']', image);
-            }
-
-            if (this.product.selected.length > 0) {
-                for (var i = 0; i <= this.product.selected.length; i++) {
-                    let value = this.product.selected[i];
-
-                    if (value !== undefined) {
-                        formData.append('select_value[' + i + ']', value);
-                    }
-                }
-            }
-
-            if (this.product.attr_value.length > 0) {
-                 for (var i = 0; i <= this.product.attr_value.length; i++) {
-                    let value = this.product.attr_value[i];
-
-                    formData.append('attr_value[' + attributeId[i] + ']', value);
-                }
-            }
+            this.appends(formData, this.files, 'image[ ]');
+            this.appends(formData, this.product.selected, 'select_value[ ]');
+            this.appends(formData, this.product.attr_value, 'attr_value[ ]');
 
             if (this.details) {
                 formData.append('_method', 'PATCH');
@@ -115,6 +102,23 @@ export default {
             formData.append('featured', this.product.featured);
 
             return formData;
+        },
+
+        appends(formData, attribute, field) {
+            let param = field.split(" ");
+            let attributeId = this.attributes.map(a => a.id);
+
+            if (attribute.length > 0) {
+                for (var i = 0; i < attribute.length; i++) {
+                    let value = attribute[i];
+
+                    if (field !== 'attr_value[ ]') {
+                        formData.append(param[0] + i + param[1], value);
+                    } else if (value !== undefined) {
+                        formData.append(param[0] + attributeId[i] + param[1], value);
+                    }
+                }
+            }
         }
     }
 };

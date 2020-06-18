@@ -66,7 +66,9 @@
                                             @if (Auth::check())
                                                 <add-to-wishlist :user="{{ Auth::user()->id }}" :product="{{ $item->id }}"></add-to-wishlist>
                                             @endif
-                                            <a href="{{ route('checkout.cart.remove', $item->id) }}" class="btn btn-outline-danger ml-2">Remove  <i class="fa fa-times"></i> </a>
+                                            <a href="{{ route('checkout.cart.remove', $item->id) }}" class="btn btn-outline-danger ml-2">
+                                                Remove  <i class="fa fa-times"></i>
+                                            </a>
                                         </td>
                                     </tr>
                                 @endforeach
@@ -76,97 +78,15 @@
                     @endif
                     @if(Auth::check())
                         <wishlist :user="{{ Auth::user()->id }}"></wishlist>
+                        @include('partials._buy_again')
                     @endif
                 </main>
                 @if(! \Cart::isEmpty())
-                    <aside class="col-sm-3">
-                        <a href="{{ route('checkout.cart.clear') }}" class="btn btn-danger btn-block mb-4">Clear Cart</a>
-                        <dl class="dlist-align h4">
-                            <dt>Total Price:</dt>
-                            <dd class="text-right">
-                                <strong>{{ config('e-commerce.currency_symbol') }}{{ number_format(\Cart::getSubTotal(), 2) }}</strong>
-                            </dd>
-                        </dl>
-                        <hr>
-                        <div class="d-flex">
-                           <figure class="itemside mb-3">
-                                <aside class="aside"><img src="{{ asset('frontend/images/icons/pay-visa.png') }}"></aside>
-                            </figure>
-                            <figure class="itemside mb-3">
-                                <aside class="aside"> <img src="{{ asset('frontend/images/icons/pay-mastercard.png') }}"> </aside>
-                            </figure>
-                            <figure class="itemside mb-3">
-                                <aside class="aside"> <img src="{{ asset('storage/svg/PayPal.svg') }}"> </aside>
-                            </figure>
-                        </div>
-                        <a href="{{ route('checkout') }}" class="btn btn-success btn-lg btn-block">Proceed To Checkout</a>
-                    </aside>
+                    @include('partials._cart_controls')
                 @endif
             </div>
-            @if(Auth::check())
-                <hr>
-                <span class="font-weight-bold">Buy Again</span>
-                <div class="row">
-                    @foreach($purchased as $order)
-                        @foreach($order->products as $product)
-                            <div class="col-md-3">
-                                <figure class="card card-product-grid">
-                                    <div class="img-wrap padding-y">
-                                        @if($product->featured)
-                                            <span class="badge badge-warning ml-5"> FEATURED </span>
-                                        @endif
-                                        @if($product->new())
-                                            <span class="badge badge-danger"> NEW </span>
-                                        @endif
-                                        <img src="{{ asset('storage/' . $product->mainImage()) }}"
-                                            style="height: 200px;"
-                                            alt="mainImage">
-                                    </div>
-
-                                    <figcaption class="info-wrap bop">
-                                        <a class="title" href="{{ $product->path() }}">{{ $product->name }}</a>
-                                    </figcaption>
-                                    <div class="bottom-wrap">
-                                        @if ($product->inStock)
-                                            <form action="{{ route('add-to-cart') }}" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="id" value="{{ $product->id }}">
-                                                <input type="hidden" name="quantity" value="1">
-                                                <input type="hidden" name="price" value="{{ $product->price }}">
-                                                <button type="submit" class="btn btn-sm btn-success float-right">
-                                                    <i class="fa fa-cart-arrow-down"></i> Buy Now
-                                                </button>
-                                            </form>
-                                        @endif
-                                        @if ($product->sale_price != 0)
-                                            <div class="price-wrap h5">
-                                                <span class="price h3"> {{ config('e-commerce.currency_symbol').$product->sale_price }} </span>
-                                                <del class="price-old text-danger"> {{ config('e-commerce.currency_symbol').$product->price }}</del>
-                                            </div>
-                                        @else
-                                            <div class="price-wrap h5">
-                                                <span class="price h3"> {{ config('e-commerce.currency_symbol').$product->price }} </span>
-                                            </div>
-                                        @endif
-                                    </div>
-                                </figure>
-                            </div>
-                        @endforeach
-                    @endforeach
-                </div>
-            @endif
         </div>
-         <div class="container">
-                @if ($errors->count() > 0)
-                    <ul>
-                        @foreach($errors->all() as $error)
-                            <div class="alert alert-danger">
-                                <li>{{ $error }}</li>
-                            </div>
-                        @endforeach
-                    </ul>
-                @endif
-            </div>
+        @include('partials._errors')
     </section>
 @stop
 

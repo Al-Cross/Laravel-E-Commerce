@@ -27,21 +27,12 @@ class CartController extends Controller
     /**
      * Update the contents of the cart.
      *
-     * @param integer  $id
+     * @param integer $id
      *
      * @return \Illuminate\Http\Response
     */
     public function update($id)
     {
-        $validator = Validator::make(request()->all(), [
-            'quantity' => ['required', 'numeric', 'between:1,5']
-        ]);
-
-        if ($validator->fails()) {
-            session()->flash('flash', "Quantity must be between 1 and 5.");
-            return response()->json(['success' => false], 400);
-        }
-
         \Cart::update($id, ['quantity' => [
             'relative' => false,
             'value' => request()->quantity

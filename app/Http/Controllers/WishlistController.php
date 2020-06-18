@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use App\Wishlist;
 use Illuminate\Http\Request;
 use App\Exceptions\ItemInWishlistException;
@@ -13,19 +14,19 @@ class WishlistController extends Controller
       *
       * @return \Illuminate\Http\Response
      */
-    public function index($userId)
+    public function index(User $user)
     {
-        $wishlist = Wishlist::where('user_id', '=', $userId)
+        $wishlist = Wishlist::where('user_id', '=', $user->id)
             ->orderBy('id', 'desc')
             ->paginate(20);
 
         $products = $wishlist->load(['product', 'product.images']);
-        // dd($products);
+
         if (request()->wantsJson()) {
             return $products;
         }
 
-        return view('users.wishlist', compact('wishlist'));
+        return view('users.wishlist', compact('wishlist', 'user'));
     }
 
     /**
@@ -55,8 +56,7 @@ class WishlistController extends Controller
 
         $item->delete();
 
-        return redirect()
-            ->back()
+        return back()
             ->with('flash', 'Removed successfully from the wishlist.');
     }
 }

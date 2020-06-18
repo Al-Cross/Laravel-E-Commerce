@@ -17,7 +17,7 @@
 
                 <section class="section-content bg padding-y w-75">
                     <div class="container">
-						<article class="card  mb-3">
+						<article class="card mb-3">
 							<div class="card-body">
 								<h5 class="card-title mb-4">All Orders </h5>
 
@@ -46,14 +46,13 @@
 															<p><a href="{{ $product->path() }}">{{ $product->name }}</a></p>
 														</figcaption>
 													</figure>
-												</div> <!-- col.// -->
+												</div>
 											@endforeach
 										</div>
 									@endforeach
-							</div> <!-- row.// -->
-
-							</div> <!-- card-body .// -->
-						</article> <!-- card.// -->
+								</div>
+							</div>
+						</article>
 					</div>
 				</section>
 			</div>

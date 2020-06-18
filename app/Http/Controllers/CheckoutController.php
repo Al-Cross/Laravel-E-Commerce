@@ -88,15 +88,15 @@ class CheckoutController extends Controller
         $name = $transaction->paypal['payerFirstName'] . ' ' . $transaction->paypal['payerLastName'];
 
         if ($result->success || !is_null($result->transaction)) {
-            $this->addToOrdersTablesPaypal($email, $name, null);
+            $order = $this->addToOrdersTablesPaypal($name, $email, null);
 
-            Mail::send(new OrderPlaced);
+            Mail::send(new OrderPlaced($order, $email));
             \Cart::clear();
             session()->forget('coupon');
 
             return view('products.thankyou');
         } else {
-            $this->addToOrdersTablesPaypal($email, $name, $result->message);
+            $this->addToOrdersTablesPaypal($name, $email, $result->message);
 
             return back()->with(
                 'flash',
@@ -179,6 +179,8 @@ class CheckoutController extends Controller
             $product = Product::findOrFail($item->id);
             $product->reduceQuantity($item->quantity);
         }
+
+        return $order;
     }
 
     /**

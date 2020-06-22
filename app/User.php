@@ -2,12 +2,9 @@
 
 namespace App;
 
-use App\Order;
-use App\Wishlist;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Nicolaslopezj\Searchable\SearchableTrait;
-use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
@@ -47,14 +44,14 @@ class User extends Authenticatable
      * @var array
      */
     protected $appends = [
-      'isAdmin'
+        'isAdmin'
     ];
 
     /**
-    * Searchable rules.
-    *
-    * @var array
-    */
+     * Searchable rules.
+     *
+     * @var array
+     */
     protected $searchable = [
         /**
          * Columns and their priority in search results.
@@ -70,9 +67,9 @@ class User extends Authenticatable
     ];
 
     /**
-     * Set the site administrators
+     * Set the site administrators.
      *
-     * @return boolean
+     * @return bool
      */
     public function isAdmin()
     {
@@ -90,7 +87,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Define the relationship with App\Order
+     * Define the relationship with App\Order.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -100,7 +97,7 @@ class User extends Authenticatable
     }
 
     /**
-     * Define the relationship with App\Wishlist
+     * Define the relationship with App\Wishlist.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */

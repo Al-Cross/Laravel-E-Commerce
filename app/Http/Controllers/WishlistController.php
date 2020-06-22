@@ -5,14 +5,13 @@ namespace App\Http\Controllers;
 use App\User;
 use App\Wishlist;
 use Illuminate\Http\Request;
-use App\Exceptions\ItemInWishlistException;
 
 class WishlistController extends Controller
 {
     /**
-      * Display a listing of the resource.
-      *
-      * @return \Illuminate\Http\Response
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
      */
     public function index(User $user)
     {
@@ -32,7 +31,7 @@ class WishlistController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  integer $userId
+     * @param  int $userId
      * @return \Illuminate\Http\Response
      */
     public function store($userId)
@@ -46,8 +45,8 @@ class WishlistController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  integer  $userId
-     * @param  integer $productId
+     * @param  int  $userId
+     * @param  int $productId
      * @return \Illuminate\Http\Response
      */
     public function destroy($userId, $productId)

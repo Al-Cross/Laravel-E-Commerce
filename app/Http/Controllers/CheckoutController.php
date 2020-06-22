@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Order;
-use App\Product;
-use App\OrderProduct;
+use App\Http\Requests\CheckoutRequest;
 use App\Mail\OrderPlaced;
+use App\Order;
+use App\OrderProduct;
+use App\Product;
+use Cartalyst\Stripe\Exception\CardErrorException;
+use Cartalyst\Stripe\Laravel\Facades\Stripe;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
-use App\Http\Requests\CheckoutRequest;
-use Cartalyst\Stripe\Laravel\Facades\Stripe;
-use Cartalyst\Stripe\Exception\CardErrorException;
 
 class CheckoutController extends Controller
 {

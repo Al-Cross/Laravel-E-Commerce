@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\AttributeValues;
+use App\Category;
+use App\Http\Controllers\Controller;
+use App\Http\Requests\StoreProductRequest;
 use App\Images;
 use App\Product;
-use App\Category;
-use App\AttributeValues;
-use Illuminate\Support\Str;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
-use App\Http\Requests\StoreProductRequest;
+use Illuminate\Support\Str;
 
 class ProductUploadController extends Controller
 {

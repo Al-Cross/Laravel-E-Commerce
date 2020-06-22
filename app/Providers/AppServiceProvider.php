@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use App\User;
 use App\Category;
+use App\User;
 use App\Wishlist;
 use Illuminate\Support\ServiceProvider;
 

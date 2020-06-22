@@ -2,10 +2,10 @@
 
 namespace App;
 
+use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\Notifiable;
 use Nicolaslopezj\Searchable\SearchableTrait;
-use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {

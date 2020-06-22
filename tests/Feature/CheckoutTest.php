@@ -34,6 +34,7 @@ class CheckoutTest extends TestCase
      */
     public function logged_in_users_may_make_orders()
     {
+        $this->withoutExceptionHandling();
         $user = create('App\User');
 
         $this->actingAs($user);
@@ -59,6 +60,7 @@ class CheckoutTest extends TestCase
      */
     public function the_available_quantity_decreases_after_an_order_is_made()
     {
+        $this->withoutExceptionHandling();
         $this->buyProduct(['stripeToken' => 'tok_visa'], 4);
 
         $this->assertDatabaseHas('products', ['quantity' => 6]);

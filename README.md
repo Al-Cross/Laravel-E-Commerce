@@ -1,4 +1,4 @@
-# E-Commerce
+# E-Commerce [![Build Status](https://travis-ci.org/Al-Cross/E-Commerce.svg?branch=master)](https://travis-ci.org/Al-Cross/E-Commerce)
 
 This is an open-source flexible e-commerce application with customizable features making it useful for many types of products.
 
@@ -11,7 +11,7 @@ This is an open-source flexible e-commerce application with customizable feature
 First, clone this repository and install all Composer dependencies.
 
 ```bash
-git clone git@github.com:Al-Cross/E-Commerce.git
+git clone https://github.com/Al-Cross/E-Commerce.git
 cd e-commerce && composer install
 mv .env.example .env
 php artisan key:generate

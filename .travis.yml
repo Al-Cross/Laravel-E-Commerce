@@ -14,9 +14,10 @@ cache:
 
 before_script:
   - cp .env.travis .env
+  - phpenv config-rm xdebug.ini
   - composer self-update
   - composer install --no-interaction
 
 script:
   - php artisan key:generate
-  - vendor/bin/phpunit --coverage-text
+  - vendor/bin/phpunit

@@ -95,23 +95,30 @@
                         </div>
                     </form>
 
-                    @if (Auth::check() && URL::current() != route('wishlist', Auth::user()->id))
+                    @if (URL::current() != route('wishlist', Auth::check()) || URL::current() == route('all_products'))
                         <ul class="nav">
                             <li class="nav-item dropdown">
-                                     <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <a id="navbarDropdown"
+                                    class="nav-link dropdown-toggle"
+                                    href="#"
+                                    role="button"
+                                    data-toggle="dropdown"
+                                    aria-haspopup="true"
+                                    aria-expanded="false"
+                                    v-pre>
                                         Sort Products <span class="caret"></span>
+                                </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                                    <a class="dropdown-item" href="{{ Request::path() }}?price=desc">
+                                        Price Descending
                                     </a>
-                                    <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                         <a class="dropdown-item" href="{{ Request::path() }}?price=desc">
-                                            Price Descending
-                                        </a>
-                                        <a class="dropdown-item" href="{{ Request::path() }}?price=asc">
-                                            Price Ascending
-                                        </a>
-                                         <a class="dropdown-item" href="{{ Request::path() }}?demand=1">
-                                            Hottest
-                                        </a>
-                                    </div>
+                                    <a class="dropdown-item" href="{{ Request::path() }}?price=asc">
+                                        Price Ascending
+                                    </a>
+                                    <a class="dropdown-item" href="{{ Request::path() }}?demand=1">
+                                        Hottest
+                                    </a>
+                                </div>
                             </li>
                         </ul>
                     @endif

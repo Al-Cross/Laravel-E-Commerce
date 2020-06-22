@@ -71,7 +71,7 @@ Route::post('/paypal-checkout', 'CheckoutController@paypal')->name('paypal');
 Route::get('/cart/{id}/remove', 'CartController@destroy')->name('checkout.cart.remove');
 Route::patch('/cart/{id}/update', 'CartController@update')->name('checkout.cart.update');
 Route::get('/cart/clear', 'CartController@clearCart')->name('checkout.cart.clear');
-Route::get('/products', 'ProductController@index');
+Route::get('/products', 'ProductController@index')->name('all_products');
 Route::get('/products/{category:slug}/{product:slug}', 'ProductController@show');
 Route::get('/{category:slug}', 'ProductController@index')->name('category');
 Route::post('/product/add-cart', 'ProductController@fillCart')->name('add-to-cart');

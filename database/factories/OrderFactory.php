@@ -3,8 +3,8 @@
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
 use App\Order;
-use Faker\Provider\Address;
 use Faker\Generator as Faker;
+use Faker\Provider\Address;
 
 $factory->define(Order::class, function (Faker $faker) {
     $name = $faker->name;

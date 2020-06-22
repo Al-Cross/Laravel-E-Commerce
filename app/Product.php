@@ -2,11 +2,11 @@
 
 namespace App;
 
+use App\Notifications\AlmostOutOfStockNotification;
+use App\Notifications\OutOfStockNotification;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use App\Notifications\OutOfStockNotification;
 use Nicolaslopezj\Searchable\SearchableTrait;
-use App\Notifications\AlmostOutOfStockNotification;
 
 class Product extends Model
 {

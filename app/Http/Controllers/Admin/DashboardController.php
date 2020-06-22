@@ -2,13 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\User;
-use App\Order;
 use App\Coupon;
-use App\Images;
-use App\Product;
-use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Images;
+use App\Order;
+use App\Product;
+use App\User;
+use Illuminate\Http\Request;
 
 class DashboardController extends Controller
 {

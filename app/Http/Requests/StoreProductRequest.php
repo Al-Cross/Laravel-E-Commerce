@@ -3,8 +3,8 @@
 namespace App\Http\Requests;
 
 use App\Rules\Checkbox;
-use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class StoreProductRequest extends FormRequest
 {

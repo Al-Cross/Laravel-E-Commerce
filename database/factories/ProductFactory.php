@@ -2,10 +2,10 @@
 
 /** @var \Illuminate\Database\Eloquent\Factory $factory */
 
-use App\Product;
 use App\Category;
-use Illuminate\Support\Str;
+use App\Product;
 use Faker\Generator as Faker;
+use Illuminate\Support\Str;
 
 $factory->define(Product::class, function (Faker $faker) {
     $name = $faker->word;

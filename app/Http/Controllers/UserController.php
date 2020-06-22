@@ -28,7 +28,7 @@ class UserController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  integer  $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function edit($userId)
@@ -51,7 +51,7 @@ class UserController extends Controller
     {
         $data = $request->validate([
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . auth()->id()],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,'.auth()->id()],
             'password' => ['sometimes', 'nullable', 'string', 'min:8', 'confirmed'],
             'address' => ['required', 'string'],
             'city' => ['required', 'string'],

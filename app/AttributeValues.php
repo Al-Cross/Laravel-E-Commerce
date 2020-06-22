@@ -2,9 +2,6 @@
 
 namespace App;
 
-use App\Product;
-use App\Attribute;
-use App\ProductAttributes;
 use Illuminate\Database\Eloquent\Model;
 
 class AttributeValues extends Model
@@ -17,7 +14,7 @@ class AttributeValues extends Model
     protected $fillable = ['attribute_id', 'value'];
 
     /**
-     * Define the relationship with App\Attribute
+     * Define the relationship with App\Attribute.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */

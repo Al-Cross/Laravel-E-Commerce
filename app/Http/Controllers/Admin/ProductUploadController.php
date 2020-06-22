@@ -5,20 +5,17 @@ namespace App\Http\Controllers\Admin;
 use App\Images;
 use App\Product;
 use App\Category;
-use App\Attribute;
 use App\AttributeValues;
-use App\ProductAttributes;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\StoreProductRequest;
-use Illuminate\Validation\ValidationException;
 
 class ProductUploadController extends Controller
 {
     /**
-     * Display a listing of the resource
+     * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
@@ -51,7 +48,7 @@ class ProductUploadController extends Controller
      * @param Http\Requests\StoreProductRequest $request
      *
      * @return \Illuminate\Http\Response
-    */
+     */
     public function store(StoreProductRequest $request)
     {
         $data = $request->validated();
@@ -67,8 +64,8 @@ class ProductUploadController extends Controller
             'featured' => $data['featured']
         ]);
 
-        isset($data['attr_value']) ? $attr_values['fromField'] = $data['attr_value'] : $attr_values['fromField'] = array();
-        isset($data['select_value']) ? $attr_values['fromSelect'] = $data['select_value'] : $attr_values['fromSelect'] = array();
+        isset($data['attr_value']) ? $attr_values['fromField'] = $data['attr_value'] : $attr_values['fromField'] = [];
+        isset($data['select_value']) ? $attr_values['fromSelect'] = $data['select_value'] : $attr_values['fromSelect'] = [];
 
         $this->addAttributes($attr_values, $product);
 
@@ -100,7 +97,7 @@ class ProductUploadController extends Controller
      * @param App\Product  $product
      *
      * @return \Illuminate\Http\Response
-    */
+     */
     public function update(Product $product, StoreProductRequest $request)
     {
         $data = $request->validated();
@@ -116,11 +113,10 @@ class ProductUploadController extends Controller
             'featured' => $data['featured']
         ]);
 
-        isset($data['attr_value']) ? $attr_values['fromField'] = $data['attr_value'] : $attr_values['fromField'] = array();
-        isset($data['select_value']) ? $attr_values['fromSelect'] = $data['select_value'] : $attr_values['fromSelect'] = array();
+        isset($data['attr_value']) ? $attr_values['fromField'] = $data['attr_value'] : $attr_values['fromField'] = [];
+        isset($data['select_value']) ? $attr_values['fromSelect'] = $data['select_value'] : $attr_values['fromSelect'] = [];
 
         $this->addAttributes($attr_values, $product);
-
 
         if ($request->has('image')) {
             $this->saveImages($product->id, $request->file('image'));
@@ -133,14 +129,14 @@ class ProductUploadController extends Controller
      * Delete the selected image.
      *
      * @param App\Product $product
-     * @param integer  $imageId
+     * @param int  $imageId
      */
     public function removeImage(Product $product, $imageId)
     {
         $image = $product->images->find($imageId);
         $imagePath = basename($image->path);
 
-        Storage::disk('public')->delete('/images/' . $imagePath);
+        Storage::disk('public')->delete('/images/'.$imagePath);
         $image->delete();
     }
 
@@ -160,7 +156,7 @@ class ProductUploadController extends Controller
             }
 
             foreach ($imagePath as $path) {
-                Storage::disk('public')->delete('/images/' . $path);
+                Storage::disk('public')->delete('/images/'.$path);
             }
         }
 

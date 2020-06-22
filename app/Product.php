@@ -2,12 +2,7 @@
 
 namespace App;
 
-use App\Images;
-use App\Category;
-use App\Wishlist;
 use Carbon\Carbon;
-use App\OrderProduct;
-use App\AttributeValues;
 use Illuminate\Database\Eloquent\Model;
 use App\Notifications\OutOfStockNotification;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -18,10 +13,10 @@ class Product extends Model
     use SearchableTrait;
 
     /**
-    * Searchable rules.
-    *
-    * @var array
-    */
+     * Searchable rules.
+     *
+     * @var array
+     */
     protected $searchable = [
         /**
          * Columns and their priority in search results.
@@ -58,7 +53,7 @@ class Product extends Model
     }
 
     /**
-     * Define the relationship with App\Category
+     * Define the relationship with App\Category.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -68,7 +63,7 @@ class Product extends Model
     }
 
     /**
-     * Define the relationship with App\Images
+     * Define the relationship with App\Images.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -78,7 +73,7 @@ class Product extends Model
     }
 
     /**
-     * Define the relationship with App\AttributeValues
+     * Define the relationship with App\AttributeValues.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */
@@ -93,7 +88,7 @@ class Product extends Model
     }
 
     /**
-     * Define the relationship with App\Wishlist
+     * Define the relationship with App\Wishlist.
      *
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
@@ -128,7 +123,7 @@ class Product extends Model
     }
 
     /**
-     * Subtract the ordered quantity from the available quantity
+     * Subtract the ordered quantity from the available quantity.
      *
      * @param $orderedQty
      */
@@ -160,7 +155,7 @@ class Product extends Model
     /**
      * Check the product availability.
      *
-     * @return boolean
+     * @return bool
      */
     public function getInStockAttribute()
     {
@@ -174,7 +169,7 @@ class Product extends Model
     /**
      * Check if the product is newly added.
      *
-     * @return boolean
+     * @return bool
      */
     public function new()
     {

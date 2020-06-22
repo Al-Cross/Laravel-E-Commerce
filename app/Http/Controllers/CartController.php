@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class CartController extends Controller
 {
@@ -27,25 +26,26 @@ class CartController extends Controller
     /**
      * Update the contents of the cart.
      *
-     * @param integer $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
-    */
+     */
     public function update($id)
     {
         \Cart::update($id, ['quantity' => [
             'relative' => false,
             'value' => request()->quantity
-            ]]);
+        ]]);
 
         session()->flash('flash', 'Quantity was updated successfully.');
+
         return response()->json(['success' => true]);
     }
 
     /**
      * Remove the specified item from the cart.
      *
-     * @param integer  $id
+     * @param int  $id
      *
      * @return \Illuminate\Http\Response
      */
@@ -63,7 +63,7 @@ class CartController extends Controller
     }
 
     /**
-     * Remove all items from the cart
+     * Remove all items from the cart.
      *
      * @return \Illuminate\Http\Response
      */

@@ -34,7 +34,7 @@ class DashboardController extends Controller
      *
      * @param  App\Product  $product
      * @return \Illuminate\Http\Response
-    */
+     */
     public function show()
     {
         $users = User::paginate(40);
@@ -119,15 +119,15 @@ class DashboardController extends Controller
     {
         $validated = request()->validate(
             [
-            'code' => ['required', 'string'],
-            'type' => ['required', 'string', 'in:fixed,percent'],
-            'value' => ['required_without:percent_off', 'numeric', 'nullable'],
-            'percent_off' => ['required_without:value', 'numeric', 'nullable']
-        ],
+                'code' => ['required', 'string'],
+                'type' => ['required', 'string', 'in:fixed,percent'],
+                'value' => ['required_without:percent_off', 'numeric', 'nullable'],
+                'percent_off' => ['required_without:value', 'numeric', 'nullable']
+            ],
             [
-            'value.required_without' => 'Please set a discount value.',
-            'percent_off.required_without' => 'Please set a discount.'
-        ]
+                'value.required_without' => 'Please set a discount value.',
+                'percent_off.required_without' => 'Please set a discount.'
+            ]
         );
 
         Coupon::create([
@@ -145,7 +145,7 @@ class DashboardController extends Controller
     /**
      * Remove the coupon from storage.
      *
-     * @param integer $id
+     * @param int $id
      *
      * @return \Illuminate\Http\Response
      */

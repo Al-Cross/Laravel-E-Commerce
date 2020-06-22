@@ -3,7 +3,6 @@
 namespace App\Notifications;
 
 use Illuminate\Bus\Queueable;
-use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
@@ -12,6 +11,7 @@ class AlmostOutOfStockNotification extends Notification
     use Queueable;
 
     protected $product;
+
     /**
      * Create a new notification instance.
      *
@@ -56,8 +56,8 @@ class AlmostOutOfStockNotification extends Notification
     public function toArray($notifiable)
     {
         return [
-            'message' => $this->product->name . ' is almost out of stock.
-                Units remaining: ' . $this->product->quantity,
+            'message' => $this->product->name.' is almost out of stock.
+                Units remaining: '.$this->product->quantity,
             'link' => route('admin.product.edit', $this->product->slug)
         ];
     }

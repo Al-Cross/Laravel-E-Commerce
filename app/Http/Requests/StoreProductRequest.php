@@ -62,7 +62,7 @@ class StoreProductRequest extends FormRequest
 
     /**
      * If the method of the request is a POST,
-     * then return the rules with additional rule
+     * then return the rules with additional rule.
      *
      * @param array  $rules     Array of rules determined so far
      * @param string $attribute form element that will have rules applied

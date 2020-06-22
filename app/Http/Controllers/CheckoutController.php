@@ -60,7 +60,7 @@ class CheckoutController extends Controller
         } catch (CardErrorException $e) {
             $this->addToOrdersTables($request, $e->getMessage());
 
-            return back()->with('error', 'Error! ' . $e->getMessage());
+            return back()->with('error', 'Error! '.$e->getMessage());
         }
     }
 
@@ -68,7 +68,7 @@ class CheckoutController extends Controller
      * Process the PayPal payment.
      *
      * @return \Illuminate\Http\Response
-    */
+     */
     public function paypal()
     {
         $gateway = resolve('\Braintree\Gateway');
@@ -85,9 +85,9 @@ class CheckoutController extends Controller
 
         $transaction = $result->transaction;
         $email = $transaction->paypal['payerEmail'];
-        $name = $transaction->paypal['payerFirstName'] . ' ' . $transaction->paypal['payerLastName'];
+        $name = $transaction->paypal['payerFirstName'].' '.$transaction->paypal['payerLastName'];
 
-        if ($result->success || !is_null($result->transaction)) {
+        if ($result->success || ! is_null($result->transaction)) {
             $order = $this->addToOrdersTablesPaypal($name, $email, null);
 
             Mail::send(new OrderPlaced($order, $email));
@@ -100,36 +100,37 @@ class CheckoutController extends Controller
 
             return back()->with(
                 'flash',
-                'An error occurred with the message: ' . $result->message
+                'An error occurred with the message: '.$result->message
             );
         }
     }
+
     /**
      * Save the order in the respective DB tables.
      *
      * @param App\Http\Requests $request
      * @param CardException $error
      *
-     * @return Object
+     * @return object
      */
     protected function addToOrdersTables($request, $error = null)
     {
         $order = Order::create([
-                'user_id' => auth()->user() ? auth()->user()->id : null,
-                'billing_name' => $request->name,
-                'billing_email' => $request->email,
-                'billing_address' => $request->address,
-                'billing_city' => $request->city,
-                'billing_postalcode' => $request->postalcode,
-                'billing_country' => $request->country,
-                'billing_phone' => $request->phone,
-                'billing_name_on_card' => $request->name_on_card,
-                'discount' => $this->getNumbers()->get('discount'),
-                'billing_subtotal' => $this->getNumbers()->get('newSubtotal'),
-                'billing_tax' => $this->getNumbers()->get('newTax'),
-                'billing_total' => $this->getNumbers()->get('newTotal'),
-                'error' => $error
-            ]);
+            'user_id' => auth()->user() ? auth()->user()->id : null,
+            'billing_name' => $request->name,
+            'billing_email' => $request->email,
+            'billing_address' => $request->address,
+            'billing_city' => $request->city,
+            'billing_postalcode' => $request->postalcode,
+            'billing_country' => $request->country,
+            'billing_phone' => $request->phone,
+            'billing_name_on_card' => $request->name_on_card,
+            'discount' => $this->getNumbers()->get('discount'),
+            'billing_subtotal' => $this->getNumbers()->get('newSubtotal'),
+            'billing_tax' => $this->getNumbers()->get('newTax'),
+            'billing_total' => $this->getNumbers()->get('newTotal'),
+            'error' => $error
+        ]);
 
         $cart = \Cart::getContent();
 
@@ -156,16 +157,16 @@ class CheckoutController extends Controller
     protected function addToOrdersTablesPaypal($name, $email, $error = null)
     {
         $order = Order::create([
-                'user_id' => auth()->user() ? auth()->user()->id : null,
-                'billing_name' => $name,
-                'billing_email' => $email,
-                'billing_subtotal' => $this->getNumbers()->get('newSubtotal'),
-                'billing_tax' => $this->getNumbers()->get('newTax'),
-                'billing_total' => $this->getNumbers()->get('newTotal'),
-                'payment_gateway' => 'paypal',
-                'discount' => $this->getNumbers()->get('discount'),
-                'error' => $error
-            ]);
+            'user_id' => auth()->user() ? auth()->user()->id : null,
+            'billing_name' => $name,
+            'billing_email' => $email,
+            'billing_subtotal' => $this->getNumbers()->get('newSubtotal'),
+            'billing_tax' => $this->getNumbers()->get('newTax'),
+            'billing_total' => $this->getNumbers()->get('newTotal'),
+            'payment_gateway' => 'paypal',
+            'discount' => $this->getNumbers()->get('discount'),
+            'error' => $error
+        ]);
 
         $cart = \Cart::getContent();
 

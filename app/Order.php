@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Order extends Model
@@ -15,7 +14,7 @@ class Order extends Model
     protected $fillable = ['user_id', 'billing_name', 'billing_email', 'billing_address', 'billing_city', 'billing_country', 'billing_postalcode', 'billing_phone', 'billing_name_on_card', 'billing_subtotal', 'discount', 'billing_tax', 'billing_total', 'payment_gateway', 'shipped', 'error'];
 
     /**
-     * Define the relationship with App\User
+     * Define the relationship with App\User.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
      */
@@ -25,7 +24,7 @@ class Order extends Model
     }
 
     /**
-     * Define the relationship with App\Product
+     * Define the relationship with App\Product.
      *
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
      */

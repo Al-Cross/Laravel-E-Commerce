@@ -73,5 +73,5 @@ Route::patch('/cart/{id}/update', 'CartController@update')->name('checkout.cart.
 Route::get('/cart/clear', 'CartController@clearCart')->name('checkout.cart.clear');
 Route::get('/products', 'ProductController@index')->name('all_products');
 Route::get('/products/{category:slug}/{product:slug}', 'ProductController@show');
-Route::get('/{category:slug}', 'ProductController@index')->name('category');
+Route::get('/categories/{category:slug}', 'ProductController@index')->name('category');
 Route::post('/product/add-cart', 'ProductController@fillCart')->name('add-to-cart');

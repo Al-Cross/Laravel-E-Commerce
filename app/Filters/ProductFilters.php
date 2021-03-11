@@ -42,12 +42,10 @@ class ProductFilters extends Filters
             if (isset($product)) {
                 return $this->builder->findMany($product);
             } else {
-                return redirect()
-                    ->back()
-                    ->with(
-                        'flash',
-                        'No hot items yet. Be the first to take the lead!'
-                    );
+                return session()->now(
+                    'flash',
+                    'No hot items yet. Be the first to take the lead!'
+                );
             }
         }
     }

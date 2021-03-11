@@ -75,7 +75,7 @@
 					  <div class="card-img-overlay text-white">
 					    <h5 class="card-title">Computers</h5>
 					    <p class="card-text">The newest of the world of electronics</p>
-					    <a href="/computers" class="btn btn-light">Discover</a>
+					    <a href="/categories/computers" class="btn btn-light">Discover</a>
 					  </div>
 					</div>
 				</div> <!-- col.// -->
@@ -85,7 +85,7 @@
 					  <div class="card-img-overlay text-white">
 					    <h5 class="card-title">Headphones</h5>
 					    <p class="card-text">High-Quality Made Available</p>
-					    <a href="/headphones" class="btn btn-light">Discover</a>
+					    <a href="/categories/headphones" class="btn btn-light">Discover</a>
 					  </div>
 					</div>
 				</div> <!-- col.// -->
@@ -94,7 +94,7 @@
 						<article class="card-img-overlay text-white">
 					    	<h5 class="card-title">Camera & Photo</h5>
 					    	<p class="card-text">Save the most memorable moments</p>
-					    	<a href="/action-cameras" class="btn btn-light">Discover</a>
+					    	<a href="/categories/action-cameras" class="btn btn-light">Discover</a>
 					    </article>
 					</div>
 				</div> <!-- col.// -->

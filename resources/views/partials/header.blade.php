@@ -95,7 +95,7 @@
                         </div>
                     </form>
 
-                    @if (URL::current() != route('wishlist', Auth::check()) || URL::current() == route('all_products'))
+                    @if (Str::contains(URL::current(), '/categories') || URL::current() == route('all_products'))
                         <ul class="nav">
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown"
@@ -109,13 +109,13 @@
                                         Sort Products <span class="caret"></span>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-                                    <a class="dropdown-item" href="{{ Request::path() }}?price=desc">
+                                    <a class="dropdown-item" href="{{ URL::current() }}?price=desc">
                                         Price Descending
                                     </a>
-                                    <a class="dropdown-item" href="{{ Request::path() }}?price=asc">
+                                    <a class="dropdown-item" href="{{ URL::current() }}?price=asc">
                                         Price Ascending
                                     </a>
-                                    <a class="dropdown-item" href="{{ Request::path() }}?demand=1">
+                                    <a class="dropdown-item" href="{{ URL::current() }}?demand=1">
                                         Hottest
                                     </a>
                                 </div>

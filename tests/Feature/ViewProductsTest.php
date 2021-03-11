@@ -57,12 +57,12 @@ class ViewProductsTest extends TestCase
     public function a_user_can_filter_products_according_to_a_category()
     {
         $category = create('App\Category');
-        $productNotInCategory = create('App\Product');
+        $productNotInCategory = create('App\Product', ['name' => 'Some product']);
         $productInCategory = create('App\Product', ['category_id' => $category->id]);
 
         create('App\Images', ['product_id' => $productInCategory->id]);
 
-        $this->get('/' . $category->slug)
+        $this->get(route('category', $category->slug))
             ->assertSee($productInCategory->name)
             ->assertDontSee($productNotInCategory->name);
     }

@@ -1,6 +1,10 @@
+<p align="center" width="100%">
+	<img src="/public/rsz_kisspng-e-commerce-logo.png" width="33%">
+</p>
+
 # E-Commerce [![Build Status](https://travis-ci.org/Al-Cross/E-Commerce.svg?branch=master)](https://travis-ci.org/Al-Cross/E-Commerce)
 
-This is an open-source flexible e-commerce application with customizable features making it useful for many types of products.
+An open-source flexible e-commerce application with customizable features making it useful for many types of products.
 
 ## Installation
 

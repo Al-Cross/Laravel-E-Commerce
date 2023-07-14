@@ -114,8 +114,8 @@ class Product extends Model
     /**
      * Add the product to the card.
      *
-     * @param Illuminate\Http\Request $price
-     * @param Illuminate\Http\Request $quantity
+     * @param  Illuminate\Http\Request  $price
+     * @param  Illuminate\Http\Request  $quantity
      */
     public function addToCart($price, $quantity)
     {
@@ -125,7 +125,7 @@ class Product extends Model
     /**
      * Subtract the ordered quantity from the available quantity.
      *
-     * @param $orderedQty
+     * @param  $orderedQty
      */
     public function reduceQuantity($orderedQty)
     {
@@ -143,8 +143,8 @@ class Product extends Model
     /**
      * Apply the selected filters to the query.
      *
-     * @param  Eloquent $query
-     * @param  App\Filters\ProductFilters $filters
+     * @param  Eloquent  $query
+     * @param  App\Filters\ProductFilters  $filters
      * @return Eloquent query
      */
     public function scopeFilter($query, $filters)

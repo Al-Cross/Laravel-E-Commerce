@@ -1,5 +1,7 @@
 <?php
 
+namespace Database\Seeders;
+
 use App\ProductAttributes;
 use Illuminate\Database\Seeder;
 

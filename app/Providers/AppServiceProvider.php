@@ -6,6 +6,7 @@ use App\Category;
 use App\User;
 use App\Wishlist;
 use Illuminate\Support\ServiceProvider;
+use Illuminate\Pagination\Paginator;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -38,6 +39,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        Paginator::useBootstrap();
+
         \View::composer('*', function ($view) {
             $categories = \Cache::rememberForever('categories', function () {
                 return Category::all();

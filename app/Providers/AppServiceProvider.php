@@ -5,8 +5,8 @@ namespace App\Providers;
 use App\Category;
 use App\User;
 use App\Wishlist;
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Pagination\Paginator;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
